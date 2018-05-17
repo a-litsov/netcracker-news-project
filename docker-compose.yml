@@ -50,6 +50,26 @@ services:
         command: ["./wait-for-it.sh", "localhost:9091"]
         logging:
             driver: json-file
+    website:
+        container_name: website
+        build:
+            context: ./website
+        image: nc-news-project/website:latest
+        expose:
+            - 80
+        ports:
+            - 80:80
+        networks:
+            - emp-network
+        links:
+            - config-server:config-server
+            - discovery-service:discovery-service
+        depends_on:
+            - config-server
+            - discovery-service
+#        command: ["./wait-for-it.sh", "localhost:9091"]
+        logging:
+            driver: json-file
     gateway-service:
         container_name: gateway-service
         build:
