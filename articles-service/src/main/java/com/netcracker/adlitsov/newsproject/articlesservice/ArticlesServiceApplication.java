@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ArticlesServiceApplication {
 
-	@GetMapping("/news/{id}")
-	String getNewsById(@PathVariable("id") int id) {
-		return "News #" + id;
+	@GetMapping(value = "/news/{id}", produces="application/json")
+	News getNewsById(@PathVariable("id") int id) {
+		return new News(id, "News #" + id);
 	}
 
 	public static void main(String[] args) {
