@@ -25,3 +25,4 @@
 /.nb-gradle/
 
 .directory
+src/main/resources/application.properties
