@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.articlesservice;
+package com.netcracker.adlitsov.newsproject.articles;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

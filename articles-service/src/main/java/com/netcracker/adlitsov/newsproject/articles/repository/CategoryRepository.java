@@ -1,6 +1,6 @@
-package com.netcracker.adlitsov.newsproject.articlesservice.repository;
+package com.netcracker.adlitsov.newsproject.articles.repository;
 
-import com.netcracker.adlitsov.newsproject.articlesservice.model.Category;
+import com.netcracker.adlitsov.newsproject.articles.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

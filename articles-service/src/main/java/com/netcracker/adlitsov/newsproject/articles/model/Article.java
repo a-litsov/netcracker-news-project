@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.articlesservice.model;
+package com.netcracker.adlitsov.newsproject.articles.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;

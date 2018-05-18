@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.articlesservice.exception;
+package com.netcracker.adlitsov.newsproject.articles.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,9 +1,8 @@
-package com.netcracker.adlitsov.newsproject.articlesservice.controller;
+package com.netcracker.adlitsov.newsproject.articles.controller;
 
-import com.netcracker.adlitsov.newsproject.articlesservice.exception.ResourceNotFoundException;
-import com.netcracker.adlitsov.newsproject.articlesservice.model.Article;
-import com.netcracker.adlitsov.newsproject.articlesservice.model.Category;
-import com.netcracker.adlitsov.newsproject.articlesservice.repository.CategoryRepository;
+import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
+import com.netcracker.adlitsov.newsproject.articles.model.Category;
+import com.netcracker.adlitsov.newsproject.articles.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
