@@ -46,6 +46,24 @@ services:
             - discovery-service
         logging:
             driver: json-file
+    comments-service:
+        container_name: comments-service
+        build:
+            context: ./comments-service
+            args:
+                JAR_FILE: target/comments-service-0.0.1-SNAPSHOT.jar
+        image: nc-news-project/comments-service:latest
+        expose:
+            - 8081
+        ports:
+            - 8081:8081
+        networks:
+            - emp-network
+        depends_on:
+            - config-server
+            - discovery-service
+        logging:
+            driver: json-file
     website:
         container_name: website
         build:
