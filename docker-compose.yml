@@ -26,6 +26,8 @@ services:
             - 9091:9091
         networks:
             - emp-network
+        depends_on:
+            - config-server
     articles-service:
         container_name: articles-service
         build:
@@ -33,21 +35,15 @@ services:
             args:
                 JAR_FILE: target/articles-service-0.0.1-SNAPSHOT.jar
         image: nc-news-project/articles-service:latest
-        environment:
-            SPRING_APPLICATION_JSON: '{"spring": {"cloud": {"config": {"uri": "http://config-server:9090"}}}}'
         expose:
             - 8080
         ports:
             - 8080:8080
         networks:
             - emp-network
-        links:
-            - config-server:config-server
-            - discovery-service:discovery-service
         depends_on:
             - config-server
             - discovery-service
-        command: ["./wait-for-it.sh", "localhost:9091"]
         logging:
             driver: json-file
     website:
@@ -61,13 +57,9 @@ services:
             - 80:80
         networks:
             - emp-network
-        links:
-            - config-server:config-server
-            - discovery-service:discovery-service
         depends_on:
             - config-server
             - discovery-service
-#        command: ["./wait-for-it.sh", "localhost:9091"]
         logging:
             driver: json-file
     gateway-service:
@@ -83,9 +75,8 @@ services:
             - 8084:8084
         networks:
             - emp-network
-        links:
-            - discovery-service:discovery-service
         depends_on:
+            - config-server
             - discovery-service
         logging:
             driver: json-file
