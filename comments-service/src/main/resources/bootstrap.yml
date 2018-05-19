@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: comments-service
+  cloud:
+    config:
+      uri: http://config-server:9090
+      failFast: true
+      retry:
+        initialInterval: 3000
+        multiplier: 1.8
+        maxInterval: 50000
+        maxAttempts: 20
