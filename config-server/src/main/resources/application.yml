@@ -1,4 +1,14 @@
 server:
   port: 9090
-spring.cloud.config.server.git:
-  uri: https://litsov@bitbucket.org/litsov/netcracker-project-config-repo.git
+---
+spring:
+  profiles: native
+  cloud.config.server:
+        native:
+          searchLocations: /etc/configs
+---
+spring:
+  profiles: remote
+  cloud.config.server:
+    git:
+      uri: https://litsov@bitbucket.org/litsov/netcracker-project-config-repo.git

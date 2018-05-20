@@ -1,8 +1,9 @@
-# Properties specify our service name and how long it will try to get in touch with config server
-
 spring:
   application:
     name: articles-service
+    profiles:
+      - dev
+      - prod
   cloud:
     config:
       uri: http://config-server:9090

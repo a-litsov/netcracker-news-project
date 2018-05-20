@@ -1,6 +1,9 @@
 spring:
   application:
     name: comments-service
+    profiles:
+      - dev
+      - prod
   cloud:
     config:
       uri: http://config-server:9090
