@@ -14,9 +14,7 @@ services:
         networks:
             - emp-network
         environment:
-            SPRING_PROFILES_ACTIVE: native
-        volumes:
-            - ./config-repo:/etc/configs
+            SPRING_PROFILES_ACTIVE: remote
     discovery-service:
         container_name: discovery-service
         build:
@@ -33,7 +31,7 @@ services:
         depends_on:
             - config-server
         environment:
-            SPRING_PROFILES_ACTIVE: dev
+            SPRING_PROFILES_ACTIVE: prod
     articles-service:
         container_name: articles-service
         build:
@@ -43,22 +41,20 @@ services:
         image: nc-news-project/articles-service:latest
         expose:
             - 8080
-            - 5005
         ports:
             - 8080:8080
             - 5005:5005 # remote debugging port
-        command:
-            "java -Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar /app.jar"
         networks:
             - emp-network
         depends_on:
             - config-server
             - discovery-service
-            - local-database
+        command:
+            "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
         logging:
             driver: json-file
         environment:
-            SPRING_PROFILES_ACTIVE: dev
+            SPRING_PROFILES_ACTIVE: prod
     comments-service:
         container_name: comments-service
         build:
@@ -68,22 +64,20 @@ services:
         image: nc-news-project/comments-service:latest
         expose:
             - 8081
-            - 5006
         ports:
             - 8081:8081
             - 5006:5006 # remote debugging port
-        command:
-            "java -Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006 -jar /app.jar"
         networks:
             - emp-network
         depends_on:
             - config-server
             - discovery-service
-            - local-database
+        command:
+            "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
         logging:
             driver: json-file
         environment:
-            SPRING_PROFILES_ACTIVE: dev
+            SPRING_PROFILES_ACTIVE: prod
     website:
         container_name: website
         build:
@@ -119,21 +113,7 @@ services:
         logging:
             driver: json-file
         environment:
-            SPRING_PROFILES_ACTIVE: dev
-    local-database:
-        container_name: local-database
-        image: postgres:9.6
-        expose:
-            - 5432
-        ports:
-            - 5432:5432
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-        networks:
-            - emp-network
-        volumes:
-          - $PWD/local-db:/docker-entrypoint-initdb.d
+            SPRING_PROFILES_ACTIVE: prod
 networks:
     emp-network:
         driver: bridge
