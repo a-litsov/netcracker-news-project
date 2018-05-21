@@ -4,11 +4,7 @@ services:
         container_name: config-server
         build:
             context: ./config-server
-            args:
-                JAR_FILE: target/config-server-0.0.1-SNAPSHOT.jar
         image: nc-news-project/config-server:latest
-        expose:
-            - 9090
         ports:
             - 9090:9090
         networks:
@@ -19,11 +15,6 @@ services:
         container_name: discovery-service
         build:
             context: discovery-service
-            args:
-                JAR_FILE: target/discovery-service-0.0.1-SNAPSHOT.jar
-        image: nc-news-project/discovery-service:latest
-        expose:
-            - 9091
         ports:
             - 9091:9091
         networks:
@@ -36,21 +27,14 @@ services:
         container_name: articles-service
         build:
             context: ./articles-service
-            args:
-                JAR_FILE: target/articles-service-0.0.1-SNAPSHOT.jar
         image: nc-news-project/articles-service:latest
-        expose:
-            - 8080
         ports:
             - 8080:8080
-            - 5005:5005 # remote debugging port
         networks:
             - emp-network
         depends_on:
             - config-server
             - discovery-service
-        command:
-            "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
         logging:
             driver: json-file
         environment:
@@ -59,21 +43,14 @@ services:
         container_name: comments-service
         build:
             context: ./comments-service
-            args:
-                JAR_FILE: target/comments-service-0.0.1-SNAPSHOT.jar
         image: nc-news-project/comments-service:latest
-        expose:
-            - 8081
         ports:
             - 8081:8081
-            - 5006:5006 # remote debugging port
         networks:
             - emp-network
         depends_on:
             - config-server
             - discovery-service
-        command:
-            "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
         logging:
             driver: json-file
         environment:
@@ -83,8 +60,6 @@ services:
         build:
             context: ./website
         image: nc-news-project/website:latest
-        expose:
-            - 80
         ports:
             - 80:80
         networks:
@@ -98,11 +73,7 @@ services:
         container_name: gateway-service
         build:
             context: ./gateway-service
-            args:
-                JAR_FILE: target/gateway-service-0.0.1-SNAPSHOT.jar
         image: nc-news-project/gateway-service:latest
-        expose:
-            - 8084
         ports:
             - 8084:8084
         networks:
