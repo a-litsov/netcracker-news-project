@@ -2,6 +2,7 @@ package com.netcracker.adlitsov.newsproject.articles.controller;
 
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
+import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
 import com.netcracker.adlitsov.newsproject.articles.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ArticleController {
@@ -19,6 +21,11 @@ public class ArticleController {
     @GetMapping()
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
+    }
+
+    @GetMapping("/previews")
+    public List<ArticlePreview> getAllPreviews() {
+        return articleRepository.findAll().stream().map(Article::getPreview).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

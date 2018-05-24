@@ -109,4 +109,16 @@ public class Article implements Serializable {
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
     }
+
+    public ArticlePreview getPreview() {
+        ArticlePreview preview = new ArticlePreview();
+
+        preview.setId(getId());
+        preview.setCategory(getCategory());
+        preview.setTag(getTag());
+        preview.setLogoSrc(getLogoSrc());
+        preview.setTitle(getTitle());
+
+        return preview;
+    }
 }
