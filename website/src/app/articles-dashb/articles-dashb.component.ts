@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { ArticlesService } from '../articles.service';
 import { Preview } from '../preview'
-
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Location } from '@angular/common';
-
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'articles-dashb',
@@ -15,11 +11,10 @@ import { switchMap } from 'rxjs/operators';
 export class ArticlesDashbComponent {
   previews: Preview[];
 
-  constructor(private articlesService: ArticlesService, private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private articlesService: ArticlesService, private route: ActivatedRoute) {
   }
 
-  private getPreview(id: number) {
+  private loadPreview(id: number) {
     this.articlesService.getPreviewByCategoryId(id).subscribe((inPreviews: Preview[]) => {
         this.previews = [...inPreviews];
         console.log(this.previews);
@@ -31,7 +26,7 @@ export class ArticlesDashbComponent {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       console.log(params.get('id'));
-      this.getPreview(parseInt(params.get('id')));
+      this.loadPreview(parseInt(params.get('id')));
     });
   }
 }

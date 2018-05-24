@@ -13,10 +13,11 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { ArticleComponent } from './article/article.component';
 
 const appRoutes: Routes = [
-  { path: 'category/:id', component: ArticlesDashbComponent
-  },
+  { path: 'category/:id', component: ArticlesDashbComponent},
+  { path: 'article/:id', component: ArticleComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     AppComponent,
     MainNavComponent,
     ArticlesDashbComponent,
+    ArticleComponent,
   ],
   imports: [
     BrowserModule,
