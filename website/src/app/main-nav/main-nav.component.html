@@ -29,8 +29,12 @@
       <!-- This fills the remaining space of the current row -->
       <span class="example-fill-remaining-space"></span>
 
-      <span *ngFor="let category of categories" class="cat-menu">{{category.name}}</span>
+      <span *ngFor="let category of categories" class="cat-menu">
+        <a class="cat-link" routerLink="/category/{{category.id}}" routerLinkActive="active">
+          {{category.name}}
+        </a>
+      </span>
     </mat-toolbar>
-    <articles-dashb></articles-dashb>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

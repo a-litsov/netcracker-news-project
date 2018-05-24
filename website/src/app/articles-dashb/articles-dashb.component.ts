@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { ArticlesService } from '../articles.service';
 
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'articles-dashb',
   templateUrl: './articles-dashb.component.html',
@@ -9,10 +14,11 @@ import { ArticlesService } from '../articles.service';
 export class ArticlesDashbComponent {
   previews: Preview[];
 
-  constructor(private articlesService: ArticlesService) { }
+  constructor(private articlesService: ArticlesService, private route: ActivatedRoute,
+              private router: Router) { }
 
-  private getPreviews() {
-    this.articlesService.getPreviewsSortedByDate().subscribe(
+  private getPreviews(id: number) {
+    this.articlesService.getPreviewsByCategory(id).subscribe(
       (inPreviews: Preview[]) => {
         this.previews = [ ... inPreviews ];
         console.log(this.previews);
@@ -21,6 +27,8 @@ export class ArticlesDashbComponent {
   }
 
   ngOnInit() {
-    this.getPreviews();
-  }
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log(params.get('id'));
+      this.getPreviews(params.get('id')));
+   });
 }

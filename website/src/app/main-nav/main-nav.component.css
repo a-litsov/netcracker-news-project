@@ -12,10 +12,22 @@
 }
 
 .cat-menu:hover {
-  color: #3f51b5;
   background-color: white;
   border-radius: 5px;
 }
+
+.cat-menu:hover .cat-link {
+  color: #3f51b5;
+}
+
+.cat-link {
+  color: white;
+  text-decoration: none;
+}
+
+/* .cat-link:hover {
+  color: #3f51b5;
+} */
 
 .example-fill-remaining-space {
   /* This fills the remaining space, by using flexbox.

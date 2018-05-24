@@ -12,6 +12,17 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.component';
 
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: 'category/:id', component: ArticlesDashbComponent
+  },
+  { path: '',
+    redirectTo: '/category/2',
+    pathMatch: 'full'
+  },
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +41,11 @@ import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.componen
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterModule.forRoot(
+     appRoutes,
+     { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   providers: [ArticlesService, CategoriesService],
   bootstrap: [AppComponent]
