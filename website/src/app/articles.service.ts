@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Article } from './article';
+import { Preview } from './preview';
 
 @Injectable()
 export class ArticlesService {
@@ -15,5 +16,9 @@ export class ArticlesService {
 
   getArticles() {
     return this.http.get<Article[]>(this.serviceURL);
+  }
+
+  getPreviews() {
+    return this.http.get<Preview[]>(this.serviceURL + "previews");
   }
 }

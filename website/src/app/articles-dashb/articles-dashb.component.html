@@ -1,16 +1,16 @@
 <div class="grid-container">
   <!-- <h1 class="mat-h1">Dashboard</h1> -->
   <mat-grid-list cols="3" rowHeight="450px">
-    <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+    <mat-grid-tile *ngFor="let preview of previews" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
-        <img mat-card-image src={{card.img}} class="card-image">
+        <a [href]="preview.id" class="article-link"><img mat-card-image src={{preview.logoSrc}} class="card-image"></a>
         <mat-card-header class="dashboard-card-header">
           <mat-card-title>
-            {{card.title}}
+            <a [href]="preview.id" class="article-link">{{preview.title}}</a>
           </mat-card-title>
           <mat-card-subtitle>
             <span class="tag">
-              Dota 2
+              {{preview.tag.name}}
             </span>
           </mat-card-subtitle>
         </mat-card-header>

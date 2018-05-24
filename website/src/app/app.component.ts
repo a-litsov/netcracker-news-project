@@ -39,6 +39,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.getAllArticles();
+    // this.getAllArticles();
   }
 }
