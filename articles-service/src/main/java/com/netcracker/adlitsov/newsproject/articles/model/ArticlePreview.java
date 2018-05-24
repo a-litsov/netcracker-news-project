@@ -1,11 +1,14 @@
 package com.netcracker.adlitsov.newsproject.articles.model;
 
+import java.util.Date;
+
 public class ArticlePreview {
     private int id;
     private String title;
     private Category category;
     private Tag tag;
     private String logoSrc;
+    private Date addDate;
 
     public ArticlePreview() {
     }
@@ -48,5 +51,13 @@ public class ArticlePreview {
 
     public void setLogoSrc(String logoSrc) {
         this.logoSrc = logoSrc;
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
     }
 }

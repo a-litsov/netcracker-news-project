@@ -118,6 +118,7 @@ public class Article implements Serializable {
         preview.setTag(getTag());
         preview.setLogoSrc(getLogoSrc());
         preview.setTitle(getTitle());
+        preview.setAddDate(getAddDate());
 
         return preview;
     }
