@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,15 @@ public class ArticleController {
     @GetMapping("/previews")
     public List<ArticlePreview> getAllPreviews() {
         return articleRepository.findAll().stream().map(Article::getPreview).collect(Collectors.toList());
+    }
+
+    @GetMapping("/previews/sorted")
+    public List<ArticlePreview> getAllPreviewsSortedByDate() {
+        return articleRepository.findAll()
+                                .stream()
+                                .map(Article::getPreview)
+                                .sorted(Comparator.comparing(ArticlePreview::getAddDate).reversed())
+                                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
