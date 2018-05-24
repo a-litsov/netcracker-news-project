@@ -12,7 +12,7 @@ export class ArticlesDashbComponent {
   constructor(private articlesService: ArticlesService) { }
 
   private getPreviews() {
-    this.articlesService.getPreviews().subscribe(
+    this.articlesService.getPreviewsSortedByDate().subscribe(
       (inPreviews: Preview[]) => {
         this.previews = [ ... inPreviews ];
         console.log(this.previews);

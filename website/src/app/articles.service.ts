@@ -21,4 +21,8 @@ export class ArticlesService {
   getPreviews() {
     return this.http.get<Preview[]>(this.serviceURL + "previews");
   }
+
+  getPreviewsSortedByDate() {
+    return this.http.get<Preview[]>(this.serviceURL + "previews/sorted");
+  }
 }
