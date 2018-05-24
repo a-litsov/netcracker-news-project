@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CategoriesService } from '../categories.service';
 
 @Component({
   selector: 'main-nav',
@@ -10,11 +11,27 @@ import { map } from 'rxjs/operators';
 })
 export class MainNavComponent {
 
+  categories: Category[];
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private categoriesService:
+    CategoriesService) {}
 
+  private getCategories() {
+    this.categoriesService.getCategories().subscribe(
+      (inCategories: Category[]) => {
+        this.categories = [ ... inCategories ];
+        console.log(this.categories);
+      }, error => console.log("Error while obtaining all categories: ", error)
+    );
   }
+
+  ngOnInit() {
+    this.getCategories();
+  }
+
+}

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ArticlesService } from './articles.service';
+import { CategoriesService } from './categories.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule,
@@ -31,7 +32,7 @@ import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.componen
     MatCardModule,
     MatMenuModule
   ],
-  providers: [ArticlesService],
+  providers: [ArticlesService, CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

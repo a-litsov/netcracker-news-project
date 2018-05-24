@@ -6,3 +6,19 @@
   width: 200px;
   box-shadow: 3px 0 6px rgba(0,0,0,.24);
 }
+
+.cat-menu {
+  margin-right: 20px;
+}
+
+.cat-menu:hover {
+  color: #3f51b5;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}

@@ -25,6 +25,11 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Новостной сайт ver. 0.0.1(гостевой режим)</span>
+
+      <!-- This fills the remaining space of the current row -->
+      <span class="example-fill-remaining-space"></span>
+
+      <span *ngFor="let category of categories" class="cat-menu">{{category.name}}</span>
     </mat-toolbar>
     <articles-dashb></articles-dashb>
   </mat-sidenav-content>
