@@ -1,0 +1,27 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.card-image {
+  height: 70%;
+}
+
+.mat-card-title {
+  font-size: 120%;
+}
+
+.tag {
+  padding: 5px;
+  margin-right: 5px;
+  color: white;
+  background-color: #3f51b5;
+  font-size: 90%;
+}
