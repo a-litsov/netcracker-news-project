@@ -15,6 +15,9 @@ import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.componen
 import { RouterModule, Routes } from '@angular/router';
 import { ArticleComponent } from './article/article.component';
 
+import { MarkdownModule } from 'ngx-markdown';
+
+
 const appRoutes: Routes = [
   { path: 'category/:id', component: ArticlesDashbComponent},
   { path: 'article/:id', component: ArticleComponent},
@@ -47,7 +50,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
      appRoutes,
      { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    MarkdownModule.forRoot()
   ],
   providers: [ArticlesService, CategoriesService],
   bootstrap: [AppComponent]
