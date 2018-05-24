@@ -17,46 +17,36 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/articles")
 public class ArticleController {
 
     @Autowired
     ArticleRepository articleRepository;
-
-    @Autowired
-    CategoryRepository categoryRepository;
 
     @GetMapping()
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
     }
 
-    @GetMapping("/previews")
+    @GetMapping("/preview")
     public List<ArticlePreview> getAllPreviews() {
-        return articleRepository.findAll().stream().map(Article::getPreview).collect(Collectors.toList());
-    }
-
-    @GetMapping("/previews/sorted")
-    public List<ArticlePreview> getAllPreviewsSortedByDate() {
         return articleRepository.findAll()
                                 .stream()
                                 .map(Article::getPreview)
-                                .sorted(Comparator.comparing(ArticlePreview::getAddDate).reversed())
                                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/previews/categoryId={id}/sortedByDate")
-    public List<ArticlePreview> getAllPreviewsSortedByDate(@PathVariable("id") Integer id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
-        return category.getArticles()
-                       .stream()
-                       .map(Article::getPreview)
-                       .sorted(Comparator.comparing(ArticlePreview::getAddDate).reversed())
-                       .collect(Collectors.toList());
+    @GetMapping("/{id}")
+    public Article getArticle(@PathVariable("id") Integer id) {
+        return articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article", "id", id));
     }
 
-    @GetMapping("/{id}")
-    public Article getArticleById(@PathVariable("id") Integer id) {
-        return articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article", "id", id));
+    @GetMapping("/{id}/preview")
+    public ArticlePreview getPreview(@PathVariable("id") Integer id) {
+        return articleRepository.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Article", "id", id))
+                                .getPreview();
+
     }
 
     @PostMapping()

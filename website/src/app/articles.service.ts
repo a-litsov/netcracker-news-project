@@ -6,19 +6,23 @@ import { Preview } from './preview';
 @Injectable()
 export class ArticlesService {
 
-  serviceURL = 'http://localhost:8080/';
+  serviceURL = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
   getArticleById(id: number) {
-    return this.http.get<Article>(this.serviceURL + id);
+    return this.http.get<Article>(this.serviceURL + "/articles/" + id);
   }
 
   getArticles() {
-    return this.http.get<Article[]>(this.serviceURL);
+    return this.http.get<Article[]>(this.serviceURL + "/articles");
   }
 
-  getPreviewsByCategory(categoryId: number) {
-    return this.http.get<Preview[]>(this.serviceURL + "previews/categoryId=" + categoryId + "/sortedByDate");
+  getArticlesByCategoryId(categoryId: number) {
+    return this.http.get<Article[]>(this.serviceURL + "/categories/" + categoryId + "/articles");
+  }
+
+  getPreviewByCategoryId(categoryId: number) {
+    return this.http.get<Preview[]>(this.serviceURL + "/categories/" + categoryId + "/articles/preview?sort=add-date");
   }
 }

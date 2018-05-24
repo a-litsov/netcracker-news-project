@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CategoriesService } from '../categories.service';
+import { Category } from '../category';
 
 @Component({
   selector: 'main-nav',
