@@ -3,10 +3,14 @@
   <mat-grid-list cols="3" rowHeight="450px">
     <mat-grid-tile *ngFor="let preview of previews" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
-        <a [href]="preview.id" class="article-link"><img mat-card-image src={{preview.logoSrc}} class="card-image"></a>
+        <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">
+          <img mat-card-image src={{preview.logoSrc}} class="card-image">
+        </a>
         <mat-card-header class="dashboard-card-header">
           <mat-card-title>
-            <a [href]="preview.id" class="article-link">{{preview.title}}</a>
+            <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">
+              {{preview.title}}
+            </a>
           </mat-card-title>
           <mat-card-subtitle>
             <span class="tag">

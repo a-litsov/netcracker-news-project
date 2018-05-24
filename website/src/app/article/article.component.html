@@ -1,8 +1,9 @@
-<div class="article-wrapper">
+<!--ngIf here to be free of error due to html rendered before we load article from server-->
+<div *ngIf="article" class="article-wrapper mat-typography">
 
   <div class="article-header">
     <div class="article-title">
-      {{article.title}}
+      <h1>{{article.title}}</h1>
     </div>
     <div class="article-details">
       <div class="author-info">
@@ -14,17 +15,17 @@
     </div>
   </div>
 
-  <div class="article-content">
-    {{article.content}}
+  <div markdown [data]="article.content" class="article-content">
   </div>
 
   <div class="article-tags">
+    Теги:
     <span class="tag">
       {{article.tag.name}}
     </span>
   </div>
 
   <div class="article-comments">
-    sdfsdf
+    Блок комментариев
   </div>
 </div>

@@ -4,14 +4,37 @@ div {
 
 .article-wrapper {
   max-width: 70%;
-  margin: 30px auto;
+  margin: 20px auto;
+}
+.article-title h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.author-info {
+  text-align: left;
+  width: 49%;
+  float: left;
+}
+
+.article-add-date {
+  text-align: right;
+  width: 49%;
+  float: right;
+}
+
+.article-details {
+  margin-bottom: 40px;
+}
+
+.article-content ::ng-deep img  {
+  width: 100%;
 }
 
 .tag {
   padding: 5px;
-  margin-right: 5px;
+  margin: 0 5px;
   color: white;
   background-color: #3f51b5;
   font-size: 90%;
-  float: left;
 }
