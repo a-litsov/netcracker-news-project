@@ -28,13 +28,10 @@ SET search_path = public, pg_catalog;
 
 INSERT INTO category VALUES (1, 'Главное');
 INSERT INTO category VALUES (4, 'Политика');
-INSERT INTO category VALUES (5, 'Общество');
-INSERT INTO category VALUES (6, 'Экономика');
 INSERT INTO category VALUES (7, 'В мире');
 INSERT INTO category VALUES (8, 'Происшествия');
 INSERT INTO category VALUES (9, 'Спорт');
 INSERT INTO category VALUES (10, 'Наука');
-INSERT INTO category VALUES (11, 'Культура');
 INSERT INTO category VALUES (2, 'Киберспорт');
 
 
