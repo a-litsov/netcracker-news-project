@@ -3,7 +3,9 @@ package com.netcracker.adlitsov.newsproject.articles.controller;
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
+import com.netcracker.adlitsov.newsproject.articles.model.Category;
 import com.netcracker.adlitsov.newsproject.articles.repository.ArticleRepository;
+import com.netcracker.adlitsov.newsproject.articles.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ public class ArticleController {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @GetMapping()
     public List<Article> getAllArticles() {
@@ -37,6 +42,16 @@ public class ArticleController {
                                 .map(Article::getPreview)
                                 .sorted(Comparator.comparing(ArticlePreview::getAddDate).reversed())
                                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/previews/categoryId={id}/sortedByDate")
+    public List<ArticlePreview> getAllPreviewsSortedByDate(@PathVariable("id") Integer id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
+        return category.getArticles()
+                       .stream()
+                       .map(Article::getPreview)
+                       .sorted(Comparator.comparing(ArticlePreview::getAddDate).reversed())
+                       .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
