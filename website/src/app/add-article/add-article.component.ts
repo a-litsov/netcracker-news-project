@@ -3,6 +3,7 @@ import {Article} from '../article';
 import {Category} from '../category';
 import { ArticlesService } from '../articles.service';
 import {Tag} from "../tag";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-article',
@@ -16,7 +17,7 @@ export class AddArticleComponent implements OnInit {
   private tags: Tag[] = [];
   private content: string = "";
 
-  constructor(private articlesService: ArticlesService) { }
+  constructor(private articlesService: ArticlesService, private router: Router) { }
 
   private getCategories() {
     this.articlesService.getCategories().subscribe((inCategories: Category[]) => {
@@ -32,12 +33,13 @@ export class AddArticleComponent implements OnInit {
     });
   }
 
-  private postArticle() {
+  private createArticle() {
     console.log("posting article...");
     console.log(this.article);
     this.articlesService.createArticle(this.article).subscribe((inArticle: Article) => {
       this.article = { ... inArticle};
       console.log(this.article);
+      this.router.navigate(['/article/' + this.article.id]);
     });
   }
 

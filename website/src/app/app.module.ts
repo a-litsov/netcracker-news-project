@@ -21,6 +21,7 @@ import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.componen
 
 import { ArticleComponent } from './article/article.component';
 import { AddArticleComponent } from './add-article/add-article.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { AddArticleComponent } from './add-article/add-article.component';
     ArticlesDashbComponent,
     ArticleComponent,
     AddArticleComponent,
+    EditArticleComponent,
   ],
   imports: [
     BrowserModule,

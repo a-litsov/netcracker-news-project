@@ -1,0 +1,19 @@
+.wrapper {
+  margin: 15px;
+  min-height: 800px;
+}
+
+.mat-card {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* workaround for md-editor. it currently doesn't limit images width*/
+::ng-deep md-editor img {
+  max-width: 600px;
+}

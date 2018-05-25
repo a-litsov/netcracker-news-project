@@ -10,6 +10,13 @@
   bottom: 15px;
 }
 
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 .article-link {
   color: black;
   text-decoration: none;

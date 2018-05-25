@@ -1,9 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ArticlesService } from '../articles.service';
 import { Preview } from '../preview'
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-
+import {Article} from "../article";
+import { Location } from "@angular/common";
 @Component({
   selector: 'articles-dashb',
   templateUrl: './articles-dashb.component.html',
@@ -17,6 +18,7 @@ export class ArticlesDashbComponent {
   @ViewChild('gridContainer') gridContainer: ElementRef;
 
   constructor(private articlesService: ArticlesService, private route: ActivatedRoute,
+              private location: Location,
               private cdRef:ChangeDetectorRef) {
   }
 
@@ -43,9 +45,18 @@ export class ArticlesDashbComponent {
     let gridWidth = this.gridContainer.nativeElement.clientWidth;
     console.log(gridWidth);
     this.colsCount = (gridWidth < this.cardMinWidth) ? 1 :
-      Math.min(this.previews.length, Math.floor(gridWidth / this.cardMinWidth));
+      Math.floor(gridWidth / this.cardMinWidth);
     this.cdRef.detectChanges();
     console.log(this.colsCount);
+  }
+
+  private deleteArticleById(id: number) {
+    console.log("removing article...");
+    console.log(id);
+    this.articlesService.deleteArticleById(id).subscribe((response) => {
+      console.log(response);
+      window.location.reload();
+    });
   }
 
   onResize(event) {

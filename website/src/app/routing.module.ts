@@ -5,16 +5,18 @@ import { ArticleComponent } from './article/article.component';
 import {AddArticleComponent} from "./add-article/add-article.component";
 
 import { RouterModule, Routes } from '@angular/router';
+import {EditArticleComponent} from "./edit-article/edit-article.component";
 
 
 const appRoutes: Routes = [
   { path: 'category/:id', component: ArticlesDashbComponent},
   { path: 'article/:id', component: ArticleComponent},
   { path: 'add-article', component: AddArticleComponent},
+  { path: 'article/:id/edit', component: EditArticleComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

@@ -40,4 +40,12 @@ export class ArticlesService {
   createArticle(article: Article): Observable<Article> {
     return this.http.post<Article>(this.serviceURL + "/articles", article);
   }
+
+  updateArticle(article: Article): Observable<Article> {
+    return this.http.put<Article>(this.serviceURL + "/articles/" + article.id, article);
+  }
+
+  deleteArticleById(id: number): Observable<{}> {
+    return this.http.delete<Article>(this.serviceURL + "/articles/" + id);
+  }
 }
