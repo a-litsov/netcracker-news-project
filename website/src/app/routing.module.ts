@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { ArticlesService } from './articles.service';
-import { CategoriesService } from './categories.service';
-import { MainNavComponent } from './main-nav/main-nav.component';
 import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.component';
 import { ArticleComponent } from './article/article.component';
+import {AddArticleComponent} from "./add-article/add-article.component";
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   { path: 'category/:id', component: ArticlesDashbComponent},
   { path: 'article/:id', component: ArticleComponent},
+  { path: 'add-article', component: AddArticleComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'

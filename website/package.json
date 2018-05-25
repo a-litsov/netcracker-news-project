@@ -26,6 +26,7 @@
     "core-js": "^2.4.1",
     "marked": "^0.4.0",
     "ngx-markdown": "^1.6.0",
+    "ngx-markdown-editor": "^1.1.7",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.0.0-rc.0",
     "zone.js": "^0.8.19"

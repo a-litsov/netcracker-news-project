@@ -1,0 +1,44 @@
+<div class="wrapper">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Добавление новости</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput [(ngModel)]="article.title" placeholder="Название новости">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="article.authorName" placeholder="Имя автора">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Категория" [(ngModel)]="article.category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Тег" [(ngModel)]="article.tag">
+          <mat-option *ngFor="let tag of tags" [value]="tag">
+            {{ tag.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="article.logoSrc" placeholder="Ссылка на лого">
+      </mat-form-field>
+
+      <md-editor name="Content" [(ngModel)]="article.content" [height]="'400px'"  required maxlength="10000"></md-editor>
+
+      <button mat-raised-button (click)="postArticle()">Добавить новость</button>
+    </mat-card-content>
+  </mat-card>
+
+</div>

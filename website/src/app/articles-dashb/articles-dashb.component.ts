@@ -1,7 +1,7 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ArticlesService } from '../articles.service';
 import { Preview } from '../preview'
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
