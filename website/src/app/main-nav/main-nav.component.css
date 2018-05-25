@@ -7,27 +7,10 @@
   box-shadow: 3px 0 6px rgba(0,0,0,.24);
 }
 
-.cat-menu {
-  margin-right: 20px;
-}
-
-.cat-menu:hover {
-  background-color: white;
-  border-radius: 5px;
-}
-
-.cat-menu:hover .cat-link {
-  color: #3f51b5;
-}
-
 .cat-link {
   color: white;
   text-decoration: none;
 }
-
-/* .cat-link:hover {
-  color: #3f51b5;
-} */
 
 .example-fill-remaining-space {
   /* This fills the remaining space, by using flexbox.

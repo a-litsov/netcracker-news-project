@@ -31,7 +31,7 @@
 
       <span *ngFor="let category of categories" class="cat-menu">
         <a class="cat-link" routerLink="/category/{{category.id}}" routerLinkActive="active">
-          {{category.name}}
+          <button mat-button>{{category.name}}</button>
         </a>
       </span>
     </mat-toolbar>
