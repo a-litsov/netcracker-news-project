@@ -3,8 +3,27 @@
 }
 
 .sidenav {
-  width: 200px;
+  width: 250px;
   box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+
+.user-avatar {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  border: 1px solid white;
+  margin: 0 10px;
+}
+
+.content-toolbar > .user-avatar {
+  cursor: pointer;
+}
+
+.user-info {
+  height: 20px;
+}
+
+.user-name {
+  margin: auto 0;
 }
 
 .cat-link {

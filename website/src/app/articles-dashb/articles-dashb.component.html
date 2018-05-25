@@ -1,6 +1,6 @@
-<div class="grid-container">
+<div class="grid-container" #gridContainer>
   <!-- <h1 class="mat-h1">Dashboard</h1> -->
-  <mat-grid-list cols="3" rowHeight="450px">
+  <mat-grid-list [cols]="colsCount" rowHeight="450px" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let preview of previews" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
         <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">
