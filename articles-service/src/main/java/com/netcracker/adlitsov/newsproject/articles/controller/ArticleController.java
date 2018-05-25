@@ -64,9 +64,11 @@ public class ArticleController {
                                            .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
 
         article.setTitle(articleDetails.getTitle());
-        article.setContent(articleDetails.getContent());
+        article.setAuthorName(articleDetails.getAuthorName());
         article.setCategory(articleDetails.getCategory());
-
+        article.setTag(articleDetails.getTag());
+        article.setLogoSrc(articleDetails.getLogoSrc());
+        article.setContent(articleDetails.getContent());
 
         Article updatedArticle = articleRepository.save(article);
         return updatedArticle;
