@@ -49,7 +49,7 @@
       <h1>Комментарии</h1>
     </mat-card-title>
 
-    <mat-card-subtitle>
+    <mat-card-subtitle *ngIf="comments.length == 0">
       <h2>Здесь пока нет комментариев...</h2>
     </mat-card-subtitle>
 
