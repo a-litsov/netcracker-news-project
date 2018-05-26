@@ -92,7 +92,11 @@ div {
   color: gray;
 }
 
-.comment-content {
+.mat-card-title {
+  margin-bottom: 10px;
+}
+
+.comment-content  {
   color: black;
 }
 
