@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
@@ -60,8 +61,15 @@ public class CommentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/article/{id}")
-    public List<Comment> getCommentsByArticleId(@PathVariable("id") Integer id) {
-        return commentRepository.findByArticleId(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
+    @GetMapping(params = "articleId")
+    public List<Comment> getCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
+        return commentRepository.findByArticleId(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", articleId));
     }
+
+    @GetMapping(params = {"articleId", "root"})
+    public List<Comment> getRootCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
+        return commentRepository.findByArticleIdAndParentIsNull(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", articleId));
+    }
+
+
 }

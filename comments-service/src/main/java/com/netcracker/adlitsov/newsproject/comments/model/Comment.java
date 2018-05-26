@@ -20,13 +20,13 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Comment> children;
 
-    @JsonIgnoreProperties({"parent", "articleId", "authorName", "content", "addDate"})
+    @JsonIgnoreProperties({"parent", "articleId", "children", "authorName", "content", "addDate"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Comment parent;
 
     private Integer articleId;
