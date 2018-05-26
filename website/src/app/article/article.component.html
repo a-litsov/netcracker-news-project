@@ -1,31 +1,47 @@
 <!--ngIf here to be free of error due to html rendered before we load article from server-->
 <div *ngIf="article" class="article-wrapper mat-typography">
 
-  <div class="article-header">
-    <div class="article-title">
-      <h1>{{article.title}}</h1>
-    </div>
-    <div class="article-details">
-      <div class="author-info">
-        {{article.authorName}}
-      </div>
-      <div class="article-add-date">
-        {{article.addDate | date: 'hh:mm dd.MM.yyyy'}}
-      </div>
-    </div>
-  </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="article-title">
+        <h1>{{article.title}}</h1>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <div class="article-info">
+          <div class="author-info">
+            <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+            <span class="author-name">
+              {{article.authorName}}
+            </span>
+          </div>
+          <span class="article-add-date">{{article.addDate | date: 'hh:mm dd.MM.yyyy'}}</span>
+        </div>
+      </mat-card-subtitle>
+    </mat-card-header>
 
-  <div markdown [data]="article.content" class="article-content">
-  </div>
+    <mat-divider></mat-divider>
 
-  <div class="article-tags">
-    Теги:
-    <span class="tag">
-      {{article.tag.name}}
-    </span>
-  </div>
+    <mat-card-content>
+      <div markdown [data]="article.content" class="article-content"></div>
+    </mat-card-content>
 
-  <div class="article-comments">
-    Блок комментариев
-  </div>
+    <mat-divider></mat-divider>
+
+    <mat-card-footer>
+      Теги:
+      <span class="tag">
+        {{article.tag.name}}
+      </span>
+
+      <mat-card-actions align="end">
+        <button mat-raised-button>Нравится</button>
+        <button mat-raised-button>Не нравится</button>
+        <div class="rating">
+          0
+        </div>
+      </mat-card-actions>
+
+    </mat-card-footer>
+  </mat-card>
+
 </div>

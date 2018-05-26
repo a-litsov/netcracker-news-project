@@ -1,5 +1,5 @@
 div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .article-wrapper {
@@ -11,30 +11,60 @@ div {
   font-weight: bold;
 }
 
-.author-info {
+.article-info {
   text-align: left;
-  width: 49%;
-  float: left;
+  width: 100%;
+  padding: auto 0;
+  display: table;
+  margin-bottom: 20px;
+}
+
+.author-info {
+  display: table;
+}
+
+.author-name {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.user-avatar {
+  display: table-cell;
+  background-size: cover;
+  border: 1px solid white;
+  margin: 0 10px;
 }
 
 .article-add-date {
+  display: table-cell;
+  vertical-align: middle;
   text-align: right;
-  width: 49%;
-  float: right;
 }
 
-.article-details {
-  margin-bottom: 40px;
+.mat-card-content {
+  margin: 20px 0 ;
 }
 
 .article-content ::ng-deep img  {
   width: 100%;
 }
 
+.mat-card-footer {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 40px;
+}
 .tag {
   padding: 5px;
   margin: 0 5px;
   color: white;
   background-color: #3f51b5;
   font-size: 90%;
+}
+
+.rating {
+  font-size: 200%;
+  color: black;
+  margin: auto 40px;
 }
