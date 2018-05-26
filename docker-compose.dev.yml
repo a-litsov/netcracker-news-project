@@ -72,7 +72,7 @@ services:
             context: ./website
         image: nc-news-project/website:latest
         ports:
-            - 80:80
+            - 4200:4200
         networks:
             - emp-network
         depends_on:

@@ -12,28 +12,28 @@ import {Router} from "@angular/router";
 })
 export class AddArticleComponent implements OnInit {
 
-  private article: Article = new Article();
-  private categories: Category[] = [];
-  private tags: Tag[] = [];
-  private content: string = "";
+  article: Article = new Article();
+  categories: Category[] = [];
+  tags: Tag[] = [];
+  content: string = "";
 
   constructor(private articlesService: ArticlesService, private router: Router) { }
 
-  private getCategories() {
+  getCategories() {
     this.articlesService.getCategories().subscribe((inCategories: Category[]) => {
       this.categories = [ ... inCategories];
       console.log(this.categories);
     });
   }
 
-  private getTags() {
+  getTags() {
     this.articlesService.getTags().subscribe((inTags: Tag[]) => {
       this.tags = [ ... inTags];
       console.log(this.tags);
     });
   }
 
-  private createArticle() {
+  createArticle() {
     console.log("posting article...");
     console.log(this.article);
     this.articlesService.createArticle(this.article).subscribe((inArticle: Article) => {

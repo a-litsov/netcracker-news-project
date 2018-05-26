@@ -11,10 +11,10 @@ import {Category} from "../category";
   styleUrls: ['./edit-article.component.css']
 })
 export class EditArticleComponent implements OnInit {
-  private article: Article = this.createDefArticle();
-  private categories: Category[] = [];
-  private tags: Tag[] = [];
-  private content: string = "";
+  article: Article = this.createDefArticle();
+  categories: Category[] = [];
+  tags: Tag[] = [];
+  content: string = "";
 
   constructor(private articlesService: ArticlesService, private router: Router,
               private route: ActivatedRoute) { }
@@ -43,7 +43,7 @@ export class EditArticleComponent implements OnInit {
     });
   }
 
-  private updateArticle() {
+  updateArticle() {
     console.log("posting article...");
     console.log(this.article);
     this.articlesService.updateArticle(this.article).subscribe((inArticle: Article) => {

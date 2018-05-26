@@ -35,7 +35,7 @@
         <input matInput [(ngModel)]="article.logoSrc" placeholder="Ссылка на лого">
       </mat-form-field>
 
-      <md-editor name="Content" [mode]="preview" [(ngModel)]="article.content" [height]="'400px'"  required maxlength="10000"></md-editor>
+      <md-editor name="Content" [(ngModel)]="article.content" [height]="'400px'"  required maxlength="10000"></md-editor>
 
       <button mat-raised-button (click)="updateArticle()">Редактировать новость</button>
     </mat-card-content>
