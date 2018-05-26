@@ -68,3 +68,55 @@ div {
   color: black;
   margin: auto 40px;
 }
+
+.comments-card {
+  margin-top: 20px;
+}
+
+.comment-wrapper {
+  margin-top: 20px;
+}
+
+.comment-author{
+  font-weight: 600;
+}
+
+.comment-date {
+  margin-left: 10px;
+  color: gray;
+}
+
+.comment-content {
+  color: black;
+}
+
+.comment-rating {
+  font-size: 150%;
+  color: black;
+  margin-left: 10px;
+}
+
+.user-comment {
+  margin-top: 40px;
+}
+
+.user-comment-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-comment-content {
+  width: 80%;
+}
+
+.user-comment-content textarea {
+  min-height: 40px;
+}
+.send-button {
+  height: 40px;
+}
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}

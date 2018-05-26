@@ -44,4 +44,72 @@
     </mat-card-footer>
   </mat-card>
 
+  <mat-card class="comments-card">
+    <mat-card-title>
+      <h1>Комментарии</h1>
+    </mat-card-title>
+
+    <mat-card-subtitle>
+      <h2>Здесь пока нет комментариев...</h2>
+    </mat-card-subtitle>
+
+    <div class="comment-wrapper">
+      <mat-card-header>
+        <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+        <mat-card-title>
+          <span class="comment-author">Неизвестный автор</span>
+          <span class="comment-date">15:33 24.05.18</span>
+        </mat-card-title>
+        <mat-card-subtitle class="comment-content">Это мой очень хороший комментарий!</mat-card-subtitle>
+        <span class="example-fill-remaining-space"></span>
+        Рейтинг:
+        <div class="comment-rating">
+          0
+        </div>
+      </mat-card-header>
+
+      <button mat-button>Нравится</button>
+      <button mat-button>Не нравится</button>
+      <button mat-button>Ответить</button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="comment-wrapper" style="margin-left: 40px">
+      <mat-card-header>
+        <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+        <mat-card-title>
+          <span class="comment-author">Неизвестный автор</span>
+          <span class="comment-date">15:33 24.05.18</span>
+        </mat-card-title>
+        <mat-card-subtitle class="comment-content">Это мой очень хороший комментарий!</mat-card-subtitle>
+        <span class="example-fill-remaining-space"></span>
+        Рейтинг:
+        <div class="comment-rating">
+          0
+        </div>
+      </mat-card-header>
+
+      <button mat-button>Нравится</button>
+      <button mat-button>Не нравится</button>
+      <button mat-button>Ответить</button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="user-comment">
+      <mat-card-title>
+        <h3>Ваш комментарий</h3>
+      </mat-card-title>
+      <div class="user-comment-form">
+        <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+        <mat-form-field class="user-comment-content">
+          <textarea matInput placeholder="Что вы об этом думаете?" matTextareaAutosize></textarea>
+        </mat-form-field>
+        <button mat-button class="send-button">Отправить</button>
+      </div>
+    </div>
+  </mat-card>
+
+
 </div>
