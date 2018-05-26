@@ -25,6 +25,10 @@ mat-sidenav-content {
   margin: auto 0;
 }
 
+.user-avatar {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+}
+
 .cat-link {
   color: white;
   text-decoration: none;

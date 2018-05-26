@@ -22,6 +22,7 @@ import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.componen
 import { ArticleComponent } from './article/article.component';
 import { AddArticleComponent } from './add-article/add-article.component';
 import { EditArticleComponent } from './edit-article/edit-article.component';
+import {CommentsService} from "./comments.service";
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import { EditArticleComponent } from './edit-article/edit-article.component';
     MarkdownModule.forRoot(),
     LMarkdownEditorModule
   ],
-  providers: [ArticlesService, CategoriesService],
+  providers: [ArticlesService, CommentsService, CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

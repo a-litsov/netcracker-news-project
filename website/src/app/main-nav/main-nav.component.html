@@ -10,7 +10,7 @@
     [disableClose]="true"
     (openedChange)="sideNavChanged()">
     <mat-toolbar color="primary">
-      <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+      <div mat-card-avatar class="user-avatar"></div>
       <div class="user-name">Гость</div>
       <span class="example-fill-remaining-space"></span>
       <button mat-button (click)="drawer.toggle()">Скрыть</button>
@@ -34,8 +34,7 @@
           <button mat-button>{{category.name}}</button>
         </a>
       </span>
-      <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-           *ngIf="!drawer.opened" (click)="drawer.toggle()">
+      <div mat-card-avatar class="user-avatar" *ngIf="!drawer.opened" (click)="drawer.toggle()"></div>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

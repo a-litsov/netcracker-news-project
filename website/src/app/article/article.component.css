@@ -30,6 +30,7 @@ div {
 }
 
 .user-avatar {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   display: table-cell;
   background-size: cover;
   border: 1px solid white;
@@ -73,8 +74,13 @@ div {
   margin-top: 20px;
 }
 
+.comments-block > .comment-wrapper {
+  margin-left: 0;
+}
+
 .comment-wrapper {
   margin-top: 20px;
+  margin-left: 50px;
 }
 
 .comment-author{
@@ -88,6 +94,10 @@ div {
 
 .comment-content {
   color: black;
+}
+
+.comment-buttons {
+  margin-top: -15px;
 }
 
 .comment-rating {
@@ -119,4 +129,8 @@ div {
   /* This fills the remaining space, by using flexbox.
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
+}
+
+.comments-divider {
+  width: 100%;
 }
