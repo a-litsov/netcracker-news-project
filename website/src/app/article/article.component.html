@@ -53,28 +53,6 @@
       <h2>Здесь пока нет комментариев...</h2>
     </mat-card-subtitle>
 
-    <!--<div class="comment-wrapper" *ngFor="let comment of comments">-->
-    <!--<mat-card-header>-->
-    <!--<img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">-->
-    <!--<mat-card-title>-->
-    <!--<span class="comment-author">{{comment.authorName}}</span>-->
-    <!--<span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>-->
-    <!--</mat-card-title>-->
-    <!--<mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>-->
-    <!--<span class="example-fill-remaining-space"></span>-->
-    <!--Рейтинг:-->
-    <!--<div class="comment-rating">-->
-    <!--0-->
-    <!--</div>-->
-    <!--</mat-card-header>-->
-
-    <!--<button mat-button>Нравится</button>-->
-    <!--<button mat-button>Не нравится</button>-->
-    <!--<button mat-button>Ответить</button>-->
-
-    <!--<mat-divider class="comments-divider"></mat-divider>-->
-    <!--</div>-->
-
     <div class="comments-block">
       <ng-template #recursiveList let-comments>
         <div class="comment-wrapper" *ngFor="let comment of comments">
@@ -107,65 +85,6 @@
 
       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comments }"></ng-container>
     </div>
-
-    <!--<div class="comment-wrapper" style="margin-left: 40px">-->
-    <!--<mat-card-header>-->
-    <!--<img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">-->
-    <!--<mat-card-title>-->
-    <!--<span class="comment-author">Неизвестный автор</span>-->
-    <!--<span class="comment-date">15:33 24.05.18</span>-->
-    <!--</mat-card-title>-->
-    <!--<mat-card-subtitle class="comment-content">Это мой очень хороший комментарий!</mat-card-subtitle>-->
-    <!--<span class="example-fill-remaining-space"></span>-->
-    <!--Рейтинг:-->
-    <!--<div class="comment-rating">-->
-    <!--0-->
-    <!--</div>-->
-    <!--</mat-card-header>-->
-
-    <!--<button mat-button>Нравится</button>-->
-    <!--<button mat-button>Не нравится</button>-->
-    <!--<button mat-button>Ответить</button>-->
-
-    <!--<div class="comment-wrapper" style="margin-left: 40px">-->
-    <!--<mat-card-header>-->
-    <!--<img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">-->
-    <!--<mat-card-title>-->
-    <!--<span class="comment-author">Неизвестный автор</span>-->
-    <!--<span class="comment-date">15:33 24.05.18</span>-->
-    <!--</mat-card-title>-->
-    <!--<mat-card-subtitle class="comment-content">Это мой очень хороший комментарий!</mat-card-subtitle>-->
-    <!--<span class="example-fill-remaining-space"></span>-->
-    <!--Рейтинг:-->
-    <!--<div class="comment-rating">-->
-    <!--0-->
-    <!--</div>-->
-    <!--</mat-card-header>-->
-
-    <!--<button mat-button>Нравится</button>-->
-    <!--<button mat-button>Не нравится</button>-->
-    <!--<button mat-button>Ответить</button>-->
-    <!--<div class="comment-wrapper" style="margin-left: 40px">-->
-    <!--<mat-card-header>-->
-    <!--<img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">-->
-    <!--<mat-card-title>-->
-    <!--<span class="comment-author">Неизвестный автор</span>-->
-    <!--<span class="comment-date">15:33 24.05.18</span>-->
-    <!--</mat-card-title>-->
-    <!--<mat-card-subtitle class="comment-content">Это мой очень хороший комментарий!</mat-card-subtitle>-->
-    <!--<span class="example-fill-remaining-space"></span>-->
-    <!--Рейтинг:-->
-    <!--<div class="comment-rating">-->
-    <!--0-->
-    <!--</div>-->
-    <!--</mat-card-header>-->
-
-    <!--<button mat-button>Нравится</button>-->
-    <!--<button mat-button>Не нравится</button>-->
-    <!--<button mat-button>Ответить</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 
     <mat-divider></mat-divider>
 
