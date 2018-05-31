@@ -39,13 +39,13 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder encoder = passwordEncoder();
         auth.inMemoryAuthentication()
-            .withUser("reader")
-                .password(encoder.encode("reader"))
-                .authorities("FOO_READ")
+            .withUser("user")
+                .password(encoder.encode("user"))
+                .roles("USER")
             .and()
-            .withUser("writer")
-                .password(encoder.encode("writer"))
-                .authorities("FOO_READ", "FOO_WRITE");
+            .withUser("editor")
+                .password(encoder.encode("editor"))
+                .roles("EDITOR");
     }
 
     @Bean

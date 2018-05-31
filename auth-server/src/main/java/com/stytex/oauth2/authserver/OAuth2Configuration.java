@@ -21,15 +21,17 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-               .withClient("web_app")
-               .scopes("FOO")
+               .withClient("website")
+               .scopes("ARTICLE", "CATEGORY", "TAG", "COMMENT")
                .autoApprove(true)
-               .authorities("FOO_READ", "FOO_WRITE")
                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code");
+//               .and()
+//               .withClient("")
+
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
     }
 
