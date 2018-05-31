@@ -24,7 +24,6 @@ public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
 
-    @PreAuthorize("hasAuthority('FOO_WRITE')")
     @GetMapping()
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
