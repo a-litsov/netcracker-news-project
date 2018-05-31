@@ -8,6 +8,7 @@ import com.netcracker.adlitsov.newsproject.articles.repository.ArticleRepository
 import com.netcracker.adlitsov.newsproject.articles.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
 
+    @PreAuthorize("hasAuthority('FOO_WRITE')")
     @GetMapping()
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
