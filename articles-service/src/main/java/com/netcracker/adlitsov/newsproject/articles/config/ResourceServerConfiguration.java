@@ -19,9 +19,16 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/**").hasRole("EDITOR")
-                .antMatchers(HttpMethod.PUT, "/**").hasRole("EDITOR")
-                .antMatchers(HttpMethod.DELETE, "/**").hasRole("EDITOR")
+                .antMatchers(HttpMethod.POST, "/articles/**").hasAuthority("OP_ADD_ARTICLE")
+                .antMatchers(HttpMethod.PUT, "/articles/**").hasAuthority("OP_UPDATE_ARTICLE")
+                .antMatchers(HttpMethod.DELETE, "/articles/**").hasAuthority("OP_DELETE_ARTICLE")
+                .antMatchers(HttpMethod.POST, "/categories/**").hasAuthority("OP_ADD_CATEGORY")
+                .antMatchers(HttpMethod.PUT, "/categories/**").hasAuthority("OP_UPDATE_CATEGORY")
+                .antMatchers(HttpMethod.DELETE, "/categories/**").hasAuthority("OP_DELETE_CATEGORY")
+                .antMatchers(HttpMethod.POST, "/tags/**").hasAuthority("OP_ADD_TAG")
+                .antMatchers(HttpMethod.PUT, "/tags/**").hasAuthority("OP_UPDATE_TAG")
+                .antMatchers(HttpMethod.DELETE, "/tags/**").hasAuthority("OP_DELETE_TAG")
+
                 .anyRequest().permitAll();
     }
 

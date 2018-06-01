@@ -1,4 +1,4 @@
-package com.stytex.oauth2.authserver;
+package com.netcracker.adlitsov.newsproject.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

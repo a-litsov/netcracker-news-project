@@ -1,0 +1,148 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.9
+-- Dumped by pg_dump version 9.6.7
+
+-- Started on 2018-06-01 13:47:44 MSK
+
+\connect auth_db
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 2155 (class 0 OID 16451)
+-- Dependencies: 185
+-- Data for Name: operation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO operation VALUES (1, 'OP_ADD_ARTICLE');
+INSERT INTO operation VALUES (2, 'OP_UPDATE_ARTICLE');
+INSERT INTO operation VALUES (3, 'OP_DELETE_ARTICLE');
+INSERT INTO operation VALUES (4, 'OP_ADD_COMMENT');
+INSERT INTO operation VALUES (5, 'OP_UPDATE_COMMENT');
+INSERT INTO operation VALUES (6, 'OP_DELETE_COMMENT');
+INSERT INTO operation VALUES (7, 'OP_VOTE_ARTICLE');
+INSERT INTO operation VALUES (8, 'OP_VOTE_COMMENT');
+INSERT INTO operation VALUES (9, 'OP_BAN_USER');
+INSERT INTO operation VALUES (10, 'OP_CREATE_USER');
+INSERT INTO operation VALUES (11, 'OP_UPDATE_USER');
+INSERT INTO operation VALUES (12, 'OP_DELETE_USER');
+INSERT INTO operation VALUES (13, 'OP_ADD_CATEGORY');
+INSERT INTO operation VALUES (14, 'OP_UPDATE_CATEGORY');
+INSERT INTO operation VALUES (15, 'OP_DELETE_CATEGORY');
+INSERT INTO operation VALUES (16, 'OP_ADD_TAG');
+INSERT INTO operation VALUES (17, 'OP_UPDATE_TAG');
+INSERT INTO operation VALUES (18, 'OP_DELETE_TAG');
+
+
+--
+-- TOC entry 2166 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: operation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('operation_id_seq', 18, true);
+
+
+--
+-- TOC entry 2157 (class 0 OID 16459)
+-- Dependencies: 187
+-- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO role VALUES (1, 'ROLE_BANNED');
+INSERT INTO role VALUES (2, 'ROLE_USER');
+INSERT INTO role VALUES (3, 'ROLE_EDITOR');
+INSERT INTO role VALUES (4, 'ROLE_MODERATOR');
+INSERT INTO role VALUES (5, 'ROLE_ADMIN');
+
+
+--
+-- TOC entry 2167 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('role_id_seq', 5, true);
+
+
+--
+-- TOC entry 2159 (class 0 OID 16467)
+-- Dependencies: 189
+-- Data for Name: role_operation; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO role_operation VALUES (2, 4);
+INSERT INTO role_operation VALUES (2, 7);
+INSERT INTO role_operation VALUES (2, 8);
+INSERT INTO role_operation VALUES (3, 1);
+INSERT INTO role_operation VALUES (3, 2);
+INSERT INTO role_operation VALUES (3, 3);
+INSERT INTO role_operation VALUES (3, 4);
+INSERT INTO role_operation VALUES (3, 7);
+INSERT INTO role_operation VALUES (3, 8);
+INSERT INTO role_operation VALUES (4, 4);
+INSERT INTO role_operation VALUES (4, 5);
+INSERT INTO role_operation VALUES (4, 6);
+INSERT INTO role_operation VALUES (4, 7);
+INSERT INTO role_operation VALUES (4, 8);
+INSERT INTO role_operation VALUES (4, 9);
+INSERT INTO role_operation VALUES (5, 1);
+INSERT INTO role_operation VALUES (5, 2);
+INSERT INTO role_operation VALUES (5, 3);
+INSERT INTO role_operation VALUES (5, 4);
+INSERT INTO role_operation VALUES (5, 5);
+INSERT INTO role_operation VALUES (5, 6);
+INSERT INTO role_operation VALUES (5, 7);
+INSERT INTO role_operation VALUES (5, 8);
+INSERT INTO role_operation VALUES (5, 9);
+INSERT INTO role_operation VALUES (5, 10);
+INSERT INTO role_operation VALUES (5, 11);
+INSERT INTO role_operation VALUES (5, 12);
+INSERT INTO role_operation VALUES (5, 13);
+INSERT INTO role_operation VALUES (5, 14);
+INSERT INTO role_operation VALUES (5, 15);
+INSERT INTO role_operation VALUES (5, 16);
+INSERT INTO role_operation VALUES (5, 17);
+INSERT INTO role_operation VALUES (5, 18);
+
+
+--
+-- TOC entry 2160 (class 0 OID 16470)
+-- Dependencies: 190
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "user" VALUES (1, 'banned', 'banned', 1);
+INSERT INTO "user" VALUES (2, 'user', 'user', 2);
+INSERT INTO "user" VALUES (3, 'editor', 'editor', 3);
+INSERT INTO "user" VALUES (4, 'moderator', 'moderator', 4);
+INSERT INTO "user" VALUES (5, 'admin', 'admin', 5);
+
+
+--
+-- TOC entry 2168 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('user_id_seq', 5, true);
+
+
+-- Completed on 2018-06-01 13:47:44 MSK
+
+--
+-- PostgreSQL database dump complete
+--
+
