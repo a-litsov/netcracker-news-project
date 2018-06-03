@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.9
 -- Dumped by pg_dump version 9.6.7
 
--- Started on 2018-06-01 13:47:44 MSK
+-- Started on 2018-06-03 20:17:46 MSK
 
 \connect auth_db
 
@@ -124,11 +124,11 @@ INSERT INTO role_operation VALUES (5, 18);
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "user" VALUES (1, 'banned', 'banned', 1);
-INSERT INTO "user" VALUES (2, 'user', 'user', 2);
-INSERT INTO "user" VALUES (3, 'editor', 'editor', 3);
-INSERT INTO "user" VALUES (4, 'moderator', 'moderator', 4);
-INSERT INTO "user" VALUES (5, 'admin', 'admin', 5);
+INSERT INTO "user" VALUES (1, 'banned', '$2a$10$zuRSX8dR4CDVN/luDXHRvus.Bbg4IEAoI01zfODxUKtDoEIGymO56', 1);
+INSERT INTO "user" VALUES (2, 'user', '$2a$10$jN8weyj1/tqxNn0ZfSq1auyJqeaXrdLf/gc9yQxaVu5.r8g6LTCiu', 2);
+INSERT INTO "user" VALUES (3, 'editor', '$2a$10$6QByNiAIXRheHYLiGrxmNukqdc1yVJ8MIEJKBzUpTmVQZobnL34w.', 3);
+INSERT INTO "user" VALUES (4, 'moderator', '$2a$10$q3TszCp5tvnBPGhUTkvvBubu9g/FLnBwgxjxCLoVF1G3kn6loLLVK', 4);
+INSERT INTO "user" VALUES (5, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z8753Q5Dl.PxZctjdlWyCCDa', 5);
 
 
 --
@@ -140,7 +140,7 @@ INSERT INTO "user" VALUES (5, 'admin', 'admin', 5);
 SELECT pg_catalog.setval('user_id_seq', 5, true);
 
 
--- Completed on 2018-06-01 13:47:44 MSK
+-- Completed on 2018-06-03 20:17:47 MSK
 
 --
 -- PostgreSQL database dump complete

@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Operation implements GrantedAuthority {
     @NotBlank
     private String authority;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "operations")
     private List<Role> roles;
 
@@ -39,6 +41,14 @@ public class Operation implements GrantedAuthority {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", authority='" + authority + '\'' +
+                '}';
     }
 }
 
