@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-public class UserController {
+public class RegisterController {
 
     @Autowired
     private MyUserDetailsService myUserDetailsService;
@@ -28,6 +28,7 @@ public class UserController {
         } catch(UserAlreadyExistsException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
