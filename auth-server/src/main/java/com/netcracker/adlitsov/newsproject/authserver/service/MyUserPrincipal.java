@@ -1,6 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.service;
 
-import com.netcracker.adlitsov.newsproject.authserver.domain.User;
+import com.netcracker.adlitsov.newsproject.authserver.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -51,7 +51,10 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        // TODO: change to email approval
-        return true;
+        return user.isEnabled();
+    }
+
+    public boolean isEmailVerified() {
+        return user.isEmailVerified();
     }
 }

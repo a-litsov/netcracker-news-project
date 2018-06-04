@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.authserver.domain;
+package com.netcracker.adlitsov.newsproject.authserver.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,6 +22,15 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @NotNull
+    private boolean enabled;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @NotNull
+    private boolean emailVerified;
 
     public Integer getId() {
         return id;
@@ -49,5 +58,29 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }

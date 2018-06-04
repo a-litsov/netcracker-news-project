@@ -1,6 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.exception;
 
-import com.netcracker.adlitsov.newsproject.authserver.domain.User;
+import com.netcracker.adlitsov.newsproject.authserver.model.User;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(User user) {

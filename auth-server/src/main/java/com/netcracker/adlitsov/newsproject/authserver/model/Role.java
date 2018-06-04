@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.authserver.domain;
+package com.netcracker.adlitsov.newsproject.authserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

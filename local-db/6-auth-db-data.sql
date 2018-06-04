@@ -124,11 +124,11 @@ INSERT INTO role_operation VALUES (5, 18);
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "user" VALUES (1, 'banned', '$2a$10$zuRSX8dR4CDVN/luDXHRvus.Bbg4IEAoI01zfODxUKtDoEIGymO56', 1);
-INSERT INTO "user" VALUES (2, 'user', '$2a$10$jN8weyj1/tqxNn0ZfSq1auyJqeaXrdLf/gc9yQxaVu5.r8g6LTCiu', 2);
-INSERT INTO "user" VALUES (3, 'editor', '$2a$10$6QByNiAIXRheHYLiGrxmNukqdc1yVJ8MIEJKBzUpTmVQZobnL34w.', 3);
-INSERT INTO "user" VALUES (4, 'moderator', '$2a$10$q3TszCp5tvnBPGhUTkvvBubu9g/FLnBwgxjxCLoVF1G3kn6loLLVK', 4);
-INSERT INTO "user" VALUES (5, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z8753Q5Dl.PxZctjdlWyCCDa', 5);
+INSERT INTO "user" VALUES (1, 'banned', '$2a$10$zuRSX8dR4CDVN/luDXHRvus.Bbg4IEAoI01zfODxUKtDoEIGymO56', 1, 'banned@news.com');
+INSERT INTO "user" VALUES (2, 'user', '$2a$10$jN8weyj1/tqxNn0ZfSq1auyJqeaXrdLf/gc9yQxaVu5.r8g6LTCiu', 2, 'user@news.com');
+INSERT INTO "user" VALUES (3, 'editor', '$2a$10$6QByNiAIXRheHYLiGrxmNukqdc1yVJ8MIEJKBzUpTmVQZobnL34w.', 3, 'editor@news.com');
+INSERT INTO "user" VALUES (4, 'moderator', '$2a$10$q3TszCp5tvnBPGhUTkvvBubu9g/FLnBwgxjxCLoVF1G3kn6loLLVK', 4, 'moderator@news.com');
+INSERT INTO "user" VALUES (5, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z8753Q5Dl.PxZctjdlWyCCDa', 5, 'admin@news.com');
 
 
 --

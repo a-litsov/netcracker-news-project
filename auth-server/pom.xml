@@ -47,6 +47,12 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+		<!--TODO: move in mail service-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -66,6 +72,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--TODO: move this in docker-compose.dev.yml-->
+				<configuration>
+					<jvmArguments>
+						-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007
+					</jvmArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

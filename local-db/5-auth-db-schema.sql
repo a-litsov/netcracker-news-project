@@ -143,7 +143,10 @@ CREATE TABLE "user" (
     id integer NOT NULL,
     username text,
     password text,
-    role_id integer
+    role_id integer,
+    email text NOT NULL,
+    enabled boolean DEFAULT true,
+    email_verified boolean DEFAULT false
 );
 
 
@@ -257,6 +260,55 @@ ALTER TABLE ONLY "user"
 
 
 -- Completed on 2018-06-01 12:55:24 MSK
+
+CREATE TABLE verification_token (
+    id integer NOT NULL,
+    user_id integer,
+    token text NOT NULL,
+    expiry_date timestamp without time zone
+);
+
+
+--
+-- TOC entry 192 (class 1259 OID 16538)
+-- Name: verification_token_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE verification_token_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2150 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: verification_token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE verification_token_id_seq OWNED BY verification_token.id;
+
+
+--
+-- TOC entry 2026 (class 2604 OID 16543)
+-- Name: verification_token id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY verification_token ALTER COLUMN id SET DEFAULT nextval('verification_token_id_seq'::regclass);
+
+
+--
+-- TOC entry 2028 (class 2606 OID 16548)
+-- Name: verification_token verification_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY verification_token
+    ADD CONSTRAINT verification_token_pkey PRIMARY KEY (id);
+
+
+-- Completed on 2018-06-05 00:50:15 MSK
 
 --
 -- PostgreSQL database dump complete
