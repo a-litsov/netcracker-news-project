@@ -23,6 +23,7 @@ import { ArticleComponent } from './article/article.component';
 import { AddArticleComponent } from './add-article/add-article.component';
 import { EditArticleComponent } from './edit-article/edit-article.component';
 import {CommentsService} from "./comments.service";
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {CommentsService} from "./comments.service";
     ArticleComponent,
     AddArticleComponent,
     EditArticleComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,38 @@
+<div class="wrapper">
+
+  <mat-card class="login-card">
+    <mat-tab-group class="form-tab-group" [dynamicHeight]="true">
+      <mat-tab label="Вход">
+        <div class="form-wrapper">
+          <mat-form-field>
+            <input matInput placeholder="Логин">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Пароль">
+          </mat-form-field>
+          <button mat-raised-button color="primary">Войти</button>
+          <button mat-button>Я забыл пароль</button>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Регистрация">
+        <div class="form-wrapper">
+          <mat-form-field>
+            <input matInput placeholder="Логин">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Пароль">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Повторите пароль">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="E-mail">
+          </mat-form-field>
+          <button mat-raised-button color="primary">Зарегистрироваться</button>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+</div>

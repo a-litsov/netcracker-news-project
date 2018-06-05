@@ -5,3 +5,8 @@ body { margin: 0; }
 .mat-drawer-backdrop.mat-drawer-shown {
   background: none;
 }
+
+/* To make tabs in auth component fill all space evenly */
+.mat-tab-label {
+  width: 50%;
+}

@@ -6,6 +6,7 @@ import {AddArticleComponent} from "./add-article/add-article.component";
 
 import { RouterModule, Routes } from '@angular/router';
 import {EditArticleComponent} from "./edit-article/edit-article.component";
+import {AuthComponent} from "./auth/auth.component";
 
 
 const appRoutes: Routes = [
@@ -13,6 +14,7 @@ const appRoutes: Routes = [
   { path: 'article/:id', component: ArticleComponent},
   { path: 'add-article', component: AddArticleComponent},
   { path: 'article/:id/edit', component: EditArticleComponent},
+  { path: 'auth', component: AuthComponent },
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'
