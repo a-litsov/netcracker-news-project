@@ -5,12 +5,12 @@
       <mat-tab label="Вход">
         <div class="form-wrapper">
           <mat-form-field>
-            <input matInput placeholder="Логин">
+            <input matInput placeholder="Логин" [(ngModel)]="userAuthInfo.username">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Пароль">
+            <input matInput placeholder="Пароль" [(ngModel)]="userAuthInfo.password">
           </mat-form-field>
-          <button mat-raised-button color="primary">Войти</button>
+          <button mat-raised-button color="primary" (click)="login()">Войти</button>
           <button mat-button>Я забыл пароль</button>
         </div>
       </mat-tab>

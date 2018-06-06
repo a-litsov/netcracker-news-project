@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { CategoriesService } from '../categories.service';
 import { Category } from '../category';
 import {MatSidenav} from "@angular/material";
+import {AuthService} from "../auth/auth.service";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private categoriesService:
-    CategoriesService) {}
+    CategoriesService, private authService: AuthService) {}
 
   private getCategories() {
     this.categoriesService.getCategories().subscribe(
@@ -38,6 +39,7 @@ export class MainNavComponent {
   }
 
   ngOnInit() {
+    console.log(this);
     this.getCategories();
   }
 

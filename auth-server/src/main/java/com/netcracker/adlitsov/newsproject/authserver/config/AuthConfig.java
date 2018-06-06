@@ -9,10 +9,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -25,9 +27,10 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
             .withClient("website")
-                .scopes("ARTICLE", "CATEGORY", "TAG", "COMMENT")
+                .scopes("ARTICLE", "CATEGORY", "TAG", "COMMENT", "REGISTER_USER")
                 .autoApprove(true)
-                .authorizedGrantTypes("implicit", "refresh_token", "password", "authorization_code")
+                .authorizedGrantTypes("client_credentials", "refresh_token", "password")
+                .secret(passwordEncoder().encode("website-secret"))
                 .and()
             .withClient("users-service")
                 .scopes("REGISTER_USER")
