@@ -4,8 +4,7 @@ import com.netcracker.adlitsov.newsproject.authserver.model.User;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
 import com.netcracker.adlitsov.newsproject.authserver.model.VerificationToken;
 import com.netcracker.adlitsov.newsproject.authserver.service.MailService;
-import com.netcracker.adlitsov.newsproject.authserver.service.MyUserDetailsService;
-import org.apache.logging.log4j.message.SimpleMessage;
+import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import java.util.Calendar;
 public class RegisterController {
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private UserService userService;
 
     @Autowired
     private MailService mailService;
@@ -28,7 +27,7 @@ public class RegisterController {
         System.out.println("USER:" + user);
         User createdUser = null;
         try {
-            createdUser = myUserDetailsService.registerUser(user);
+            createdUser = userService.registerUser(user);
         } catch (UserAlreadyExistsException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -42,7 +41,7 @@ public class RegisterController {
         System.out.println("USER:" + user);
         User createdUser = null;
         try {
-            createdUser = myUserDetailsService.createUser(user);
+            createdUser = userService.createUser(user);
         } catch (UserAlreadyExistsException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -58,18 +57,10 @@ public class RegisterController {
 
     @GetMapping(value = "/confirm-registration")
     public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token) {
-        VerificationToken verificationToken = myUserDetailsService.getVerificationToken(token);
-        if (verificationToken == null) {
-            return new ResponseEntity<>("Token not found", HttpStatus.NOT_FOUND);
+        if (userService.confirmUserByToken(token)) {
+            return new ResponseEntity<>("Successfully verified email!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Confirmation not succeedded", HttpStatus.NOT_FOUND);
         }
-
-        User user = verificationToken.getUser();
-        Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            return new ResponseEntity<>("Token expired", HttpStatus.FORBIDDEN);
-        }
-
-        myUserDetailsService.setEmailVerified(user);
-        return new ResponseEntity<>("Successfully verified email, " + user.getUsername() + "!", HttpStatus.OK);
     }
 }

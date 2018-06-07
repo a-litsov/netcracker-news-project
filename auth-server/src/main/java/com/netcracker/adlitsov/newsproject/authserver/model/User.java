@@ -3,10 +3,11 @@ package com.netcracker.adlitsov.newsproject.authserver.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "`user`")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,14 +24,14 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @NotNull
-    private boolean enabled;
-
     @Column(nullable = false, unique = true)
     private String email;
 
     @NotNull
-    private boolean emailVerified;
+    boolean emailConfirmed;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private UserInfo userInfo;
 
     public Integer getId() {
         return id;
@@ -60,14 +61,6 @@ public class User {
         this.role = role;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -76,11 +69,19 @@ public class User {
         this.email = email;
     }
 
-    public boolean isEmailVerified() {
-        return emailVerified;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
     }
 }

@@ -19,18 +19,18 @@
       <mat-tab label="Регистрация">
         <div class="form-wrapper">
           <mat-form-field>
-            <input matInput placeholder="Логин">
+            <input matInput placeholder="Логин" [(ngModel)]="userRegInfo.username">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Пароль">
+            <input matInput type="password" placeholder="Пароль" [(ngModel)]="userRegInfo.password">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Повторите пароль">
+            <input matInput type="password" placeholder="Повторите пароль">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="E-mail">
+            <input matInput placeholder="E-mail" [(ngModel)]="userRegInfo.email">
           </mat-form-field>
-          <button mat-raised-button color="primary">Зарегистрироваться</button>
+          <button mat-raised-button color="primary" (click)="register()">Зарегистрироваться</button>
         </div>
       </mat-tab>
     </mat-tab-group>

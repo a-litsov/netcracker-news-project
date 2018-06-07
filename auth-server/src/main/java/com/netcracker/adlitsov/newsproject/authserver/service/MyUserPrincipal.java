@@ -51,10 +51,7 @@ public class MyUserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
-    }
+        return !"ROLE_BANNED".equals(this.user.getRole().getAuthority());
 
-    public boolean isEmailVerified() {
-        return user.isEmailVerified();
     }
 }

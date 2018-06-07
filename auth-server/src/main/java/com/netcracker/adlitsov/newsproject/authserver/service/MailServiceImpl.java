@@ -14,7 +14,7 @@ public class MailServiceImpl implements MailService {
     private MailSender emailSender;
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private UserService userService;
 
     @Override
     public void sendSimpleMessage(String to, String subject, String text) {

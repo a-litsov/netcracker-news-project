@@ -62,10 +62,11 @@ SELECT pg_catalog.setval('operation_id_seq', 18, true);
 --
 
 INSERT INTO role VALUES (1, 'ROLE_BANNED');
-INSERT INTO role VALUES (2, 'ROLE_USER');
-INSERT INTO role VALUES (3, 'ROLE_EDITOR');
-INSERT INTO role VALUES (4, 'ROLE_MODERATOR');
-INSERT INTO role VALUES (5, 'ROLE_ADMIN');
+INSERT INTO role VALUES (2, 'ROLE_MUTED');
+INSERT INTO role VALUES (3, 'ROLE_USER');
+INSERT INTO role VALUES (4, 'ROLE_EDITOR');
+INSERT INTO role VALUES (5, 'ROLE_MODERATOR');
+INSERT INTO role VALUES (6, 'ROLE_ADMIN');
 
 
 --
@@ -83,39 +84,39 @@ SELECT pg_catalog.setval('role_id_seq', 5, true);
 -- Data for Name: role_operation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO role_operation VALUES (2, 4);
-INSERT INTO role_operation VALUES (2, 7);
-INSERT INTO role_operation VALUES (2, 8);
-INSERT INTO role_operation VALUES (3, 1);
-INSERT INTO role_operation VALUES (3, 2);
-INSERT INTO role_operation VALUES (3, 3);
 INSERT INTO role_operation VALUES (3, 4);
 INSERT INTO role_operation VALUES (3, 7);
 INSERT INTO role_operation VALUES (3, 8);
+INSERT INTO role_operation VALUES (4, 1);
+INSERT INTO role_operation VALUES (4, 2);
+INSERT INTO role_operation VALUES (4, 3);
 INSERT INTO role_operation VALUES (4, 4);
-INSERT INTO role_operation VALUES (4, 5);
-INSERT INTO role_operation VALUES (4, 6);
 INSERT INTO role_operation VALUES (4, 7);
 INSERT INTO role_operation VALUES (4, 8);
-INSERT INTO role_operation VALUES (4, 9);
-INSERT INTO role_operation VALUES (5, 1);
-INSERT INTO role_operation VALUES (5, 2);
-INSERT INTO role_operation VALUES (5, 3);
 INSERT INTO role_operation VALUES (5, 4);
 INSERT INTO role_operation VALUES (5, 5);
 INSERT INTO role_operation VALUES (5, 6);
 INSERT INTO role_operation VALUES (5, 7);
 INSERT INTO role_operation VALUES (5, 8);
 INSERT INTO role_operation VALUES (5, 9);
-INSERT INTO role_operation VALUES (5, 10);
-INSERT INTO role_operation VALUES (5, 11);
-INSERT INTO role_operation VALUES (5, 12);
-INSERT INTO role_operation VALUES (5, 13);
-INSERT INTO role_operation VALUES (5, 14);
-INSERT INTO role_operation VALUES (5, 15);
-INSERT INTO role_operation VALUES (5, 16);
-INSERT INTO role_operation VALUES (5, 17);
-INSERT INTO role_operation VALUES (5, 18);
+INSERT INTO role_operation VALUES (6, 1);
+INSERT INTO role_operation VALUES (6, 2);
+INSERT INTO role_operation VALUES (6, 3);
+INSERT INTO role_operation VALUES (6, 4);
+INSERT INTO role_operation VALUES (6, 5);
+INSERT INTO role_operation VALUES (6, 6);
+INSERT INTO role_operation VALUES (6, 7);
+INSERT INTO role_operation VALUES (6, 8);
+INSERT INTO role_operation VALUES (6, 9);
+INSERT INTO role_operation VALUES (6, 10);
+INSERT INTO role_operation VALUES (6, 11);
+INSERT INTO role_operation VALUES (6, 12);
+INSERT INTO role_operation VALUES (6, 13);
+INSERT INTO role_operation VALUES (6, 14);
+INSERT INTO role_operation VALUES (6, 15);
+INSERT INTO role_operation VALUES (6, 16);
+INSERT INTO role_operation VALUES (6, 17);
+INSERT INTO role_operation VALUES (6, 18);
 
 
 --
@@ -125,10 +126,11 @@ INSERT INTO role_operation VALUES (5, 18);
 --
 
 INSERT INTO "user" VALUES (1, 'banned', '$2a$10$zuRSX8dR4CDVN/luDXHRvus.Bbg4IEAoI01zfODxUKtDoEIGymO56', 1, 'banned@news.com');
-INSERT INTO "user" VALUES (2, 'user', '$2a$10$jN8weyj1/tqxNn0ZfSq1auyJqeaXrdLf/gc9yQxaVu5.r8g6LTCiu', 2, 'user@news.com');
-INSERT INTO "user" VALUES (3, 'editor', '$2a$10$6QByNiAIXRheHYLiGrxmNukqdc1yVJ8MIEJKBzUpTmVQZobnL34w.', 3, 'editor@news.com');
-INSERT INTO "user" VALUES (4, 'moderator', '$2a$10$q3TszCp5tvnBPGhUTkvvBubu9g/FLnBwgxjxCLoVF1G3kn6loLLVK', 4, 'moderator@news.com');
-INSERT INTO "user" VALUES (5, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z8753Q5Dl.PxZctjdlWyCCDa', 5, 'admin@news.com');
+INSERT INTO "user" VALUES (2, 'muted', '$2a$12$X22QlEKuAoGBZk9KtTg.o.N1huw2YbG3K9XJBXWhHJwBAc.dp/QVG', 2, 'muted@news.com');
+INSERT INTO "user" VALUES (3, 'user', '$2a$10$jN8weyj1/tqxNn0ZfSq1auyJqeaXrdLf/gc9yQxaVu5.r8g6LTCiu', 3, 'user@news.com');
+INSERT INTO "user" VALUES (4, 'editor', '$2a$10$6QByNiAIXRheHYLiGrxmNukqdc1yVJ8MIEJKBzUpTmVQZobnL34w.', 4, 'editor@news.com');
+INSERT INTO "user" VALUES (5, 'moderator', '$2a$10$q3TszCp5tvnBPGhUTkvvBubu9g/FLnBwgxjxCLoVF1G3kn6loLLVK', 5, 'moderator@news.com');
+INSERT INTO "user" VALUES (6, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z8753Q5Dl.PxZctjdlWyCCDa', 6, 'admin@news.com');
 
 
 --
@@ -138,7 +140,7 @@ INSERT INTO "user" VALUES (5, 'admin', '$2a$10$wk6L8scdfWH8cjqMMHwoPe33fm/08Z875
 --
 
 
-SELECT pg_catalog.setval('user_id_seq', 5, true);
+SELECT pg_catalog.setval('user_id_seq', 6, true);
 
 
 INSERT INTO rank VALUES (1, 'Плохой', 'FF0000', -10);
@@ -147,11 +149,12 @@ INSERT INTO rank VALUES (3, 'Бывалый', '00B6C9', 10);
 
 
 
-INSERT INTO user_details VALUES (1, 'Василий', 'Пупкин', -20, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
-INSERT INTO user_details VALUES (2, 'Игорь', 'Пользователев', 4, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
-INSERT INTO user_details VALUES (3, 'Владимир', 'Редакторов', 15, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
-INSERT INTO user_details VALUES (5, 'Альберт', 'Администраторов', 42, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
-INSERT INTO user_details VALUES (4, 'Семён', 'Модераторов', 23, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
+INSERT INTO user_info VALUES (1, 'Василий', 'Блокированный', -20, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я даже не могу зайти в аккаунт', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO user_info VALUES (2, 'Михаил', 'Немногословный', -20, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Я вёл себя плохо и поэтому я теперь muted. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO user_info VALUES (3, 'Игорь', 'Пользователев', 4, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
+INSERT INTO user_info VALUES (4, 'Владимир', 'Редакторов', 15, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
+INSERT INTO user_info VALUES (5, 'Альберт', 'Администраторов', 42, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
+INSERT INTO user_info VALUES (6, 'Семён', 'Модераторов', 23, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
 
 
 

@@ -40,7 +40,17 @@ mat-sidenav-content {
   flex: 1 1 auto;
 }
 
-.hide-icon {
+.hide-right-nav-icon {
   width: 30px;
   height: 30px;
+}
+
+.confirm-email-banner {
+  font-size: 100%;
+  height: 30px;
+}
+
+.hide-confirm-email-banner {
+  width: 20px;
+  height: 20px;
 }

@@ -1,3 +1,13 @@
+<mat-toolbar class="confirm-email-banner">
+    Пожалуйста, подтвердите почту, которую вы указали при регистрации, чтобы писать комментарии и изменять
+  рейтинг новостей и комментариев.
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <button mat-icon-button [disableRipple]="true" (click)="drawer.toggle()">
+    <mat-icon class="hide-confirm-email-banner" fontSet="fa" fontIcon="fa-times">
+    </mat-icon>
+  </button>
+</mat-toolbar>
 <mat-sidenav-container>
   <!--Will be used when we add user functionality-->
   <mat-sidenav
@@ -13,8 +23,8 @@
       <div mat-card-avatar class="user-avatar"></div>
       <div class="user-name">{{user.userName}}</div>
       <span class="example-fill-remaining-space"></span>
-      <button mat-icon-button [color]="" (click)="drawer.toggle()">
-        <mat-icon class="hide-icon"  fontSet="fa" fontIcon="fa-angle-right">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon class="hide-right-nav-icon" fontSet="fa" fontIcon="fa-angle-right">
         </mat-icon>
       </button>
     </mat-toolbar>

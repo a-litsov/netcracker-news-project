@@ -1,16 +1,11 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {UserAuthDto} from './userAuthDTO';
-import {UserRegDto} from './userRegDto';
-import {AuthComponent} from "./auth.component";
-import {AppModule} from "../app.module";
+import {UserAuthDTO} from './userAuthDTO';
+import {UserRegDTO} from './userRegDTO';
 import * as moment from 'moment';
-import * as jwt_decode from 'jwt-decode';
 import {User} from "./user";
-import { Subject } from 'rxjs/Subject';
-import {AsyncSubject, BehaviorSubject, Observable} from "rxjs/Rx";
-
+import {BehaviorSubject} from "rxjs/Rx";
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +19,6 @@ export class AuthService {
 
   public currentUser: BehaviorSubject<User>;
   private _userAuthorities: string[];
-
-
-  // private username: Observable<string> = new Observable<string>(observer => {
-  // });
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.currentUser =  new BehaviorSubject<User>(this.user);
@@ -51,7 +42,7 @@ export class AuthService {
     this._user = user;
   }
 
-  public login(userInfo: UserAuthDto, onSuccess, errorHandler) {
+  public login(userInfo: UserAuthDTO, onSuccess, errorHandler) {
     console.log(userInfo);
     let authHeader: string = window.btoa("website:website-secret");
 
@@ -80,6 +71,27 @@ export class AuthService {
         }.bind(this), duration);
 
         console.log("put next", this.currentUser);
+
+        onSuccess();
+      }, error => errorHandler(error));
+  }
+
+  public register(userInfo: UserRegDTO, onSuccess, errorHandler) {
+    console.log(userInfo);
+    let authHeader: string = window.btoa("website:website-secret");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    console.log("register user", userInfo);
+
+    this.http.post(this.serviceURL + "/register-user", userInfo, httpOptions)
+      .subscribe(res => {
+        // TODO: instant login and redirect
+        console.log("registered!");
 
         onSuccess();
       }, error => errorHandler(error));
