@@ -3,7 +3,6 @@ import { ArticlesService } from './articles.service';
 import { Article } from './article';
 import { Category } from './category';
 import { Tag } from './tag';
-import {AuthService} from "./auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,7 @@ export class AppComponent {
   article: Article;
   allArticles: Article[];
 
-  constructor(private articles: ArticlesService, private authService: AuthService) { }
+  constructor(private articles: ArticlesService) { }
 
   private getArticleById(id: number) {
     this.articles.getArticleById(this.articleId).subscribe(

@@ -6,20 +6,23 @@
     position="end"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="true"
+    [opened]="authService.isLoggedIn()"
     [disableClose]="true"
     (openedChange)="sideNavChanged()">
     <mat-toolbar color="primary">
       <div mat-card-avatar class="user-avatar"></div>
-      <div class="user-name">{{this.authService.user.userName}}</div>
+      <div class="user-name">{{user.userName}}</div>
       <span class="example-fill-remaining-space"></span>
-      <button mat-button (click)="drawer.toggle()">Скрыть</button>
+      <button mat-icon-button [color]="" (click)="drawer.toggle()">
+        <mat-icon class="hide-icon"  fontSet="fa" fontIcon="fa-angle-right">
+        </mat-icon>
+      </button>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/auth" *ngIf="this.authService.isLoggedOut()">Войти</a>
       <a mat-list-item href="#">Мой профиль</a>
       <a mat-list-item href="#">Мои комментарии</a>
-      <a mat-list-item routerLink="/add-article">Добавить новость</a>
+      <a mat-list-item routerLink="/add-article" *ngIf="authService.hasAuthority('OP_ADD_ARTICLE')">Добавить новость</a>
+      <a mat-list-item (click)="logout()">Выйти</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
@@ -35,7 +38,9 @@
           <button mat-button>{{category.name}}</button>
         </a>
       </span>
-      <div mat-card-avatar class="user-avatar" *ngIf="!drawer.opened" (click)="drawer.toggle()"></div>
+
+      <div mat-card-avatar class="user-avatar" *ngIf="!drawer.opened && authService.isLoggedIn()" (click)="drawer.toggle()"></div>
+      <button mat-stroked-button [color]="primary" routerLink="/auth" *ngIf="authService.isLoggedOut()">Войти</button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

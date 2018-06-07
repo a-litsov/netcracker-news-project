@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserAuthDto} from './userAuthDTO';
 import {UserRegDto} from './userRegDto';
@@ -7,20 +8,50 @@ import {AppModule} from "../app.module";
 import * as moment from 'moment';
 import * as jwt_decode from 'jwt-decode';
 import {User} from "./user";
+import { Subject } from 'rxjs/Subject';
+import {AsyncSubject, BehaviorSubject, Observable} from "rxjs/Rx";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  serviceURL = 'http://localhost:9999';
+  private serviceURL = 'http://localhost:9999';
 
-  user: User = this.parseUser(localStorage.getItem("access_token"));
+  private _user: User = this.parseUser();
+  private guest: User = new User();
 
-  constructor(private http: HttpClient) {
+  public currentUser: BehaviorSubject<User>;
+  private _userAuthorities: string[];
+
+
+  // private username: Observable<string> = new Observable<string>(observer => {
+  // });
+
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+    this.currentUser =  new BehaviorSubject<User>(this.user);
+    console.log("behaviorSubject created");
+    // this.useman.subscribe(res => console.log("it's res inside service", res));
   }
 
-  public login(userInfo: UserAuthDto) {
+  get user(): User {
+    if (this.isLoggedIn()) {
+      return this._user;
+    } else {
+      return this.guest;
+    }
+  }
+
+  get userAuthorities(): string[] {
+    return this.user.authorities;
+  }
+
+  set user(user: User) {
+    this._user = user;
+  }
+
+  public login(userInfo: UserAuthDto, onSuccess, errorHandler) {
     console.log(userInfo);
     let authHeader: string = window.btoa("website:website-secret");
 
@@ -37,54 +68,55 @@ export class AuthService {
     this.http.post(this.serviceURL + "/oauth/token", body.toString(), httpOptions)
       .subscribe(res => {
         this.setSession(res);
-        this.parseUser(res['access_token']);
-      });
+        this.user = this.parseUser();
+        this.currentUser.next(this.user);
+
+        let expirationDate = this.jwtHelper.getTokenExpirationDate();
+        let expirationMoment = moment(expirationDate);
+        let now = moment();
+        let duration = moment.duration(expirationMoment.diff(now)).asMilliseconds();
+        setTimeout(function() {
+          this.currentUser.next(this.user);
+        }.bind(this), duration);
+
+        console.log("put next", this.currentUser);
+
+        onSuccess();
+      }, error => errorHandler(error));
   }
 
-  private parseUser(accessToken: string): User {
+  private parseUser(): User {
     let user: User = new User();
-    if (accessToken == undefined || accessToken == null) {
-      return user;
+    let tokenInfo = this.jwtHelper.decodeToken();
+    if (tokenInfo != null) {
+      user.userName = tokenInfo.user_name;
+      user.authorities = tokenInfo.authorities;
+      console.log("user parsed", user);
+    } else {
+      console.log("Auth-service: Error while parsing user!")
     }
-
-    let tokenInfo = jwt_decode(accessToken);
-    user.userName = tokenInfo.user_name;
-    user.exp = tokenInfo.exp;
-    user.authorities = tokenInfo.authorities;
-    user.jti = tokenInfo.jti;
-    user.scope = tokenInfo.scope;
-
     return user;
   }
 
-  // TODO: make this method use user field
   private setSession(authResult) {
-    const expiresAt = moment().add(authResult['expires_in'], 'second');
-
     localStorage.setItem('access_token', authResult['access_token']);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 
   logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+    localStorage.removeItem("access_token");
   }
 
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    return !this.jwtHelper.isTokenExpired();
   }
 
   isLoggedOut() {
     return !this.isLoggedIn();
   }
 
-  getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
+  public hasAuthority(authority: string) {
+    return this.isLoggedIn() && this.user.authorities.includes(authority);
   }
 
-  public hasAuthority(authority: string) {
-    return this.user.authorities.includes(authority);
-  }
+
 }

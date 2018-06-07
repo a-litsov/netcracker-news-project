@@ -39,3 +39,8 @@ mat-sidenav-content {
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
 }
+
+.hide-icon {
+  width: 30px;
+  height: 30px;
+}

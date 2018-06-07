@@ -17,3 +17,8 @@
 .mat-button {
   margin-top: 10px;
 }
+
+.error-label {
+  color: red;
+  margin-bottom: 10px;
+}

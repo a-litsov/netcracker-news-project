@@ -8,8 +8,9 @@
             <input matInput placeholder="Логин" [(ngModel)]="userAuthInfo.username">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Пароль" [(ngModel)]="userAuthInfo.password">
+            <input matInput type="password" placeholder="Пароль" [(ngModel)]="userAuthInfo.password">
           </mat-form-field>
+          <mat-label class="error-label">{{errorMessage}}</mat-label>
           <button mat-raised-button color="primary" (click)="login()">Войти</button>
           <button mat-button>Я забыл пароль</button>
         </div>

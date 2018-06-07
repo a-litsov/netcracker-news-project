@@ -15,6 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -23,6 +25,8 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @Configuration
 @EnableAuthorizationServer
 public class AuthConfig extends AuthorizationServerConfigurerAdapter {
+    private static final int TWO_HOURS = 2 * 3600;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -31,12 +35,14 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .autoApprove(true)
                 .authorizedGrantTypes("client_credentials", "refresh_token", "password")
                 .secret(passwordEncoder().encode("website-secret"))
+                .accessTokenValiditySeconds(15)
                 .and()
             .withClient("users-service")
                 .scopes("REGISTER_USER")
                 .autoApprove(true)
                 .authorizedGrantTypes("client_credentials", "password")
-                .secret(passwordEncoder().encode("users-service-secret"));
+                .secret(passwordEncoder().encode("users-service-secret"))
+                .accessTokenValiditySeconds(TWO_HOURS);
     }
 
     @Override

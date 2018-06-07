@@ -1,6 +1,7 @@
 // Modules
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {JwtModule} from '@auth0/angular-jwt';
 import {HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from './material.module';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -23,11 +24,12 @@ import {AuthComponent} from './auth/auth.component';
 import {ArticlesService} from './articles.service';
 import {CategoriesService} from './categories.service';
 import {CommentsService} from "./comments.service";
+import {AuthService} from "./auth/auth.service";
+import {MatIconRegistry} from "@angular/material";
 
-// Interceptors
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthInterceptor} from "./auth/authInterceptor";
-
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -48,19 +50,26 @@ import {AuthInterceptor} from "./auth/authInterceptor";
     RoutingModule,
     FormsModule,
     MarkdownModule.forRoot(),
-    LMarkdownEditorModule
+    LMarkdownEditorModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:9999', 'localhost:8080', 'localhost:8081'],
+        blacklistedRoutes: ['localhost:9999/auth/'],
+        skipWhenExpired: true
+      }
+    })
   ],
   providers: [
     ArticlesService,
     CommentsService,
     CategoriesService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  public constructor(public matIconRegistry: MatIconRegistry) {
+    matIconRegistry.registerFontClassAlias("fontawesome", "fa");
+  }
 }

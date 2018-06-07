@@ -6,7 +6,14 @@ import { CategoriesService } from '../categories.service';
 import { Category } from '../category';
 import {MatSidenav} from "@angular/material";
 import {AuthService} from "../auth/auth.service";
+import {User} from "../auth/user";
 
+import { faAngleRight } from '@fortawesome/fontawesome-free-solid/';
+import fontawesome from '@fortawesome/fontawesome';
+
+fontawesome.library.add(faAngleRight);
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'main-nav',
@@ -17,6 +24,8 @@ export class MainNavComponent {
 
   categories: Category[];
   isSideOpened: boolean = true;
+
+  user: User;
 
   @ViewChild('drawer') drawer;
 
@@ -38,9 +47,18 @@ export class MainNavComponent {
     );
   }
 
+  private logout() {
+    this.authService.logout();
+  }
+
   ngOnInit() {
     console.log(this);
     this.getCategories();
+    console.log("subscribed on behaivorSubject");
+    this.authService.currentUser.subscribe((user) => {
+      console.log("get user", user);
+      this.user = user;
+    });
   }
 
   sideNavChanged() {
