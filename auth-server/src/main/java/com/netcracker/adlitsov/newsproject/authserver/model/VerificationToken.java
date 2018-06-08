@@ -1,9 +1,13 @@
 package com.netcracker.adlitsov.newsproject.authserver.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 public class VerificationToken {
@@ -13,10 +17,12 @@ public class VerificationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String token;
+    @NotNull
+    private String token = UUID.randomUUID().toString();
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
+    @JsonBackReference
     private User user;
 
     // by default - 24 hours

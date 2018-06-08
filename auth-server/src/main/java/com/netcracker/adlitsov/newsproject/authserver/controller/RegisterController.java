@@ -22,7 +22,7 @@ public class RegisterController {
     private MailService mailService;
 
     // sends verification email
-    @PostMapping("/user/register")
+    @PostMapping("/users/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         System.out.println("USER:" + user);
         User createdUser = null;
@@ -36,7 +36,7 @@ public class RegisterController {
     }
 
     // does not need any email approval and used only by admin
-    @PostMapping("/user/create")
+    @PostMapping("/users/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         System.out.println("USER:" + user);
         User createdUser = null;
@@ -55,12 +55,14 @@ public class RegisterController {
         mailService.sendSimpleMessage(to, subject, text);
     }
 
-    @GetMapping(value = "/user/confirm")
+    @GetMapping(value = "/users/confirm")
     public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token) {
-        if (userService.confirmUserByToken(token)) {
-            return new ResponseEntity<>("Successfully verified email!", HttpStatus.OK);
+        User confirmedUser = userService.confirmUserByToken(token);
+        if (confirmedUser != null) {
+            return new ResponseEntity<>("Successfully verified email your email, " + confirmedUser.getUsername() + "!",
+                                        HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Confirmation not succeedded", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Confirmation not succeedded", HttpStatus.BAD_REQUEST);
         }
     }
 }

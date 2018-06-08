@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_info")
-public class UserInfo implements Serializable {
+@Table(name = "profile")
+public class Profile implements Serializable {
     @Id
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -24,16 +24,16 @@ public class UserInfo implements Serializable {
     private int rating;
 
     @NotNull
-    private String avatarUrl;
+    private String avatarUrl = "https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png";
 
     @NotNull
-    private String about;
+    private String about = "Этот пользователь предпочёл пока не указывать информации о себе";
 
     @NotNull
-    private Date lastOnline;
+    private Date lastOnline = new Date();
 
     @NotNull
-    private Date regDate;
+    private Date regDate = new Date();
 
     @NotNull
     @ManyToOne
@@ -114,7 +114,7 @@ public class UserInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "UserInfo{" +
+        return "Profile{" +
                 "user=" + user +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

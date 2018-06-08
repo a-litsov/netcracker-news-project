@@ -64,7 +64,7 @@ SET default_with_oids = false;
 
 CREATE TABLE operation (
     id integer NOT NULL,
-    authority text
+    authority text NOT NULL
 );
 
 
@@ -97,7 +97,7 @@ ALTER SEQUENCE operation_id_seq OWNED BY operation.id;
 
 CREATE TABLE role (
     id integer NOT NULL,
-    authority text
+    authority text NOT NULL
 );
 
 
@@ -141,8 +141,8 @@ CREATE TABLE role_operation (
 
 CREATE TABLE "user" (
     id integer NOT NULL,
-    username text,
-    password text,
+    username text NOT NULL,
+    password text NOT NULL,
     role_id integer DEFAULT 2,
     email text NOT NULL,
     email_confirmed boolean NOT NULL DEFAULT FALSE
@@ -306,12 +306,17 @@ ALTER TABLE ONLY verification_token ALTER COLUMN id SET DEFAULT nextval('verific
 ALTER TABLE ONLY verification_token
     ADD CONSTRAINT verification_token_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY verification_token
+  ADD CONSTRAINT verification_token_user_fk FOREIGN KEY (user_id)
+      REFERENCES public."user" (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 -- Completed on 2018-06-05 00:50:15 MSK
 
 CREATE TABLE rank (
     id integer NOT NULL,
-    name text,
+    name text NOT NULL,
     color character(6),
     rating_threshold integer
 );
@@ -341,10 +346,10 @@ ALTER SEQUENCE rank_id_seq OWNED BY rank.id;
 
 --
 -- TOC entry 186 (class 1259 OID 16507)
--- Name: user_info; Type: TABLE; Schema: public; Owner: -
+-- Name: profile; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_info (
+CREATE TABLE profile (
     user_id integer NOT NULL,
     first_name text DEFAULT NULL,
     last_name text DEFAULT NULL,
@@ -359,10 +364,10 @@ CREATE TABLE user_info (
 
 --
 -- TOC entry 185 (class 1259 OID 16505)
--- Name: user_info_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: profile_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE user_info_user_id_seq
+CREATE SEQUENCE profile_user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -373,13 +378,13 @@ CREATE SEQUENCE user_info_user_id_seq
 --
 -- TOC entry 2149 (class 0 OID 0)
 -- Dependencies: 185
--- Name: user_info_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: profile_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE user_info_user_id_seq OWNED BY user_info.user_id;
+ALTER SEQUENCE profile_user_id_seq OWNED BY profile.user_id;
 
-ALTER TABLE ONLY user_info
-    ADD CONSTRAINT user_info_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
+ALTER TABLE ONLY profile
+    ADD CONSTRAINT profile_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE;
 
 
 --
@@ -400,11 +405,11 @@ ALTER TABLE ONLY rank
 
 --
 -- TOC entry 2020 (class 2606 OID 16517)
--- Name: user_info user_info_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: profile profile_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_info
-    ADD CONSTRAINT user_info_pkey PRIMARY KEY (user_id);
+ALTER TABLE ONLY profile
+    ADD CONSTRAINT profile_pkey PRIMARY KEY (user_id);
 
 
 --
@@ -412,15 +417,15 @@ ALTER TABLE ONLY user_info
 -- Name: fki_rank_foreign_key; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX fki_rank_foreign_key ON public.user_info USING btree (rank_id);
+CREATE INDEX fki_rank_foreign_key ON public.profile USING btree (rank_id);
 
 
 --
 -- TOC entry 2023 (class 2606 OID 16537)
--- Name: user_info rank_foreign_key; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: profile rank_foreign_key; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_info
+ALTER TABLE ONLY profile
     ADD CONSTRAINT rank_foreign_key FOREIGN KEY (rank_id) REFERENCES rank(id) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 

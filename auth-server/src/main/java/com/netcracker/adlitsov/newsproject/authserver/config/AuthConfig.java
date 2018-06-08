@@ -5,18 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -28,7 +24,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     private static final int TWO_HOURS = 2 * 3600;
 
     @Autowired
-    UserService myUserDetailsService;
+    UserService userService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -69,14 +65,14 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
         // setting public/private keys pair for RSASHA256 signing algorithm
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
-        JwtAccessTokenConverter converter = new MyJwtAccessTokenConverter();
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverterWithId();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
 
         // setting our UserDetailsService in AuthConverter (it's used to get principal from our auth as
         // UserPrincipal object): Authentication -> UserPrincipal; without this we will get only
         // string in call like auth.getPrincipal()
         DefaultUserAuthenticationConverter duac = new DefaultUserAuthenticationConverter();
-        duac.setUserDetailsService(myUserDetailsService);
+        duac.setUserDetailsService(userService);
         DefaultAccessTokenConverter datc = new DefaultAccessTokenConverter();
         datc.setUserTokenConverter(duac);
 

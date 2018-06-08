@@ -27,7 +27,7 @@ public class Rank {
 
     @JsonIgnore
     @OneToMany(mappedBy = "rank", cascade = CascadeType.ALL)
-    private List<UserInfo> usersDetails;
+    private List<Profile> usersDetails;
 
     public Integer getId() {
         return id;
@@ -57,11 +57,11 @@ public class Rank {
         this.ratingThreshold = ratingThreshold;
     }
 
-    public List<UserInfo> getUsersDetails() {
+    public List<Profile> getUsersDetails() {
         return usersDetails;
     }
 
-    public void setUsersDetails(List<UserInfo> usersDetails) {
+    public void setUsersDetails(List<Profile> usersDetails) {
         this.usersDetails = usersDetails;
     }
 

@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
     public void sendConfirmationMessage(User user, VerificationToken verificationToken) {
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = "http://localhost:9999/user/confirm?token=" + verificationToken.getToken();
+        String confirmationUrl = "http://localhost:9999/users/confirm?token=" + verificationToken.getToken();
         String message = "Registration successful! Please, confirm email: " + confirmationUrl;
 
         sendSimpleMessage(recipientAddress, subject, message);

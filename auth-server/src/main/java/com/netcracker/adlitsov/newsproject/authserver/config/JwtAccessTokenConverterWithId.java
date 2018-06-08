@@ -1,7 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.config;
 
-import com.netcracker.adlitsov.newsproject.authserver.model.User;
-import com.netcracker.adlitsov.newsproject.authserver.service.MyUserPrincipal;
+import com.netcracker.adlitsov.newsproject.authserver.service.UserPrincipal;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -10,13 +9,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyJwtAccessTokenConverter extends JwtAccessTokenConverter {
+public class JwtAccessTokenConverterWithId extends JwtAccessTokenConverter {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         // adding user_id field to token if auth type == password (i.e. we have concrete user not just client)
         if(authentication.getOAuth2Request().getGrantType().equalsIgnoreCase("password")) {
-            MyUserPrincipal user = (MyUserPrincipal) authentication.getPrincipal();
+            UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
             final Map<String, Object> additionalInfo = new HashMap<>();
 
             additionalInfo.put("user_id", user.getId());

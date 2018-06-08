@@ -88,7 +88,7 @@ export class AuthService {
 
     console.log("register user", userInfo);
 
-    this.http.post(this.serviceURL + "/user/register", userInfo, httpOptions)
+    this.http.post(this.serviceURL + "/users/register", userInfo, httpOptions)
       .subscribe(res => {
         // TODO: instant login and redirect
         console.log("registered!");

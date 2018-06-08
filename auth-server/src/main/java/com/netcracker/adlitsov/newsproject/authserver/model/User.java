@@ -13,9 +13,9 @@ public class User implements Serializable {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String username;
 
-    @NotNull
     @NotBlank
     private String password;
 
@@ -24,14 +24,18 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
+    @NotBlank
     private String email;
 
     @NotNull
     boolean emailConfirmed;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private UserInfo userInfo;
+    private Profile profile;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private VerificationToken verificationToken;
 
     public Integer getId() {
         return id;
@@ -69,12 +73,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public boolean isEmailConfirmed() {
@@ -83,5 +87,13 @@ public class User implements Serializable {
 
     public void setEmailConfirmed(boolean emailConfirmed) {
         this.emailConfirmed = emailConfirmed;
+    }
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
     }
 }

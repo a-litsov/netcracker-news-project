@@ -26,6 +26,7 @@ import {CategoriesService} from './categories.service';
 import {CommentsService} from "./comments.service";
 import {AuthService} from "./auth/auth.service";
 import {MatIconRegistry} from "@angular/material";
+import { ProfileComponent } from './profile/profile.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -39,7 +40,8 @@ export function tokenGetter() {
     ArticleComponent,
     AddArticleComponent,
     EditArticleComponent,
-    AuthComponent
+    AuthComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

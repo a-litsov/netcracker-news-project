@@ -33,7 +33,6 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter{
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/register-user").access("#oauth2.hasScope('REGISTER_USER')")
                 .antMatchers("/create-user").access("#oauth2.hasScope('REGISTER_USER') and hasAuthority('OP_CREATE_USER')");
     }
 
