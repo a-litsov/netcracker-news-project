@@ -101,6 +101,7 @@ export class AuthService {
     let user: User = new User();
     let tokenInfo = this.jwtHelper.decodeToken();
     if (tokenInfo != null) {
+      user.userId = tokenInfo.user_id;
       user.userName = tokenInfo.user_name;
       user.authorities = tokenInfo.authorities;
       console.log("user parsed", user);
