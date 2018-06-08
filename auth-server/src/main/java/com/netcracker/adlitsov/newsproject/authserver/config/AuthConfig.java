@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.config;
 
+import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -15,9 +17,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
@@ -27,6 +27,9 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     private static final int TWO_HOURS = 2 * 3600;
 
+    @Autowired
+    UserService myUserDetailsService;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -35,7 +38,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .autoApprove(true)
                 .authorizedGrantTypes("client_credentials", "refresh_token", "password")
                 .secret(passwordEncoder().encode("website-secret"))
-                .accessTokenValiditySeconds(15)
+                .accessTokenValiditySeconds(TWO_HOURS)
                 .and()
             .withClient("users-service")
                 .scopes("REGISTER_USER")
@@ -64,9 +67,20 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
+        // setting public/private keys pair for RSASHA256 signing algorithm
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
         JwtAccessTokenConverter converter = new MyJwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
+
+        // setting our UserDetailsService in AuthConverter (it's used to get principal from our auth as
+        // UserPrincipal object): Authentication -> UserPrincipal; without this we will get only
+        // string in call like auth.getPrincipal()
+        DefaultUserAuthenticationConverter duac = new DefaultUserAuthenticationConverter();
+        duac.setUserDetailsService(myUserDetailsService);
+        DefaultAccessTokenConverter datc = new DefaultAccessTokenConverter();
+        datc.setUserTokenConverter(duac);
+
+        converter.setAccessTokenConverter(datc);
         return converter;
     }
 
