@@ -73,7 +73,7 @@ CREATE TABLE article (
     title text,
     logo_src text,
     content text,
-    author_name text,
+    author_id integer NOT NULL,
     add_date timestamp with time zone
 );
 

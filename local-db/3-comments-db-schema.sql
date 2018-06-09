@@ -65,7 +65,7 @@ SET default_with_oids = false;
 CREATE TABLE comment (
     id integer NOT NULL,
     parent_id integer,
-    author_name text,
+    author_id integer NOT NULL,
     article_id integer,
     add_date timestamp with time zone,
     content text
