@@ -1,6 +1,7 @@
 package com.netcracker.adlitsov.newsproject.authserver.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +25,7 @@ public class Profile implements Serializable {
     private int rating;
 
     @NotNull
-    private String avatarUrl = "https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png";
+    private String avatarUrl = "https://www.worldskills.org/components/angular-worldskills-utils/images/user.png";
 
     @NotNull
     private String about = "Этот пользователь предпочёл пока не указывать информации о себе";
@@ -46,6 +47,10 @@ public class Profile implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUserName() {
+        return user.getUsername();
     }
 
     public String getFirstName() {

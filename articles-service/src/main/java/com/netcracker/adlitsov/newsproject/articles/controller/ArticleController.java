@@ -3,17 +3,12 @@ package com.netcracker.adlitsov.newsproject.articles.controller;
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
-import com.netcracker.adlitsov.newsproject.articles.model.Category;
 import com.netcracker.adlitsov.newsproject.articles.repository.ArticleRepository;
-import com.netcracker.adlitsov.newsproject.articles.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Date;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,11 +45,19 @@ public class ArticleController {
 
     }
 
+    @GetMapping(params = "authorId")
+    public List<ArticlePreview> getArticlesByAuthorId(@RequestParam("authorId") Integer authorId) {
+        return articleRepository.findArticleByAuthorId(authorId)
+                                .orElseThrow(() -> new ResourceNotFoundException("Articles", "authorId", authorId))
+                                .stream()
+                                .map(Article::getPreview)
+                                .collect(Collectors.toList());
+    }
+
     @PostMapping()
     public Article createArticle(@Valid @RequestBody Article article) {
         return articleRepository.save(article);
     }
-
 
 
     @PutMapping("/{id}")
@@ -65,7 +68,7 @@ public class ArticleController {
                                            .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
 
         article.setTitle(articleDetails.getTitle());
-        article.setAuthorName(articleDetails.getAuthorName());
+        article.setAuthorId(articleDetails.getAuthorId());
         article.setCategory(articleDetails.getCategory());
         article.setTag(articleDetails.getTag());
         article.setLogoSrc(articleDetails.getLogoSrc());
@@ -78,7 +81,7 @@ public class ArticleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArticle(@PathVariable(value = "id") Integer articleId) {
         Article article = articleRepository.findById(articleId)
-                                  .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
+                                           .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
 
         articleRepository.delete(article);
 

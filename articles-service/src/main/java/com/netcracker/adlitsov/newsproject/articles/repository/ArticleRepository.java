@@ -12,4 +12,6 @@ import java.util.Optional;
 //@PreAuthorize("#oauth2.hasScope('ARTICLE')") //need to move that in service layer (to do)
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
     Optional<List<Article>> findArticleByCategory(Integer articleId);
+
+    Optional<List<Article>> findArticleByAuthorId(Integer articleId);
 }

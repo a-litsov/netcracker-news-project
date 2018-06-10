@@ -24,15 +24,15 @@ public class Comment implements Serializable {
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Comment> children;
 
-    @JsonIgnoreProperties({"parent", "articleId", "children", "authorName", "content", "addDate"})
+    @JsonIgnoreProperties({"parent", "articleId", "children", "authorId", "content", "addDate"})
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     @ManyToOne()
     private Comment parent;
 
     private Integer articleId;
 
-    @NotBlank
-    private String authorName;
+    @NotNull
+    private Integer authorId;
 
     @NotBlank
     private String content;
@@ -73,12 +73,12 @@ public class Comment implements Serializable {
         this.parent = parent;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public String getContent() {

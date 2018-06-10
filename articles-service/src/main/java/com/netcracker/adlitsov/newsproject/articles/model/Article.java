@@ -38,8 +38,8 @@ public class Article implements Serializable {
     @NotBlank
     private String content;
 
-    @NotBlank
-    private String authorName;
+    @NotNull
+    private Integer authorId;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -94,12 +94,12 @@ public class Article implements Serializable {
         this.content = content;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
     }
 
     public Date getAddDate() {

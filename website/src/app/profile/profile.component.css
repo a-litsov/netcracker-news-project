@@ -1,0 +1,227 @@
+.profile-wrapper {
+  max-width: 80%;
+  margin: 20px auto;
+}
+
+.main-profile-card {
+  min-height: 230px;
+}
+
+.avatar-block {
+  display: block;
+  float: left;
+  margin-right: 24px;
+}
+
+.user-avatar {
+  background-size: cover;
+  width: 150px;
+  height: 150px;
+  position: relative;
+  margin: 10px;
+  border: 1px solid white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.user-rank {
+  height: 30px;
+  width: 90px;
+  line-height: 30px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  margin: auto auto;
+  padding: auto auto;
+  padding-bottom: 4px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.user-info-content {
+  min-height: 120px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.user-name {
+  font-size: 200%;
+  width: 100px;
+}
+
+.user-real-name {
+  color: gray;
+  margin-top: 10px;
+}
+
+.last-name {
+  margin-left: 5px;
+}
+
+.user-table-info {
+  min-width: 300px;
+}
+
+.user-counts {
+  font-size: 100%;
+}
+
+.count-info {
+  margin-left: 10px;
+}
+
+.count {
+  margin-left: 5px;
+  font-size: 150%;
+}
+
+.user-name-and-info-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.user-info-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-label {
+  font-weight: 500;
+  padding-right: 50px;
+}
+
+.user-info-content > .header-divider {
+  margin-left: 10px;
+}
+
+.header-divider {
+  border-left:1px dashed #eeeeee;
+  width: 1px;
+}
+
+.about {
+  margin-left: 10px;
+}
+
+.about-title {
+  margin-left: 10px;
+}
+
+
+.activity-tab-group {
+  min-height: 310px;
+}
+
+/* css for dashboard of articles */
+
+.user-activity-card {
+  margin-top: 20px;
+}
+
+.grid-container {
+  margin: 20px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.article-link {
+  color: black;
+  text-decoration: none;
+}
+
+.article-link:hover {
+  color: blue;
+}
+
+.dashb-card {
+  max-height: 300px;
+  background-color: lightgoldenrodyellow;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.dashb-card-title {
+  font-size: 120%;
+}
+
+.tag {
+  padding: 5px;
+  margin-right: 5px;
+  color: white;
+  background-color: #3f51b5;
+  font-size: 90%;
+  float: left;
+}
+
+.date {
+  float: right;
+  padding: 5px;
+}
+
+
+/* comments styles */
+
+.comments-card {
+  margin-top: 20px;
+}
+
+.comments-block > .comment-wrapper {
+  margin-left: 0;
+}
+
+.comment-wrapper {
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+.comment-author{
+  font-weight: 600;
+}
+
+.comment-date {
+  margin-left: 10px;
+  color: gray;
+}
+
+.mat-card-title {
+  margin-bottom: 10px;
+}
+
+.comment-content  {
+  color: black;
+}
+
+.comment-buttons {
+  margin-top: -15px;
+}
+
+.comment-rating {
+  font-size: 150%;
+  color: black;
+  margin-left: 10px;
+}
+
+
+.comment-user-avatar {
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
+  display: table-cell;
+  background-size: cover;
+  border: 1px solid white;
+  margin: 0 10px;
+}

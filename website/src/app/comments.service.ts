@@ -14,6 +14,10 @@ export class CommentsService {
     return this.http.get<Comment[]>(this.serviceURL + "/comments?articleId=" + id);
   }
 
+  getCommentsByAuthorId(id: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.serviceURL + "/comments?authorId=" + id);
+  }
+
   getRootCommentsByArticleId(id: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(this.serviceURL + "/comments?articleId=" + id + "&root");
   }

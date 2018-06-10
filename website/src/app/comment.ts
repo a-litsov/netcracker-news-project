@@ -4,7 +4,7 @@ export class Comment {
     id: number
   };
   children: Comment[];
-  authorName: string;
+  authorId: number;
   addDate: Date;
   articleId: number;
   content: string;

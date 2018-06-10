@@ -29,6 +29,10 @@ export class ArticlesService {
     return this.http.get<Preview[]>(this.serviceURL + "/categories/" + categoryId + "/articles/preview?sort=add-date");
   }
 
+  getPreviewByAuthorId(authorId: number) {
+    return this.http.get<Preview[]>(this.serviceURL + "/articles?authorId=" + authorId);
+  }
+
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.serviceURL + "/categories");
   }

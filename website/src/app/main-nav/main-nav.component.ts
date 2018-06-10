@@ -14,6 +14,8 @@ import fontawesome from '@fortawesome/fontawesome';
 fontawesome.library.add(faAngleRight);
 
 import * as moment from 'moment';
+import {Profile} from "../profile/profile";
+import {ProfileService} from "../profile/profile.service";
 
 @Component({
   selector: 'main-nav',
@@ -26,6 +28,7 @@ export class MainNavComponent {
   isSideOpened: boolean = true;
 
   user: User;
+  profile: Profile;
 
   @ViewChild('drawer') drawer;
 
@@ -36,7 +39,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private categoriesService:
-    CategoriesService, private authService: AuthService) {}
+    CategoriesService, private authService: AuthService, private profileService: ProfileService) {}
 
   private getCategories() {
     this.categoriesService.getCategories().subscribe(
@@ -58,6 +61,8 @@ export class MainNavComponent {
     this.authService.currentUser.subscribe((user) => {
       console.log("get user", user);
       this.user = user;
+      // TODO: maybe there is more proper way?
+      this.authService.getProfile().subscribe((profile) => console.log(this.profile = profile));
     });
   }
 

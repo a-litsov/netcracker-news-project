@@ -354,7 +354,7 @@ CREATE TABLE profile (
     first_name text DEFAULT NULL,
     last_name text DEFAULT NULL,
     rating integer NOT NULL DEFAULT 0,
-    avatar_url text NOT NULL DEFAULT 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png'::text,
+    avatar_url text NOT NULL DEFAULT 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png'::text,
     about text NOT NULL DEFAULT 'Этот пользователь предпочёл пока не указывать информации о себе',
     last_online timestamp NOT NULL DEFAULT NOW(),
     reg_date timestamp NOT NULL DEFAULT NOW(),

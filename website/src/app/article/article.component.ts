@@ -4,6 +4,7 @@ import {Article} from "../article";
 import {Router, ActivatedRoute, ParamMap} from "@angular/router";
 import {CommentsService} from "../comments.service";
 import {Comment} from '../comment';
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-article',
@@ -17,7 +18,8 @@ export class ArticleComponent implements OnInit {
   userComment: Comment = new Comment();
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
-              private route: ActivatedRoute, private router: Router) { }
+              private authService: AuthService, private route: ActivatedRoute,
+              private router: Router) { }
 
   private loadArticle(id: number) {
     this.articlesService.getArticleById(id).subscribe((inArticle: Article) => {
@@ -47,7 +49,7 @@ export class ArticleComponent implements OnInit {
   }
 
   private createComment() {
-    this.userComment.authorName = "Неизвестный автор";
+    this.userComment.authorId = this.authService.user.userId;
     this.userComment.articleId = this.article.id;
     console.log("posting comment...", this.userComment);
     this.commentsService.createComment(this.userComment).subscribe((inComment: Comment) => {

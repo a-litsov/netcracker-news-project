@@ -1,4 +1,5 @@
 <!--ngIf here to be free of error due to html rendered before we load article from server-->
+<!--TODO: ngif? + spinner-->
 <div *ngIf="article" class="article-wrapper mat-typography">
 
   <mat-card>
@@ -11,7 +12,7 @@
           <div class="author-info">
             <div mat-card-avatar class="user-avatar"></div>
             <span class="author-name">
-              {{article.authorName}}
+              {{article.authorId}}
             </span>
           </div>
           <span class="article-add-date">{{article.addDate | date: 'hh:mm dd.MM.yyyy'}}</span>
@@ -59,7 +60,7 @@
           <mat-card-header>
             <div mat-card-avatar class="user-avatar"></div>
             <mat-card-title>
-              <span class="comment-author">{{comment.authorName}}</span>
+              <span class="comment-author">{{comment.authorId}}</span>
               <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
             </mat-card-title>
             <mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>
@@ -73,7 +74,7 @@
           <div class="comment-buttons">
             <button mat-button>Нравится</button>
             <button mat-button>Не нравится</button>
-            <button mat-button (click)="setParentComment(comment.authorName, comment.id)">Ответить</button>
+            <button mat-button (click)="setParentComment(comment.authorId, comment.id)">Ответить</button>
           </div>
           <div *ngIf="comment.children.length > 0">
             <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comment.children }"></ng-container>

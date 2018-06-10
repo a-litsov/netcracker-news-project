@@ -42,7 +42,7 @@ public class CommentController {
                                            .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
 
         comment.setArticleId(commentDetails.getArticleId());
-        comment.setAuthorName(commentDetails.getAuthorName());
+        comment.setAuthorId(commentDetails.getAuthorId());
         comment.setParent(commentDetails.getParent());
         comment.setContent(commentDetails.getContent());
 
@@ -63,13 +63,16 @@ public class CommentController {
 
     @GetMapping(params = "articleId")
     public List<Comment> getCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
-        return commentRepository.findByArticleId(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", articleId));
+        return commentRepository.findByArticleId(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
     }
 
     @GetMapping(params = {"articleId", "root"})
     public List<Comment> getRootCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
-        return commentRepository.findByArticleIdAndParentIsNull(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", articleId));
+        return commentRepository.findByArticleIdAndParentIsNull(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
     }
 
-
+    @GetMapping(params = "authorId")
+    public List<Comment> getCommentsByAuthorId(@RequestParam("authorId") Integer authorId) {
+        return commentRepository.findByAuthorId(authorId).orElseThrow(() -> new ResourceNotFoundException("Comment", "authorId", authorId));
+    }
 }

@@ -1,3 +1,176 @@
-<p>
-  profile works!
-</p>
+<!--TODO: ngif? + spinner-->
+<div *ngIf="profile" class="profile-wrapper mat-typography">
+
+  <mat-card class="main-profile-card">
+
+    <div class="avatar-block">
+      <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
+      <div [style.background-color]="getRankColor()" class="user-rank">{{profile.rank.name}}</div>
+    </div>
+
+    <div class="profile-header">
+      <div class="user-name">{{profile.userName}}</div>
+
+      <span class="example-fill-remaining-space"></span>
+
+      <div class="user-counts">
+        <span class="count-info">
+          Рейтинг <span class="count">{{profile.rating}}</span></span>
+        <span class="count-info">
+          Комментарии <span class="count">{{comments.length}}</span>
+        </span>
+        <span class="count-info">
+          Новости <span class="count">{{previews.length}}</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="user-real-name">
+      <span class="first-name">{{profile.firstName}}</span>
+      <span class="last-name">{{profile.lastName}}</span>
+    </div>
+
+    <hr class="user-name-and-info-divider">
+
+    <mat-card-content class="user-info-content">
+      <table class="user-table-info">
+        <tr>
+          <td>
+            <span class="info-label">Последний визит:</span>
+          </td>
+          <td>
+            {{profile.lastOnline | date: 'dd.MM.yyyy в hh:mm'}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="info-label">Дата регистрации:</span>
+          </td>
+          <td>
+            {{profile.regDate | date: 'dd.MM.yyyy'}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="info-label">Пол:</span>
+          </td>
+          <td>
+            Мужской
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="info-label">Родился:</span>
+          </td>
+          <td>
+            21.01.1996
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="info-label">Страна:</span>
+          </td>
+          <td>
+            Россия
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="info-label">Город:</span>
+          </td>
+          <td>
+            Нижний Новгород
+          </td>
+        </tr>
+      </table>
+
+      <div class="header-divider"></div>
+
+      <div class="about">
+        <div class="about-title info-label">О себе:</div>
+        <div class="about-content">{{profile.about}}</div>
+      </div>
+
+      <!--<div markdown [data]="article.content" class="article-content"></div>-->
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="user-activity-card">
+    <mat-card-title>Активность пользователя</mat-card-title>
+    <mat-tab-group class="activity-tab-group" [dynamicHeight]="true">
+      <mat-tab label="Статьи">
+        <mat-card-subtitle *ngIf="previews.length == 0">
+          <h2>Здесь пока нет статей...</h2>
+        </mat-card-subtitle>
+
+        <div class="grid-container" #gridContainer>
+          <!-- <h1 class="mat-h1">Dashboard</h1>  -->
+          <mat-grid-list [cols]="2" rowHeight="180">
+            <mat-grid-tile *ngFor="let preview of previews" [colspan]="1" [rowspan]="1">
+              <mat-card class="dashb-card">
+                <mat-card-header class="dashboard-card-header">
+                  <!--TODO: decide whether admin/editor should have access to edit/remove here-->
+                  <!--<button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">-->
+                    <!--<mat-icon>more_vert</mat-icon>-->
+                  <!--</button>-->
+                  <!--<mat-menu #menu="matMenu" xPosition="before">-->
+                    <!--<button mat-menu-item [routerLink]="['/article',preview.id,'edit']" routerLinkActive="active">-->
+                      <!--Редактировать-->
+                    <!--</button>-->
+                    <!--<button mat-menu-item (click)="deleteArticleById(preview.id)">Удалить</button>-->
+                  <!--</mat-menu>-->
+                  <mat-card-title class="dashb-card-title">
+                    <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">
+                      {{preview.title}}
+                    </a>
+                  </mat-card-title>
+                  <mat-card-subtitle>
+                <span class="tag">
+                  {{preview.tag.name}}
+                </span>
+                    <span class="date">
+                  {{preview.addDate | date: 'hh:mm dd.MM'}}
+                </span>
+                  </mat-card-subtitle>
+                </mat-card-header>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Комментарии">
+        <mat-card-subtitle *ngIf="comments.length == 0">
+          <h2>Здесь пока нет комментариев...</h2>
+        </mat-card-subtitle>
+
+        <div class="comments-block">
+          <div class="comment-wrapper" *ngFor="let comment of comments">
+            <mat-card-header>
+              <div mat-card-avatar class="comment-user-avatar"
+                   [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}">
+              </div>
+              <mat-card-title class="comment-title">
+                <span class="comment-author">{{profile.userName}}</span>
+                <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
+              </mat-card-title>
+              <mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>
+              <span class="example-fill-remaining-space"></span>
+              Рейтинг:
+              <div class="comment-rating">
+                0
+              </div>
+            </mat-card-header>
+
+            <div class="comment-buttons">
+              <button mat-button *ngIf="canVoteComment()">Нравится</button>
+              <button mat-button *ngIf="canVoteComment()">Не нравится</button>
+            </div>
+          </div>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+</div>

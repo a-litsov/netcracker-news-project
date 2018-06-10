@@ -149,12 +149,12 @@ INSERT INTO rank VALUES (3, 'Бывалый', '00B6C9', 10);
 
 
 
-INSERT INTO profile VALUES (1, 'Василий', 'Блокированный', -20, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я даже не могу зайти в аккаунт', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
-INSERT INTO profile VALUES (2, 'Михаил', 'Немногословный', -20, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Я вёл себя плохо и поэтому я теперь muted. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
-INSERT INTO profile VALUES (3, 'Игорь', 'Пользователев', 4, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
-INSERT INTO profile VALUES (4, 'Владимир', 'Редакторов', 15, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
-INSERT INTO profile VALUES (5, 'Альберт', 'Администраторов', 42, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
-INSERT INTO profile VALUES (6, 'Семён', 'Модераторов', 23, 'https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Avatar-512.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
+INSERT INTO profile VALUES (1, 'Василий', 'Блокированный', -20, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я даже не могу зайти в аккаунт', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO profile VALUES (2, 'Михаил', 'Немногословный', -20, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому я теперь muted. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO profile VALUES (3, 'Игорь', 'Пользователев', 4, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
+INSERT INTO profile VALUES (4, 'Владимир', 'Редакторов', 15, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
+INSERT INTO profile VALUES (5, 'Семён', 'Модераторов', 25, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
+INSERT INTO profile VALUES (6, 'Альберт', 'Администраторов', 42, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
 
 
 

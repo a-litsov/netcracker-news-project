@@ -8,6 +8,6 @@ export class Article {
   title: string;
   logoSrc: string;
   content: string;
-  authorName: string;
+  authorId: number;
   addDate: Date;
 }

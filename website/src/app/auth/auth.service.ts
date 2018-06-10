@@ -5,7 +5,8 @@ import {UserAuthDTO} from './userAuthDTO';
 import {UserRegDTO} from './userRegDTO';
 import * as moment from 'moment';
 import {User} from "./user";
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {Profile} from "../profile/profile";
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,17 @@ export class AuthService {
       }, error => errorHandler(error));
   }
 
+  getProfile(): Observable<Profile> {
+    let curUser = this.user;
+    // TODO: create default profile
+    if (curUser === this.guest) {
+      let guestProfile = new Profile();
+      guestProfile.avatarUrl = 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png';
+      return new BehaviorSubject<Profile>(guestProfile).asObservable();
+    }
+    return this.http.get<Profile>(this.serviceURL + "/profiles/" + this.user.userId);
+  }
+
   private parseUser(): User {
     let user: User = new User();
     let tokenInfo = this.jwtHelper.decodeToken();
@@ -117,6 +129,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem("access_token");
+    this.currentUser.next(this.user);
   }
 
   public isLoggedIn() {
@@ -130,6 +143,4 @@ export class AuthService {
   public hasAuthority(authority: string) {
     return this.isLoggedIn() && this.user.authorities.includes(authority);
   }
-
-
 }
