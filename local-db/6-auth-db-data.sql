@@ -154,7 +154,7 @@ INSERT INTO profile VALUES (2, 'Михаил', 'Немногословный', -
 INSERT INTO profile VALUES (3, 'Игорь', 'Пользователев', 4, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
 INSERT INTO profile VALUES (4, 'Владимир', 'Редакторов', 15, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
 INSERT INTO profile VALUES (5, 'Семён', 'Модераторов', 25, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
-INSERT INTO profile VALUES (6, 'Альберт', 'Администраторов', 42, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
+INSERT INTO profile VALUES (6, 'Альберт', 'Администраторов', 42, 'https://i.imgur.com/bzWhIub.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
 
 
 

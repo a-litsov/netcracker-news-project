@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.service;
 
+import com.netcracker.adlitsov.newsproject.authserver.exception.ForbiddenException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.VerificationTokenExpiredException;
 import com.netcracker.adlitsov.newsproject.authserver.model.Profile;
@@ -10,6 +11,7 @@ import com.netcracker.adlitsov.newsproject.authserver.repository.RankRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.RoleRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,9 +43,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() ->  new UsernameNotFoundException(username));
+                                  .orElseThrow(() -> new UsernameNotFoundException(username));
 
         return new UserPrincipal(user);
+    }
+
+    public User getUser(int userId) {
+        return userRepository.findById(userId)
+                             .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
     }
 
     public Profile getUserProfile(int userId) {
@@ -59,6 +66,10 @@ public class UserService implements UserDetailsService {
         previousProfile.setLastName(profile.getLastName());
         previousProfile.setAvatarUrl(profile.getAvatarUrl());
         previousProfile.setAbout(profile.getAbout());
+        previousProfile.setCountry(profile.getCountry());
+        previousProfile.setCity(profile.getCity());
+        previousProfile.setBirthDate(profile.getBirthDate());
+        previousProfile.setGender(profile.getGender());
 
         return userRepository.save(user).getProfile();
     }
@@ -104,7 +115,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User confirmUserByToken(String token) {
         User user = userRepository.findUserByVerificationToken_Token(token)
-                                        .orElseThrow(() -> new ResourceNotFoundException("User", "verificationToken", token));
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "verificationToken", token));
 
         VerificationToken verificationToken = user.getVerificationToken();
         Calendar cal = Calendar.getInstance();

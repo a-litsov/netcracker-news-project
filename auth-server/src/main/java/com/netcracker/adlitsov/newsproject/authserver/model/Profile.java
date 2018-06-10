@@ -2,6 +2,10 @@ package com.netcracker.adlitsov.newsproject.authserver.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.netcracker.adlitsov.newsproject.authserver.converter.GenderConverter;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +16,13 @@ import java.util.Date;
 @Entity
 @Table(name = "profile")
 public class Profile implements Serializable {
+
+    private static final GenderConverter GENDER_CONVERTER = new GenderConverter();
+
+    public static enum Gender {
+        MALE, FEMALE
+    }
+
     @Id
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -40,6 +51,15 @@ public class Profile implements Serializable {
     @ManyToOne
     @JoinColumn(name = "rank_id")
     private Rank rank;
+
+    private String country;
+
+    private String city;
+
+    private Date birthDate;
+
+    @Convert(converter = GenderConverter.class)
+    private Gender gender;
 
     public User getUser() {
         return user;
@@ -117,6 +137,50 @@ public class Profile implements Serializable {
         this.rank = rank;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    @JsonIgnore
+    public Gender getGender() {
+        return gender;
+    }
+
+    @JsonIgnore
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    @JsonGetter(value = "gender")
+    public String getGenderText() {
+        return GENDER_CONVERTER.convertToDatabaseColumn(gender);
+    }
+
+    @JsonSetter(value = "gender")
+    public void setGenderText(String gender) {
+        this.gender = GENDER_CONVERTER.convertToEntityAttribute(gender);
+    }
+
     @Override
     public String toString() {
         return "Profile{" +
@@ -129,6 +193,10 @@ public class Profile implements Serializable {
                 ", lastOnline=" + lastOnline +
                 ", regDate=" + regDate +
                 ", rank=" + rank +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender=" + gender +
                 '}';
     }
 }

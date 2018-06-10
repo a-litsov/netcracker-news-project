@@ -50,36 +50,36 @@
             {{profile.regDate | date: 'dd.MM.yyyy'}}
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="profile.gender">
           <td>
             <span class="info-label">Пол:</span>
           </td>
           <td>
-            Мужской
+            {{profile.gender}}
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="profile.birthDate">
           <td>
             <span class="info-label">Родился:</span>
           </td>
           <td>
-            21.01.1996
+            {{profile.birthDate}}
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="profile.country">
           <td>
             <span class="info-label">Страна:</span>
           </td>
           <td>
-            Россия
+            {{profile.country}}
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="profile.city">
           <td>
             <span class="info-label">Город:</span>
           </td>
           <td>
-            Нижний Новгород
+            {{profile.city}}
           </td>
         </tr>
       </table>

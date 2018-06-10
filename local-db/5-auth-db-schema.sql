@@ -351,14 +351,18 @@ ALTER SEQUENCE rank_id_seq OWNED BY rank.id;
 
 CREATE TABLE profile (
     user_id integer NOT NULL,
-    first_name text DEFAULT NULL,
-    last_name text DEFAULT NULL,
+    first_name varchar(20) DEFAULT NULL,
+    last_name varchar(20) DEFAULT NULL,
     rating integer NOT NULL DEFAULT 0,
     avatar_url text NOT NULL DEFAULT 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png'::text,
-    about text NOT NULL DEFAULT 'Этот пользователь предпочёл пока не указывать информации о себе',
+    about varchar(300) NOT NULL DEFAULT 'Этот пользователь предпочёл пока не указывать информации о себе',
     last_online timestamp NOT NULL DEFAULT NOW(),
     reg_date timestamp NOT NULL DEFAULT NOW(),
-    rank_id integer NOT NULL DEFAULT 2 NOT NULL
+    rank_id integer NOT NULL DEFAULT 2 NOT NULL,
+    country varchar(30),
+    city varchar(30),
+    birth_date timestamp,
+    gender varchar(10)
 );
 
 

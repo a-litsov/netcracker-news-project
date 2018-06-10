@@ -10,4 +10,8 @@ export class Profile {
   lastOnline: Date;
   regDate: Date;
   rank: Rank;
+  country: string;
+  city: string;
+  birthDate: Date;
+  gender: string;
 }
