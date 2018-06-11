@@ -38,12 +38,14 @@ INSERT INTO operation VALUES (9, 'OP_BAN_USER');
 INSERT INTO operation VALUES (10, 'OP_CREATE_USER');
 INSERT INTO operation VALUES (11, 'OP_UPDATE_USER');
 INSERT INTO operation VALUES (12, 'OP_DELETE_USER');
-INSERT INTO operation VALUES (13, 'OP_ADD_CATEGORY');
-INSERT INTO operation VALUES (14, 'OP_UPDATE_CATEGORY');
-INSERT INTO operation VALUES (15, 'OP_DELETE_CATEGORY');
-INSERT INTO operation VALUES (16, 'OP_ADD_TAG');
-INSERT INTO operation VALUES (17, 'OP_UPDATE_TAG');
-INSERT INTO operation VALUES (18, 'OP_DELETE_TAG');
+INSERT INTO operation VALUES (13, 'OP_UPDATE_PROFILE');
+INSERT INTO operation VALUES (14, 'OP_ADD_CATEGORY');
+INSERT INTO operation VALUES (15, 'OP_UPDATE_CATEGORY');
+INSERT INTO operation VALUES (16, 'OP_DELETE_CATEGORY');
+INSERT INTO operation VALUES (17, 'OP_ADD_TAG');
+INSERT INTO operation VALUES (18, 'OP_UPDATE_TAG');
+INSERT INTO operation VALUES (19, 'OP_DELETE_TAG');
+
 
 
 --
@@ -99,6 +101,7 @@ INSERT INTO role_operation VALUES (5, 6);
 INSERT INTO role_operation VALUES (5, 7);
 INSERT INTO role_operation VALUES (5, 8);
 INSERT INTO role_operation VALUES (5, 9);
+INSERT INTO role_operation VALUES (5, 13);
 INSERT INTO role_operation VALUES (6, 1);
 INSERT INTO role_operation VALUES (6, 2);
 INSERT INTO role_operation VALUES (6, 3);
@@ -117,6 +120,7 @@ INSERT INTO role_operation VALUES (6, 15);
 INSERT INTO role_operation VALUES (6, 16);
 INSERT INTO role_operation VALUES (6, 17);
 INSERT INTO role_operation VALUES (6, 18);
+INSERT INTO role_operation VALUES (6, 19);
 
 
 --

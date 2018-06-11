@@ -3,6 +3,7 @@ package com.netcracker.adlitsov.newsproject.authserver.service;
 import com.netcracker.adlitsov.newsproject.authserver.exception.ForbiddenException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.VerificationTokenExpiredException;
+import com.netcracker.adlitsov.newsproject.authserver.model.EmailInfo;
 import com.netcracker.adlitsov.newsproject.authserver.model.Profile;
 import com.netcracker.adlitsov.newsproject.authserver.model.User;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
@@ -63,6 +64,16 @@ public class UserService implements UserDetailsService {
                              .getProfile();
     }
 
+    public EmailInfo getUserEmailInfo(int userId) {
+        User user = getUser(userId);
+
+        EmailInfo emailInfo = new EmailInfo();
+        emailInfo.setEmail(user.getEmail());
+        emailInfo.setConfirmed(user.isEmailConfirmed());
+
+        return emailInfo;
+    }
+
     public Profile updateUserProfile(User user, Profile profile) {
         Profile previousProfile = user.getProfile();
 
@@ -94,15 +105,30 @@ public class UserService implements UserDetailsService {
         profile.setUser(user);
         user.setProfile(profile);
 
+
+        User savedUser = userRepository.save(sendConfirmation(user));
+        return savedUser;
+    }
+
+    public void sendConfirmation(int userId) {
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        if (user.isEmailConfirmed()) {
+            throw new ForbiddenException();
+        }
+
+        userRepository.save(sendConfirmation(user));
+    }
+
+    private User sendConfirmation(User user) {
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setUser(user);
         user.setVerificationToken(verificationToken);
 
-        User savedUser = userRepository.save(user);
+        mailService.sendConfirmationMessage(user, verificationToken);
 
-        mailService.sendConfirmationMessage(savedUser, verificationToken);
-
-        return savedUser;
+        return user;
     }
 
     // creates user with any role without confirmation email
@@ -146,16 +172,10 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(id)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        VerificationToken verificationToken = new VerificationToken();
-        verificationToken.setUser(user);
-        user.setVerificationToken(verificationToken);
-
         user.setEmail(newEmail);
         user.setEmailConfirmed(false);
 
-        User updatedUser = userRepository.save(user);
-        mailService.sendConfirmationMessage(updatedUser, updatedUser.getVerificationToken());
-
+        User updatedUser = userRepository.save(sendConfirmation(user));
         return updatedUser.getEmail();
     }
 

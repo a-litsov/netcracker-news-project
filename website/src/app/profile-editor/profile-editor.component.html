@@ -1,0 +1,49 @@
+<div class="wrapper">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2>Редактирование профиля</h2>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput [(ngModel)]="profile.firstName" placeholder="Имя пользователя">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="profile.lastName" placeholder="Фамилия пользователя">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Пол" [(ngModel)]="profile.gender">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let gender of genders" [value]="gender">
+            {{ gender }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Дата рождения" [(ngModel)]="profile.birthDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [(ngModel)]="profile.avatarUrl.logoSrc" placeholder="Ссылка на аватар">
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea class="about-area" matInput [(ngModel)]="profile.about"
+                  placeholder="О себе (макс. 270 символов)" matTextareaAutosize></textarea>
+      </mat-form-field>
+
+      <div class="buttons">
+        <button class="apply-button" mat-raised-button color="primary" (click)="updateProfile()">Применить</button>
+        <button mat-button class="apply-button" (click)="cancel()">Отмена</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

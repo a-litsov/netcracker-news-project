@@ -8,6 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {EditArticleComponent} from "./edit-article/edit-article.component";
 import {AuthComponent} from "./auth/auth.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {ProfileEditorComponent} from "./profile-editor/profile-editor.component";
+import {UserSettingsComponent} from "./user-settings/user-settings.component";
 
 
 const appRoutes: Routes = [
@@ -16,7 +18,11 @@ const appRoutes: Routes = [
   { path: 'add-article', component: AddArticleComponent},
   { path: 'article/:id/edit', component: EditArticleComponent},
   { path: 'auth', component: AuthComponent },
+  { path: 'profile/edit', component: ProfileEditorComponent},
+  { path: 'profile/:id/edit', component: ProfileEditorComponent},
   { path: 'profile/:id', component: ProfileComponent},
+  { path: 'user/settings', component: UserSettingsComponent},
+  { path: 'user/:id/settings', component: UserSettingsComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'

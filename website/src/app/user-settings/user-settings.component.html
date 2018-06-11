@@ -1,0 +1,52 @@
+<div class="wrapper">
+
+  <mat-card>
+    <mat-tab-group class="form-tab-group" [dynamicHeight]="true">
+      <mat-tab label="Сменить пароль">
+        <div class="form-wrapper">
+          <mat-form-field>
+            <input matInput type="password" [(ngModel)]="passwordsPair.oldPassword" placeholder="Текущий пароль">
+          </mat-form-field>
+
+          <mat-label class="error-label">{{errorMessage}}</mat-label>
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Новый пароль">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="password" [(ngModel)]="passwordsPair.newPassword"
+                   placeholder="Повторите новый пароль">
+          </mat-form-field>
+
+          <button class="password-button" mat-raised-button color="primary" (click)="updatePassword()">Применить
+          </button>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Поменять адрес почты">
+        <div class="form-wrapper">
+          <mat-form-field>
+            <input class="current-email-field" matInput [readonly]="true" [value]="emailInfo.email"
+                   placeholder="Текущий адрес почты">
+          </mat-form-field>
+          <div class="email-status">
+            Статус:
+            <span class="email-status-ok" *ngIf="emailInfo.confirmed">Подтверждена</span>
+            <span class="email-status-bad" *ngIf="!emailInfo.confirmed">Не подтверждена</span>
+          </div>
+          <mat-form-field>
+            <input matInput placeholder="Новый адрес почты" [(ngModel)]="email">
+          </mat-form-field>
+          <div class="buttons">
+            <button class="change-email-button" mat-raised-button color="primary" (click)="updateEmail()">Применить</button>
+            <button class="confirm-email-button" mat-button *ngIf="!emailInfo.confirmed" (click)="sendConfirmation()">
+              Выслать повторное сообщение
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+</div>

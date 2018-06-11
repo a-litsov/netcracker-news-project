@@ -27,6 +27,7 @@ export class AuthComponent implements OnInit {
         console.log(error);
         switch (error.status) {
           case 400:
+            // TODO: token expired!
             console.log("our error", error);
             if (error.error.error_description.includes("disabled"))
               this.errorMessage = "Аккаунт заблокирован. Доступ запрещен!";

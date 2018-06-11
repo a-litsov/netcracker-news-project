@@ -1,0 +1,28 @@
+.wrapper {
+  margin: 15px;
+  min-height: 800px;
+}
+
+.mat-card {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-area {
+  min-height: 60px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.apply-button {
+  width: 40%;
+  margin: auto;
+}

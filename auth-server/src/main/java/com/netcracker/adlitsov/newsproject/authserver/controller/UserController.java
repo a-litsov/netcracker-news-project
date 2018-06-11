@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.controller;
 
+import com.netcracker.adlitsov.newsproject.authserver.model.EmailInfo;
 import com.netcracker.adlitsov.newsproject.authserver.model.User;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
 import com.netcracker.adlitsov.newsproject.authserver.model.VerificationToken;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 
 @RestController
-public class RegisterController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -50,9 +51,9 @@ public class RegisterController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/send-message")
-    public void sendMessage(String to, String subject, String text) {
-        mailService.sendSimpleMessage(to, subject, text);
+    @GetMapping("/users/{id}/send-confirmation")
+    public void sendMessage(@PathVariable("id") Integer id) {
+        userService.sendConfirmation(id);
     }
 
     @GetMapping(value = "/users/confirm")

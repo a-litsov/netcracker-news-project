@@ -60,10 +60,10 @@
         </tr>
         <tr *ngIf="profile.birthDate">
           <td>
-            <span class="info-label">Родился:</span>
+            <span class="info-label">Дата рождения:</span>
           </td>
           <td>
-            {{profile.birthDate}}
+            {{profile.birthDate | date: 'dd.MM.yyyy'}}
           </td>
         </tr>
         <tr *ngIf="profile.country">
