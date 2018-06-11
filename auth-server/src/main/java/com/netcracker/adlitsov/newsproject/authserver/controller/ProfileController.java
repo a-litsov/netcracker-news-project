@@ -5,6 +5,7 @@ import com.netcracker.adlitsov.newsproject.authserver.model.Profile;
 import com.netcracker.adlitsov.newsproject.authserver.service.UserPrincipal;
 import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -34,11 +35,6 @@ public class ProfileController {
     }
 
     // @AuthenticationPrincipal is used to get current user principal from spring security context (auth obj)
-    @PutMapping("/profiles")
-    public Profile updateMyProfile(@AuthenticationPrincipal UserPrincipal principal, @RequestBody Profile profile) {
-        return userService.updateUserProfile(principal.getUser(), profile);
-    }
-
     @GetMapping("/genders")
     public List<String> getGenders() {
         GenderConverter genderConverter = new GenderConverter();

@@ -48,6 +48,10 @@ public class UserService implements UserDetailsService {
         return new UserPrincipal(user);
     }
 
+    public UserDetails loadUserById(int id) {
+        return new UserPrincipal(getUser(id));
+    }
+
     public User getUser(int userId) {
         return userRepository.findById(userId)
                              .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
@@ -81,8 +85,9 @@ public class UserService implements UserDetailsService {
             throw new UserAlreadyExistsException(user);
         }
 
-        user.setRole(roleRepository.findByAuthority("ROLE_MUTED"));
+        user.setRole(roleRepository.findByAuthority("ROLE_USER"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmailConfirmed(false);
 
         Profile profile = new Profile();
         profile.setRank(rankRepository.findByName("Новичок"));
@@ -127,17 +132,50 @@ public class UserService implements UserDetailsService {
             throw new VerificationTokenExpiredException("VerificationToken", "value", token);
         }
 
-        // Shouldn't be used to make: banned -> user; muted -> user with already approved mail
-        if (!user.isEmailConfirmed()) {
-            // admin could manually change role without any mail approval, then we mustn't change role
-            if ("ROLE_MUTED".equals(user.getRole().getAuthority())) {
-                user.setRole(roleRepository.findByAuthority("ROLE_USER"));
-            }
-            user.setEmailConfirmed(true);
-        }
+        // have no influence on user group (it's separate marker)
+        user.setEmailConfirmed(true);
 
         // orphanRemoval - this removes verToken from table in db
         user.setVerificationToken(null);
         return userRepository.save(user);
+    }
+
+    // usual method which sends confirmation email
+    @Transactional
+    public String updateUserEmail(int id, String newEmail) {
+        User user = userRepository.findById(id)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        VerificationToken verificationToken = new VerificationToken();
+        verificationToken.setUser(user);
+        user.setVerificationToken(verificationToken);
+
+        user.setEmail(newEmail);
+        user.setEmailConfirmed(false);
+
+        User updatedUser = userRepository.save(user);
+        mailService.sendConfirmationMessage(updatedUser, updatedUser.getVerificationToken());
+
+        return updatedUser.getEmail();
+    }
+
+    // TODO: check password in method level security; charSequence?
+    @Transactional
+    public void updateUserPassword(int id, String oldPassword, String newPassword) {
+        User user = userRepository.findById(id)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        // passwords don't match
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new ForbiddenException();
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        // TODO: make separate method for this in  mailService
+        mailService.sendSimpleMessage(user.getEmail(), "News project site - настройки аккаунта изменились",
+                                      "Уважаемый " + user.getUsername() + ", кто-то изменил пароль для вашего аккаунта." +
+                                              "\nЕсли это были не вы, пожалуйста, свяжитесь с администрацией сайта.");
     }
 }

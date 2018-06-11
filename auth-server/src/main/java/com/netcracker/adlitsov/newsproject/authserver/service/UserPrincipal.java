@@ -5,8 +5,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
+// used by spring security as representation of user
 public class UserPrincipal implements UserDetails {
     private User user;
 
@@ -64,5 +67,31 @@ public class UserPrincipal implements UserDetails {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean hasAuthority(String authority) {
+        return getAuthorities().stream()
+                               .anyMatch(a -> Objects.equals(authority, a.getAuthority()));
+    }
+
+    public boolean hasAnyAuthority(String... authorities) {
+        for (String authority : authorities) {
+            for (GrantedAuthority ourAuthority : getAuthorities()) {
+                if (Objects.equals(ourAuthority.getAuthority(), authority)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasRole(String role) {
+        return Objects.equals("ROLE_" + role, user.getRole().getAuthority());
+    }
+
+    public boolean hasAnyRole(String... roles) {
+        return Arrays.stream(roles)
+                     .anyMatch(r -> Objects.equals("ROLE_" + r, user.getRole().getAuthority()));
+
     }
 }
