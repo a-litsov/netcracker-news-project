@@ -40,8 +40,14 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/create-user").access("#oauth2.hasScope('REGISTER_USER') and hasAuthority('OP_CREATE_USER')")
-                .antMatchers(HttpMethod.GET, "/profiles/**").permitAll();
+                // UserController
+                .antMatchers("/users/register", "/users/confirm", "/users/{\\d+}/send-confirmation").permitAll()
+                .antMatchers("/users/create").hasAuthority("OP_CREATE_USER")
+                .antMatchers("/users/{\\d+}/mute", "/users/{\\d+}/unmute").hasAuthority("OP_MUTE_USER")
+                .antMatchers("/users/{\\d+}/ban", "/users/{\\d+}/unban").hasAuthority("OP_BAN_USER")
+                // SettingsController
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     // setting default expression handler (need to

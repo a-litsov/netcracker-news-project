@@ -31,7 +31,7 @@ public class ProfileController {
 
     @PutMapping("/profiles/{id}")
     public Profile updateUserProfile(@PathVariable("id") Integer id, @RequestBody Profile profile) {
-        return userService.updateUserProfile(userService.getUser(id), profile);
+        return userService.updateUserProfile(id, profile);
     }
 
     // @AuthenticationPrincipal is used to get current user principal from spring security context (auth obj)

@@ -20,6 +20,7 @@ public class SettingsController {
         return userService.getUserEmailInfo(id);
     }
 
+    // TODO: add ability to change email without confirmation mail to moderators (OP_SET_EMAIL)
     @PutMapping(value = "/users/{id}/email")
     public String updateEmail(@PathVariable("id") Integer id, @RequestBody String newEmail) {
         return JSONFunctions.quote(userService.updateUserEmail(id, newEmail));

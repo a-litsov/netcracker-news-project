@@ -71,7 +71,9 @@ public class UserService implements UserDetailsService {
         return emailInfo;
     }
 
-    public Profile updateUserProfile(User user, Profile profile) {
+    @PreAuthorize("@securityService.canUpdateProfile(principal, #id)")
+    public Profile updateUserProfile(int id, Profile profile) {
+        User user = getUser(id);
         Profile previousProfile = user.getProfile();
 
         previousProfile.setFirstName(profile.getFirstName());
@@ -165,6 +167,7 @@ public class UserService implements UserDetailsService {
 
     // usual method which sends confirmation email
     @Transactional
+    @PreAuthorize("@securityService.canUpdateEmail(principal, #id)")
     public String updateUserEmail(int id, String newEmail) {
         User user = userRepository.findById(id)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
@@ -178,14 +181,10 @@ public class UserService implements UserDetailsService {
 
     // TODO: check password in method level security; charSequence?
     @Transactional
+    @PreAuthorize("@securityService.canUpdatePassword(principal, #id, #oldPassword)")
     public void updateUserPassword(int id, String oldPassword, String newPassword) {
         User user = userRepository.findById(id)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-
-        // passwords don't match
-        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new ForbiddenException();
-        }
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
