@@ -55,7 +55,7 @@
     </mat-card-subtitle>
 
     <div class="comments-block">
-      <ng-template #recursiveList let-comments>
+      <ng-template #recursiveList let-comments let-parent="parent">
         <div class="comment-wrapper" *ngFor="let comment of comments">
           <mat-card-header>
             <div mat-card-avatar class="user-avatar"></div>
@@ -63,7 +63,12 @@
               <span class="comment-author">{{comment.authorId}}</span>
               <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
             </mat-card-title>
-            <mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>
+            <mat-card-subtitle class="comment-content" *ngIf="!comment.hidden">
+              {{comment.content}}
+            </mat-card-subtitle>
+            <mat-card-subtitle class="comment-content" *ngIf="comment.hidden">
+              <em>Содержимое комментария скрыто модератором</em>
+            </mat-card-subtitle>
             <span class="example-fill-remaining-space"></span>
             Рейтинг:
             <div class="comment-rating">
@@ -74,22 +79,26 @@
           <div class="comment-buttons">
             <button mat-button>Нравится</button>
             <button mat-button>Не нравится</button>
-            <button mat-button (click)="setParentComment(comment.authorId, comment.id)">Ответить</button>
-          </div>
-          <div *ngIf="comment.children.length > 0">
-            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comment.children }"></ng-container>
+            <button mat-button (click)="setParentComment(comment)">Ответить</button>
+            <button mat-button *ngIf="!comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="hideComment(comment)">Скрыть</button>
+            <button mat-button *ngIf="comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="showComment(comment)">Показать</button>
+            <button mat-button *ngIf="authService.hasAuthority('OP_DELETE_COMMENT')" (click)="deleteComment(comment, parent)">Удалить</button>
           </div>
 
-          <mat-divider *ngIf="comment.parent === null" class="comments-divider"></mat-divider>
+          <hr class="comments-divider">
+
+
+          <div *ngIf="comment.children.length > 0">
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comment.children, parent: comment }"></ng-container>
+          </div>
+
         </div>
       </ng-template>
 
       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comments }"></ng-container>
     </div>
 
-    <mat-divider></mat-divider>
-
-    <div class="user-comment">
+    <div class="user-comment" *ngIf="authService.hasAuthority('OP_ADD_COMMENT')">
       <mat-card-title>
         <h3>Ваш комментарий</h3>
       </mat-card-title>

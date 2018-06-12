@@ -16,6 +16,8 @@ fontawesome.library.add(faAngleRight);
 import * as moment from 'moment';
 import {Profile} from "../profile/profile";
 import {ProfileService} from "../profile/profile.service";
+import {EmailInfo} from "../user-settings/emailInfo";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'main-nav',
@@ -26,9 +28,11 @@ export class MainNavComponent {
 
   categories: Category[];
   isSideOpened: boolean = true;
+  isEmailBannerShown: boolean = true;
 
   user: User;
   profile: Profile;
+  emailInfo: EmailInfo = new EmailInfo();
 
   @ViewChild('drawer') drawer;
 
@@ -38,8 +42,9 @@ export class MainNavComponent {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private categoriesService:
-    CategoriesService, private authService: AuthService, private profileService: ProfileService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private categoriesService: CategoriesService,
+              private authService: AuthService, private profileService: ProfileService,
+              private router: Router) {}
 
   private getCategories() {
     this.categoriesService.getCategories().subscribe(
@@ -52,6 +57,7 @@ export class MainNavComponent {
 
   private logout() {
     this.authService.logout();
+    this.router.navigateByUrl("/");
   }
 
   ngOnInit() {
@@ -61,6 +67,8 @@ export class MainNavComponent {
     this.authService.currentUser.subscribe((user) => {
       console.log("get user", user);
       this.user = user;
+      this.authService.getEmailInfo().subscribe((emailInfo) =>
+        console.log("emailInfo in main-nav:", this.emailInfo = emailInfo));
       // TODO: maybe there is more proper way?
       this.authService.getProfile().subscribe((profile) => console.log(this.profile = profile));
     });

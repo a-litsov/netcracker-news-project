@@ -1,4 +1,4 @@
 export class EmailInfo {
   email: string;
-  confirmed: boolean;
+  confirmed: boolean = true;
 }

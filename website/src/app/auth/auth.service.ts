@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import {User} from "./user";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Profile} from "../profile/profile";
+import {EmailInfo} from "../user-settings/emailInfo";
+import {UserService} from "../user-settings/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,8 @@ export class AuthService {
   public currentUser: BehaviorSubject<User>;
   private _userAuthorities: string[];
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService,
+              private userService: UserService) {
     this.currentUser =  new BehaviorSubject<User>(this.user);
     console.log("behaviorSubject created");
     // this.useman.subscribe(res => console.log("it's res inside service", res));
@@ -61,7 +64,6 @@ export class AuthService {
       .subscribe(res => {
         this.setSession(res);
         this.user = this.parseUser();
-        this.currentUser.next(this.user);
 
         let expirationDate = this.jwtHelper.getTokenExpirationDate();
         let expirationMoment = moment(expirationDate);
@@ -72,9 +74,18 @@ export class AuthService {
         }.bind(this), duration);
 
         console.log("put next", this.currentUser);
+        this.currentUser.next(this.user);
 
         onSuccess();
       }, error => errorHandler(error));
+
+  }
+
+  public getEmailInfo(): Observable<EmailInfo> {
+    if (this.isLoggedIn())
+      return this.userService.getEmailInfoById(this.user.userId);
+    else
+      return Observable.of(new EmailInfo);
   }
 
   public register(userInfo: UserRegDTO, onSuccess, errorHandler) {
@@ -142,5 +153,17 @@ export class AuthService {
 
   public hasAuthority(authority: string) {
     return this.isLoggedIn() && this.user.authorities.includes(authority);
+  }
+
+  public hasAnyAuthority(...authorities: string[]) {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+    for (var i = 0; i < authorities.length; i++) {
+      if (this.user.authorities.includes(authorities[i])) {
+        return true;
+      }
+    }
+    return false;
   }
 }

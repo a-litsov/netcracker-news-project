@@ -1,9 +1,9 @@
-<mat-toolbar class="confirm-email-banner">
+<mat-toolbar class="confirm-email-banner" *ngIf="!emailInfo.confirmed && isEmailBannerShown">
     Пожалуйста, подтвердите почту, которую вы указали при регистрации, чтобы писать комментарии и изменять
   рейтинг новостей и комментариев.
   <!-- This fills the remaining space of the current row -->
   <span class="example-fill-remaining-space"></span>
-  <button mat-icon-button [disableRipple]="true" (click)="drawer.toggle()">
+  <button mat-icon-button [disableRipple]="true" (click)="isEmailBannerShown = false">
     <mat-icon class="hide-confirm-email-banner" fontSet="fa" fontIcon="fa-times">
     </mat-icon>
   </button>
@@ -32,7 +32,6 @@
       <a mat-list-item [routerLink]="['profile', user.userId]">Мой профиль</a>
       <a mat-list-item routerLink="/profile/edit">Редактировать профиль</a>
       <a mat-list-item routerLink="/user/settings">Настройки</a>
-      <a mat-list-item href="#">Мои комментарии</a>
       <a mat-list-item routerLink="/add-article" *ngIf="authService.hasAuthority('OP_ADD_ARTICLE')">Добавить новость</a>
       <a mat-list-item (click)="logout()">Выйти</a>
     </mat-nav-list>

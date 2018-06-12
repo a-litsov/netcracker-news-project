@@ -5,6 +5,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import {Article} from "../article";
 import { Location } from "@angular/common";
+import {AuthService} from "../auth/auth.service";
 @Component({
   selector: 'articles-dashb',
   templateUrl: './articles-dashb.component.html',
@@ -18,7 +19,7 @@ export class ArticlesDashbComponent {
   @ViewChild('gridContainer') gridContainer: ElementRef;
 
   constructor(private articlesService: ArticlesService, private route: ActivatedRoute,
-              private location: Location,
+              private location: Location, private authService: AuthService,
               private cdRef:ChangeDetectorRef) {
   }
 

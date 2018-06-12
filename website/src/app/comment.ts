@@ -3,11 +3,12 @@ export class Comment {
   parent: {
     id: number
   };
-  children: Comment[];
+  children: Comment[] = new Array();
   authorId: number;
   addDate: Date;
   articleId: number;
   content: string;
+  hidden: boolean = false;
 
   constructor() { }
 }

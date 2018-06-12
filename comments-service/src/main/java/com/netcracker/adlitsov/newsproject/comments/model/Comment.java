@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class Comment implements Serializable {
 
 //    @JsonIgnore
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
+    @OrderBy("addDate")
     private List<Comment> children;
 
     @JsonIgnoreProperties({"parent", "articleId", "children", "authorId", "content", "addDate"})

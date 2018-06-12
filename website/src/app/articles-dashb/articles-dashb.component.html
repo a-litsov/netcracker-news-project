@@ -7,12 +7,15 @@
           <img mat-card-image src={{preview.logoSrc}} class="card-image">
         </a>
         <mat-card-header class="dashboard-card-header">
-          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu"
+                  *ngIf="authService.hasAnyAuthority('OP_UPDATE_ARTICLE', 'OP_DELETE_ARTICLE')">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu" xPosition="before">
-            <button mat-menu-item [routerLink]="['/article',preview.id,'edit']" routerLinkActive="active">Редактировать</button>
-            <button mat-menu-item (click)="deleteArticleById(preview.id)">Удалить</button>
+            <button mat-menu-item [routerLink]="['/article',preview.id,'edit']" *ngIf="authService.hasAuthority('OP_UPDATE_ARTICLE')"
+                    routerLinkActive="active">Редактировать</button>
+            <button mat-menu-item *ngIf="authService.hasAuthority('OP_DELETE_ARTICLE')"
+                    (click)="deleteArticleById(preview.id)">Удалить</button>
           </mat-menu>
           <mat-card-title>
             <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">

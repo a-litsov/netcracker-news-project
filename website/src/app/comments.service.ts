@@ -25,4 +25,16 @@ export class CommentsService {
   createComment(comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(this.serviceURL + "/comments", comment);
   }
+
+  hideComment(id: number): Observable<void> {
+    return this.http.put<void>(this.serviceURL + "/comments/" + id + "/hide", null);
+  }
+
+  showComment(id: number): Observable<void> {
+    return this.http.put<void>(this.serviceURL + "/comments/" + id + "/show", null);
+  }
+
+  deleteComment(id: number): Observable<void> {
+    return this.http.delete<void>(this.serviceURL + "/comments/" + id);
+  }
 }

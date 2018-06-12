@@ -19,7 +19,7 @@ public class CommentsService {
     CommentsRepository commentsRepository;
 
     public List<Comment> getAllComments() {
-        return commentsRepository.findAll();
+        return commentsRepository.findAllByOrderByAddDate();
     }
 
     public Comment getCommentById(Integer id) {
@@ -67,15 +67,21 @@ public class CommentsService {
         Comment comment = commentsRepository.findById(commentId)
                                             .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
 
+        // made all children to move one level higher
+        List<Comment> children = commentsRepository.findByParent(comment);
+        children.forEach((c) -> c.setParent(comment.getParent()));
+        commentsRepository.saveAll(children);
         commentsRepository.delete(comment);
     }
 
     public List<Comment> getCommentsByArticleId(Integer articleId) {
-        return commentsRepository.findByArticleId(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsRepository.findByArticleIdOrderByAddDate(articleId)
+                                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
     }
 
     public List<Comment> getRootCommentsByArticleId(Integer articleId) {
-        return commentsRepository.findByArticleIdAndParentIsNull(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsRepository.findByArticleIdAndParentIsNullOrderByAddDate(articleId)
+                                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
     }
 
     public List<Comment> getCommentsByAuthorId(Integer authorId) {

@@ -9,9 +9,12 @@ import java.util.Optional;
 
 public interface CommentsRepository extends JpaRepository<Comment, Integer> {
 
-    Optional<List<Comment>> findByArticleId(Integer articleId);
-    Optional<List<Comment>> findByArticleIdAndParentIsNull(Integer articleId);
+    List<Comment> findAllByOrderByAddDate();
+
+    Optional<List<Comment>> findByArticleIdOrderByAddDate(Integer articleId);
+    Optional<List<Comment>> findByArticleIdAndParentIsNullOrderByAddDate(Integer articleId);
 
     Optional<List<Comment>> findByAuthorId(Integer authorId);
+    List<Comment> findByParent(Comment parent);
 
 }
