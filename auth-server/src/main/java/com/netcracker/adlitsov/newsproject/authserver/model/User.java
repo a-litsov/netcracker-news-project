@@ -39,6 +39,9 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private VerificationToken verificationToken;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Punishment punishment;
+
     public Integer getId() {
         return id;
     }
@@ -97,5 +100,13 @@ public class User implements Serializable {
 
     public void setVerificationToken(VerificationToken verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public Punishment getPunishment() {
+        return punishment;
+    }
+
+    public void setPunishment(Punishment punishment) {
+        this.punishment = punishment;
     }
 }

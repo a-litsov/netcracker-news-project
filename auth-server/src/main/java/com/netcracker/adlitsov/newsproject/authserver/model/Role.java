@@ -30,6 +30,10 @@ public class Role implements GrantedAuthority {
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private List<User> users;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "prevRole", cascade = CascadeType.ALL)
+    private List<Punishment> punishments;
+
     public Integer getId() {
         return id;
     }
@@ -58,6 +62,14 @@ public class Role implements GrantedAuthority {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<Punishment> getPunishments() {
+        return punishments;
+    }
+
+    public void setPunishments(List<Punishment> punishments) {
+        this.punishments = punishments;
     }
 
     @Override

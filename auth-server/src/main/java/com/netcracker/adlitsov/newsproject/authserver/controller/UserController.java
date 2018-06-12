@@ -66,4 +66,24 @@ public class UserController {
             return new ResponseEntity<>("Confirmation not succeedded", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/users/{id}/mute")
+    public void muteUser(@PathVariable("id") Integer id) {
+        userService.muteUser(id);
+    }
+
+    @GetMapping("/users/{id}/unmute")
+    public void unmuteUser(@PathVariable("id") Integer id) {
+        userService.unmuteUser(id);
+    }
+
+    @GetMapping("/users/{id}/ban")
+    public void banUser(@PathVariable("id") Integer id) {
+        userService.banUser(id);
+    }
+
+    @GetMapping("/users/{id}/unban")
+    public void unbanUser(@PathVariable("id") Integer id) {
+        userService.unbanUser(id);
+    }
 }

@@ -31,20 +31,24 @@ INSERT INTO operation VALUES (2, 'OP_UPDATE_ARTICLE');
 INSERT INTO operation VALUES (3, 'OP_DELETE_ARTICLE');
 INSERT INTO operation VALUES (4, 'OP_ADD_COMMENT');
 INSERT INTO operation VALUES (5, 'OP_UPDATE_COMMENT');
-INSERT INTO operation VALUES (6, 'OP_DELETE_COMMENT');
-INSERT INTO operation VALUES (7, 'OP_VOTE_ARTICLE');
-INSERT INTO operation VALUES (8, 'OP_VOTE_COMMENT');
-INSERT INTO operation VALUES (9, 'OP_BAN_USER');
-INSERT INTO operation VALUES (10, 'OP_CREATE_USER');
-INSERT INTO operation VALUES (11, 'OP_UPDATE_USER');
-INSERT INTO operation VALUES (12, 'OP_DELETE_USER');
-INSERT INTO operation VALUES (13, 'OP_UPDATE_PROFILE');
-INSERT INTO operation VALUES (14, 'OP_ADD_CATEGORY');
-INSERT INTO operation VALUES (15, 'OP_UPDATE_CATEGORY');
-INSERT INTO operation VALUES (16, 'OP_DELETE_CATEGORY');
-INSERT INTO operation VALUES (17, 'OP_ADD_TAG');
-INSERT INTO operation VALUES (18, 'OP_UPDATE_TAG');
-INSERT INTO operation VALUES (19, 'OP_DELETE_TAG');
+INSERT INTO operation VALUES (6, 'OP_HIDE_COMMENT');
+INSERT INTO operation VALUES (7, 'OP_DELETE_COMMENT');
+INSERT INTO operation VALUES (8, 'OP_VOTE_ARTICLE');
+INSERT INTO operation VALUES (9, 'OP_VOTE_COMMENT');
+INSERT INTO operation VALUES (10, 'OP_MUTE_USER');
+INSERT INTO operation VALUES (11, 'OP_BAN_USER');
+INSERT INTO operation VALUES (12, 'OP_CREATE_USER');
+INSERT INTO operation VALUES (13, 'OP_UPDATE_USER');
+INSERT INTO operation VALUES (14, 'OP_DELETE_USER');
+INSERT INTO operation VALUES (15, 'OP_UPDATE_PROFILE');
+INSERT INTO operation VALUES (16, 'OP_UPDATE_PASSWORD');
+INSERT INTO operation VALUES (17, 'OP_UPDATE_EMAIL');
+INSERT INTO operation VALUES (18, 'OP_ADD_CATEGORY');
+INSERT INTO operation VALUES (19, 'OP_UPDATE_CATEGORY');
+INSERT INTO operation VALUES (20, 'OP_DELETE_CATEGORY');
+INSERT INTO operation VALUES (21, 'OP_ADD_TAG');
+INSERT INTO operation VALUES (22, 'OP_UPDATE_TAG');
+INSERT INTO operation VALUES (23, 'OP_DELETE_TAG');
 
 
 
@@ -87,21 +91,22 @@ SELECT pg_catalog.setval('role_id_seq', 5, true);
 --
 
 INSERT INTO role_operation VALUES (3, 4);
-INSERT INTO role_operation VALUES (3, 7);
 INSERT INTO role_operation VALUES (3, 8);
+INSERT INTO role_operation VALUES (3, 9);
 INSERT INTO role_operation VALUES (4, 1);
 INSERT INTO role_operation VALUES (4, 2);
 INSERT INTO role_operation VALUES (4, 3);
 INSERT INTO role_operation VALUES (4, 4);
-INSERT INTO role_operation VALUES (4, 7);
 INSERT INTO role_operation VALUES (4, 8);
+INSERT INTO role_operation VALUES (4, 9);
 INSERT INTO role_operation VALUES (5, 4);
 INSERT INTO role_operation VALUES (5, 5);
 INSERT INTO role_operation VALUES (5, 6);
-INSERT INTO role_operation VALUES (5, 7);
 INSERT INTO role_operation VALUES (5, 8);
 INSERT INTO role_operation VALUES (5, 9);
-INSERT INTO role_operation VALUES (5, 13);
+INSERT INTO role_operation VALUES (5, 10);
+INSERT INTO role_operation VALUES (5, 14);
+INSERT INTO role_operation VALUES (5, 15);
 INSERT INTO role_operation VALUES (6, 1);
 INSERT INTO role_operation VALUES (6, 2);
 INSERT INTO role_operation VALUES (6, 3);
@@ -121,7 +126,10 @@ INSERT INTO role_operation VALUES (6, 16);
 INSERT INTO role_operation VALUES (6, 17);
 INSERT INTO role_operation VALUES (6, 18);
 INSERT INTO role_operation VALUES (6, 19);
-
+INSERT INTO role_operation VALUES (6, 20);
+INSERT INTO role_operation VALUES (6, 21);
+INSERT INTO role_operation VALUES (6, 22);
+INSERT INTO role_operation VALUES (6, 23);
 
 --
 -- TOC entry 2160 (class 0 OID 16470)

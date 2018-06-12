@@ -3,11 +3,8 @@ package com.netcracker.adlitsov.newsproject.authserver.service;
 import com.netcracker.adlitsov.newsproject.authserver.exception.ForbiddenException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.authserver.exception.VerificationTokenExpiredException;
-import com.netcracker.adlitsov.newsproject.authserver.model.EmailInfo;
-import com.netcracker.adlitsov.newsproject.authserver.model.Profile;
-import com.netcracker.adlitsov.newsproject.authserver.model.User;
+import com.netcracker.adlitsov.newsproject.authserver.model.*;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
-import com.netcracker.adlitsov.newsproject.authserver.model.VerificationToken;
 import com.netcracker.adlitsov.newsproject.authserver.repository.RankRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.RoleRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.UserRepository;
@@ -197,5 +194,75 @@ public class UserService implements UserDetailsService {
         mailService.sendSimpleMessage(user.getEmail(), "News project site - настройки аккаунта изменились",
                                       "Уважаемый " + user.getUsername() + ", кто-то изменил пароль для вашего аккаунта." +
                                               "\nЕсли это были не вы, пожалуйста, свяжитесь с администрацией сайта.");
+    }
+
+    @Transactional
+    public void muteUser(int userId) {
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        final Role mutedRole = roleRepository.findByAuthority("ROLE_MUTED");
+
+        // checking if user was already punished, then we need to save his role before prev punishment
+        Role prevRole;
+        Punishment punishment = user.getPunishment();
+        if (punishment != null) {
+            prevRole = punishment.getPrevRole();
+        } else {
+            punishment = new Punishment();
+            prevRole = user.getRole();
+        }
+        punishment.setUser(user);
+        punishment.setPrevRole(prevRole);
+        user.setPunishment(punishment);
+
+        user.setRole(mutedRole);
+        userRepository.save(user);
+    }
+
+    public void unmuteUser(int userId) {
+        clearPunishment(userId);
+    }
+
+    @Transactional
+    public void banUser(int userId) {
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        final Role bannedRole = roleRepository.findByAuthority("ROLE_BANNED");
+
+        // checking if user was already punished, then we need to save his role before prev punishment
+        Role prevRole;
+        Punishment punishment = user.getPunishment();
+        if (punishment != null) {
+            prevRole = punishment.getPrevRole();
+        } else {
+            punishment = new Punishment();
+            prevRole = user.getRole();
+        }
+        punishment.setUser(user);
+        punishment.setPrevRole(prevRole);
+        user.setPunishment(punishment);
+
+        user.setRole(bannedRole);
+        User newUser = userRepository.save(user);
+    }
+
+    public void unbanUser(int userId) {
+        clearPunishment(userId);
+    }
+
+    private void clearPunishment(int userId) {
+        User user = userRepository.findById(userId)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        if (user.getPunishment() == null) {
+            return;
+        }
+
+        Role prevRole = user.getPunishment().getPrevRole();
+        // orphanRemoval makes this possible
+        user.setPunishment(null);
+        user.setRole(prevRole);
+
+        userRepository.save(user);
     }
 }

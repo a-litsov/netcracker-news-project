@@ -435,6 +435,11 @@ ALTER TABLE ONLY profile
 
 -- Completed on 2018-06-04 01:25:34 MSK
 
+CREATE TABLE punishment (
+	id SERIAL PRIMARY KEY,
+	user_id integer REFERENCES "user"(id),
+	prev_role_id integer REFERENCES role(id)
+);
 
 --
 -- PostgreSQL database dump complete
