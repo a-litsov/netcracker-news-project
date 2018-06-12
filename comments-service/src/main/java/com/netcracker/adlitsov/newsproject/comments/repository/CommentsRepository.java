@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+public interface CommentsRepository extends JpaRepository<Comment, Integer> {
 
     Optional<List<Comment>> findByArticleId(Integer articleId);
     Optional<List<Comment>> findByArticleIdAndParentIsNull(Integer articleId);

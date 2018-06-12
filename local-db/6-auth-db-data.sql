@@ -102,6 +102,7 @@ INSERT INTO role_operation VALUES (4, 9);
 INSERT INTO role_operation VALUES (5, 4);
 INSERT INTO role_operation VALUES (5, 5);
 INSERT INTO role_operation VALUES (5, 6);
+INSERT INTO role_operation VALUES (5, 7);
 INSERT INTO role_operation VALUES (5, 8);
 INSERT INTO role_operation VALUES (5, 9);
 INSERT INTO role_operation VALUES (5, 10);

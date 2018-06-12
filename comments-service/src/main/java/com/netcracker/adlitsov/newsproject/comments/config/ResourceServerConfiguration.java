@@ -1,4 +1,4 @@
-package com.netcracker.adlitsov.newsproject.articles.config;
+package com.netcracker.adlitsov.newsproject.comments.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,15 +21,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/articles/**").hasAuthority("OP_ADD_ARTICLE")
-                .antMatchers(HttpMethod.PUT, "/articles/**").hasAuthority("OP_UPDATE_ARTICLE")
-                .antMatchers(HttpMethod.DELETE, "/articles/**").hasAuthority("OP_DELETE_ARTICLE")
-                .antMatchers(HttpMethod.POST, "/categories/**").hasAuthority("OP_ADD_CATEGORY")
-                .antMatchers(HttpMethod.PUT, "/categories/**").hasAuthority("OP_UPDATE_CATEGORY")
-                .antMatchers(HttpMethod.DELETE, "/categories/**").hasAuthority("OP_DELETE_CATEGORY")
-                .antMatchers(HttpMethod.POST, "/tags/**").hasAuthority("OP_ADD_TAG")
-                .antMatchers(HttpMethod.PUT, "/tags/**").hasAuthority("OP_UPDATE_TAG")
-                .antMatchers(HttpMethod.DELETE, "/tags/**").hasAuthority("OP_DELETE_TAG")
+                .antMatchers(HttpMethod.POST, "/comments/**").hasAuthority("OP_ADD_COMMENT")
+                .antMatchers(HttpMethod.PUT, "/comments/{\\d+}/hide", "/comments/{\\d+}/show").hasAuthority("OP_HIDE_COMMENT")
+                .antMatchers(HttpMethod.PUT, "/comments/{\\d+}").hasAuthority("OP_UPDATE_COMMENT")
+                .antMatchers(HttpMethod.DELETE, "/comments/**").hasAuthority("OP_DELETE_COMMENT")
 
                 .anyRequest().permitAll();
     }

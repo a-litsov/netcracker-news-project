@@ -42,6 +42,8 @@ public class Comment implements Serializable {
     @CreatedDate
     private Date addDate;
 
+    private boolean hidden = false;
+
     public Comment() {
     }
 
@@ -95,5 +97,13 @@ public class Comment implements Serializable {
 
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

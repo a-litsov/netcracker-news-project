@@ -68,7 +68,8 @@ CREATE TABLE comment (
     author_id integer NOT NULL,
     article_id integer,
     add_date timestamp with time zone,
-    content text
+    content text,
+    hidden boolean DEFAULT FALSE
 );
 
 

@@ -2,7 +2,8 @@ package com.netcracker.adlitsov.newsproject.comments.controller;
 
 import com.netcracker.adlitsov.newsproject.comments.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.comments.model.Comment;
-import com.netcracker.adlitsov.newsproject.comments.repository.CommentRepository;
+import com.netcracker.adlitsov.newsproject.comments.repository.CommentsRepository;
+import com.netcracker.adlitsov.newsproject.comments.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +16,21 @@ import java.util.List;
 public class CommentController {
 
     @Autowired
-    CommentRepository commentRepository;
+    CommentsService commentsService;
 
     @GetMapping()
     public List<Comment> getAllComments() {
-        return commentRepository.findAll();
+        return commentsService.getAllComments();
     }
 
     @GetMapping("/{id}")
     public Comment getCommentById(@PathVariable("id") Integer id) {
-        return commentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
+        return commentsService.getCommentById(id);
     }
 
     @PostMapping()
     public Comment createComment(@Valid @RequestBody Comment comment) {
-        return commentRepository.save(comment);
+        return commentsService.createComment(comment);
     }
 
 
@@ -37,42 +38,36 @@ public class CommentController {
     @PutMapping("/{id}")
     public Comment updateComment(@PathVariable(value = "id") Integer commentId,
                                  @Valid @RequestBody Comment commentDetails) {
+        return commentsService.updateComment(commentId, commentDetails);
+    }
 
-        Comment comment = commentRepository.findById(commentId)
-                                           .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
+    @PutMapping("/{id}/hide")
+    public Comment hideComment(@PathVariable(value = "id") Integer commentId) {
+        return commentsService.hideComment(commentId);
+    }
 
-        comment.setArticleId(commentDetails.getArticleId());
-        comment.setAuthorId(commentDetails.getAuthorId());
-        comment.setParent(commentDetails.getParent());
-        comment.setContent(commentDetails.getContent());
-
-
-        Comment updatedComment = commentRepository.save(comment);
-        return updatedComment;
+    @PutMapping("/{id}/show")
+    public Comment showComment(@PathVariable(value = "id") Integer commentId) {
+        return commentsService.showComment(commentId);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable(value = "id") Integer commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                                           .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", commentId));
-
-        commentRepository.delete(comment);
-
-        return ResponseEntity.ok().build();
+    public void deleteComment(@PathVariable(value = "id") Integer commentId) {
+        commentsService.deleteComment(commentId);
     }
 
     @GetMapping(params = "articleId")
     public List<Comment> getCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
-        return commentRepository.findByArticleId(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsService.getCommentsByArticleId(articleId);
     }
 
     @GetMapping(params = {"articleId", "root"})
     public List<Comment> getRootCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
-        return commentRepository.findByArticleIdAndParentIsNull(articleId).orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsService.getRootCommentsByArticleId(articleId);
     }
 
     @GetMapping(params = "authorId")
     public List<Comment> getCommentsByAuthorId(@RequestParam("authorId") Integer authorId) {
-        return commentRepository.findByAuthorId(authorId).orElseThrow(() -> new ResourceNotFoundException("Comment", "authorId", authorId));
+        return commentsService.getCommentsByAuthorId(authorId);
     }
 }
