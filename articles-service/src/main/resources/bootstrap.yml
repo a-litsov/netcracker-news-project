@@ -6,7 +6,7 @@ spring:
       - prod
   cloud:
     config:
-      uri: http://config-server:9090
+      uri: http://localhost:9090
       failFast: true
       retry:
         initialInterval: 3000

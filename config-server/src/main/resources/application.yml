@@ -3,12 +3,22 @@ server:
 ---
 spring:
   profiles: native
+  application:
+    name: config-server
+    profiles:
+      - dev
+      - prod
   cloud.config.server:
         native:
           searchLocations: /etc/configs
 ---
 spring:
   profiles: remote
+  application:
+    name: config-server
+    profiles:
+      - dev
+      - prod
   cloud.config.server:
     git:
       uri: https://litsov@bitbucket.org/litsov/netcracker-project-config-repo.git

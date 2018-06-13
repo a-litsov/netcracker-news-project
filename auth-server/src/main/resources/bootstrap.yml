@@ -21,3 +21,12 @@ spring:
         smtp:
           auth: true
           starttls.enable: false
+  application:
+    name: auth-service
+    profiles:
+      - dev
+      - prod
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka/

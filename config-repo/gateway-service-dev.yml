@@ -38,5 +38,9 @@ zuul:
             path: /genders/**
             serviceId: auth-service
             stripPrefix: false
+        config-server:
+            path: /config/**
+            serviceId: config-server
+            stripPrefix: true
     host:
         socketTimeoutMillis: 30000
