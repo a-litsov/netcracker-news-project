@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentsService {
@@ -84,5 +85,10 @@ public class CommentsService {
 
     public List<Comment> getCommentsByAuthorId(Integer authorId) {
         return commentsRepository.findByAuthorId(authorId);
+    }
+
+    public List<Integer> getAuthorsIdByArticleId(int articleId) {
+        List<Comment> comments = commentsRepository.findByArticleId(articleId);
+        return comments.stream().map(c -> c.getAuthorId()).distinct().collect(Collectors.toList());
     }
 }

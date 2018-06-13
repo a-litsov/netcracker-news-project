@@ -17,8 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Calendar;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -263,5 +262,12 @@ public class UserService implements UserDetailsService {
         user.setRole(prevRole);
 
         userRepository.save(user);
+    }
+
+    public Map<Integer, AuthorCommentInfo> getAuthorsCommentInfo(List<Integer> authorsIds) {
+        List<User> authors = userRepository.findUsersByIdIn(authorsIds);
+        Map<Integer, AuthorCommentInfo> authorsMap = new HashMap();
+        authors.forEach(a -> authorsMap.put(a.getId(), new AuthorCommentInfo(a)));
+        return authorsMap;
     }
 }

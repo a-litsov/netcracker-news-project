@@ -5,6 +5,7 @@ import {Router, ActivatedRoute, ParamMap} from "@angular/router";
 import {CommentsService} from "../comments.service";
 import {Comment} from '../comment';
 import {AuthService} from "../auth/auth.service";
+import {UserService} from "../user-settings/user.service";
 
 @Component({
   selector: 'app-article',
@@ -15,13 +16,15 @@ export class ArticleComponent implements OnInit {
 
   private article: Article;
   private comments: Comment[] = [];
+  private authorsIds: number[] = [];
   private parentComment: Comment;
   private userComment: Comment = new Comment();
+  private authorsInfo = {};
   private networkProblem: boolean = false;
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router, private usersService: UserService) { }
 
   private loadArticle(id: number) {
     this.articlesService.getArticleById(id).subscribe((inArticle: Article) => {
@@ -46,10 +49,32 @@ export class ArticleComponent implements OnInit {
         console.log("Error while obtaining comments: ", error)
       }
     );
+    this.commentsService.getAuthorsIdsByArticleId(articleId).subscribe((authorsIds: number[]) => {
+        this.authorsIds = authorsIds;
+        console.log(this.authorsIds);
+        this.networkProblem = false;
+        this.authorsIds.push(this.article.authorId);
+        console.log("after pushing article author", this.authorsIds);
+        this.usersService.getAuthorsCommentInfoByArticleId(articleId, this.authorsIds).subscribe((authorsInfo) => {
+            this.authorsInfo = authorsInfo;
+            console.log(this.authorsInfo);
+            this.networkProblem = false;
+          },
+          error => {
+            this.networkProblem = true;
+            console.log("Error while obtaining authors comment info: ", error)
+          }
+        );
+      },
+      error => {
+        this.networkProblem = true;
+        console.log("Error while obtaining authors ids: ", error)
+      }
+    );
   }
 
   setParentComment(parent: Comment) {
-    this.userComment.content = parent.authorId + ", ";
+    this.userComment.content = this.authorsInfo[parent.authorId].username + ", ";
     this.parentComment = parent;
 
     window.scrollTo(0, document.body.scrollHeight);

@@ -29,4 +29,8 @@ export class UserService {
   sendConfirmation(id:number): Observable<void> {
     return this.http.get<void>(this.serviceURL + "/users/" + id + "/send-confirmation");
   }
+
+  getAuthorsCommentInfoByArticleId(id: number, authorsIds: number[]) {
+    return this.http.post(this.serviceURL + "/users/authors-comment-info", authorsIds);
+  }
 }

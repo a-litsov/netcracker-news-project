@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.authserver.controller;
 
+import com.netcracker.adlitsov.newsproject.authserver.model.AuthorCommentInfo;
 import com.netcracker.adlitsov.newsproject.authserver.model.EmailInfo;
 import com.netcracker.adlitsov.newsproject.authserver.model.User;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -85,5 +88,10 @@ public class UserController {
     @GetMapping("/users/{id}/unban")
     public void unbanUser(@PathVariable("id") Integer id) {
         userService.unbanUser(id);
+    }
+
+    @PostMapping("/users/authors-comment-info")
+    public Map<Integer, AuthorCommentInfo> getAuthorsCommentInfo(@RequestBody List<Integer> authorsIds) {
+        return userService.getAuthorsCommentInfo(authorsIds);
     }
 }

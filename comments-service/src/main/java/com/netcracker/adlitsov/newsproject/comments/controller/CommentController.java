@@ -70,4 +70,9 @@ public class CommentController {
     public List<Comment> getCommentsByAuthorId(@RequestParam("authorId") Integer authorId) {
         return commentsService.getCommentsByAuthorId(authorId);
     }
+
+    @GetMapping(params = {"articleId", "authors"})
+    public List<Integer> getAuthorsByArticleId(@RequestParam("articleId") Integer articleId) {
+        return this.commentsService.getAuthorsIdByArticleId(articleId);
+    }
 }

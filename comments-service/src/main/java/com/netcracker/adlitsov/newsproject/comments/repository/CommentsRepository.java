@@ -11,6 +11,7 @@ public interface CommentsRepository extends JpaRepository<Comment, Integer> {
 
     List<Comment> findAllByOrderByAddDate();
 
+    List<Comment> findByArticleId(Integer articleId);
     List<Comment> findByArticleIdOrderByAddDate(Integer articleId);
     List<Comment> findByArticleIdAndParentIsNullOrderByAddDate(Integer articleId);
 

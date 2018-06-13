@@ -10,9 +10,10 @@
       <mat-card-subtitle>
         <div class="article-info">
           <div class="author-info">
-            <div mat-card-avatar class="user-avatar"></div>
+            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorsInfo[article.authorId].avatarUrl + ')'}">
+            </div>
             <span class="author-name">
-              {{article.authorId}}
+              <a href="/profile/{{article.authorId}}">{{authorsInfo[article.authorId].username }}</a>
             </span>
           </div>
           <span class="article-add-date">{{article.addDate | date: 'hh:mm dd.MM.yyyy'}}</span>
@@ -59,9 +60,11 @@
       <ng-template #recursiveList let-comments let-parent="parent">
         <div class="comment-wrapper" *ngFor="let comment of comments">
           <mat-card-header>
-            <div mat-card-avatar class="user-avatar"></div>
+            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}"></div>
             <mat-card-title>
-              <span class="comment-author">{{comment.authorId}}</span>
+              <span class="comment-author">
+                <a href="/profile/{{comment.authorId}}">{{authorsInfo[comment.authorId].username }}</a>
+              </span>
               <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
             </mat-card-title>
             <mat-card-subtitle class="comment-content" *ngIf="!comment.hidden">

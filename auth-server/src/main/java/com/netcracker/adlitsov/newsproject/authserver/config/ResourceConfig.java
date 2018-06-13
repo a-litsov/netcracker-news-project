@@ -41,6 +41,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         http
                 .authorizeRequests()
                 // UserController
+                .antMatchers("/users/authors-comment-info").permitAll()
                 .antMatchers("/users/register", "/users/confirm", "/users/{\\d+}/send-confirmation").permitAll()
                 .antMatchers("/users/create").hasAuthority("OP_CREATE_USER")
                 .antMatchers("/users/{\\d+}/mute", "/users/{\\d+}/unmute").hasAuthority("OP_MUTE_USER")

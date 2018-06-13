@@ -37,4 +37,8 @@ export class CommentsService {
   deleteComment(id: number): Observable<void> {
     return this.http.delete<void>(this.serviceURL + "/comments/" + id);
   }
+
+  getAuthorsIdsByArticleId(id: number): Observable<number[]> {
+    return this.http.get<number[]>(this.serviceURL + "/comments?articleId=" + id + "&authors");
+  }
 }

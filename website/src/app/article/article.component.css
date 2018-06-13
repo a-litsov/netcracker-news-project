@@ -26,7 +26,18 @@ div {
 .author-name {
   display: table-cell;
   vertical-align: middle;
-  text-align: left;
+  padding-left: 15px;
+  color: black;
+  font-weight: 500;
+  font-size: 120%;
+}
+
+.author-name > a {
+  color: darkslategray;
+}
+
+.comment-author > a {
+  color: black;
 }
 
 .user-avatar {
