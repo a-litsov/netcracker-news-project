@@ -4,6 +4,7 @@ import {Article} from "../article";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {Tag} from "../tag";
 import {Category} from "../category";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-edit-article',
@@ -17,7 +18,7 @@ export class EditArticleComponent implements OnInit {
   content: string = "";
 
   constructor(private articlesService: ArticlesService, private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private authService: AuthService) { }
 
 
   private loadArticle(id: number) {
@@ -79,6 +80,11 @@ export class EditArticleComponent implements OnInit {
 
   ngOnInit() {
     console.log("edit article component init");
+    if (this.authService.isLoggedOut()) {
+      this.router.navigateByUrl("/auth");
+    } else if (!this.authService.hasAuthority("OP_UPDATE_ARTICLE")) {
+      this.router.navigateByUrl("/access-denied");
+    }
     this.getCategories();
     this.getTags();
     this.route.paramMap.subscribe((params: ParamMap) => {

@@ -51,6 +51,9 @@ export class ProfileEditorComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.isLoggedOut()) {
+      this.router.navigateByUrl("/auth");
+    }
     this.route.paramMap.subscribe((params: ParamMap) => {
       if (params.get('id') == undefined) {
         console.log("id undefined");
@@ -58,6 +61,10 @@ export class ProfileEditorComponent implements OnInit {
         console.log("auth id used", this.userId);
       } else {
         this.userId = parseInt(params.get('id'));
+        if (this.userId != this.authService.user.userId &&
+              !this.authService.hasAuthority("OP_UPDATE_PROFILE")) {
+          this.router.navigateByUrl("/access-denied");
+        }
       }
       console.log("profile id to load", this.userId);
       this.loadProfile(this.userId);

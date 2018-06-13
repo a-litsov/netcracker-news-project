@@ -4,6 +4,7 @@ import {Category} from '../category';
 import { ArticlesService } from '../articles.service';
 import {Tag} from "../tag";
 import {Router} from "@angular/router";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-add-article',
@@ -17,7 +18,8 @@ export class AddArticleComponent implements OnInit {
   tags: Tag[] = [];
   content: string = "";
 
-  constructor(private articlesService: ArticlesService, private router: Router) { }
+  constructor(private articlesService: ArticlesService, private router: Router,
+              private authService: AuthService) { }
 
   getCategories() {
     this.articlesService.getCategories().subscribe((inCategories: Category[]) => {
@@ -44,6 +46,11 @@ export class AddArticleComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.isLoggedOut()) {
+      this.router.navigateByUrl("/auth");
+    } else if (!this.authService.hasAuthority("OP_ADD_ARTICLE")) {
+      this.router.navigateByUrl("/access-denied");
+    }
     this.getCategories();
     this.getTags();
   }

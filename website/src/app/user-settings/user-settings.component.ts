@@ -69,6 +69,9 @@ export class UserSettingsComponent implements OnInit {
 
 
   ngOnInit() {
+    if (this.authService.isLoggedOut()) {
+      this.router.navigateByUrl("/auth");
+    }
     this.route.paramMap.subscribe((params: ParamMap) => {
       if (params.get('id') == undefined) {
         console.log("id undefined");
@@ -76,6 +79,10 @@ export class UserSettingsComponent implements OnInit {
         console.log("auth id used", this.userId);
       } else {
         this.userId = parseInt(params.get('id'));
+        if (this.userId != this.authService.user.userId &&
+          !this.authService.hasAuthority("OP_UPDATE_USER")) {
+          this.router.navigateByUrl("/access-denied");
+        }
       }
       this.loadEmail();
     });

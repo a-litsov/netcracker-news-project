@@ -29,6 +29,7 @@ import {MatIconRegistry} from "@angular/material";
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -45,7 +46,8 @@ export function tokenGetter() {
     AuthComponent,
     ProfileComponent,
     ProfileEditorComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    AccessDeniedComponent
   ],
   imports: [
     BrowserModule,

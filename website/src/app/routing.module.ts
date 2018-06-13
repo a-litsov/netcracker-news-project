@@ -10,6 +10,7 @@ import {AuthComponent} from "./auth/auth.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {ProfileEditorComponent} from "./profile-editor/profile-editor.component";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
+import {AccessDeniedComponent} from "./access-denied/access-denied.component";
 
 
 const appRoutes: Routes = [
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'profile/:id', component: ProfileComponent},
   { path: 'user/settings', component: UserSettingsComponent},
   { path: 'user/:id/settings', component: UserSettingsComponent},
+  { path: 'access-denied', component: AccessDeniedComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'
