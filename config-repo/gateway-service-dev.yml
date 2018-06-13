@@ -7,8 +7,36 @@ server:
 zuul:
     routes:
         articles:
+            path: /articles/**
             serviceId: articles-service
+            stripPrefix: false
+        articles_categories:
+            path: /categories/**
+            serviceId: articles-service
+            stripPrefix: false
+        articles_tags:
+            path: /tags/**
+            serviceId: articles-service
+            stripPrefix: false
         comments:
+            path: /comments/**
             serviceId: comments-service
+            stripPrefix: false
+        auth_token:
+            path: /oauth/**
+            serviceId: auth-service
+            stripPrefix: false
+        auth:
+            path: /users/**
+            serviceId: auth-service
+            stripPrefix: false
+        auth_profiles:
+            path: /profiles/**
+            serviceId: auth-service
+            stripPrefix: false
+        auth_genders:
+            path: /genders/**
+            serviceId: auth-service
+            stripPrefix: false
     host:
         socketTimeoutMillis: 30000
