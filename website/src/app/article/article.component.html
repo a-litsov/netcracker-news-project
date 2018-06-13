@@ -50,8 +50,9 @@
       <h1>Комментарии</h1>
     </mat-card-title>
 
-    <mat-card-subtitle *ngIf="comments.length == 0">
-      <h2>Здесь пока нет комментариев...</h2>
+    <mat-card-subtitle >
+      <h2 *ngIf="comments.length == 0 && !networkProblem">Здесь пока нет комментариев...</h2>
+      <mat-label class="error-label" *ngIf="networkProblem">Проблемы с сетью!</mat-label>
     </mat-card-subtitle>
 
     <div class="comments-block">
@@ -98,7 +99,7 @@
       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comments }"></ng-container>
     </div>
 
-    <div class="user-comment" *ngIf="authService.hasAuthority('OP_ADD_COMMENT')">
+    <div class="user-comment" *ngIf="authService.hasAuthority('OP_ADD_COMMENT') && !networkProblem">
       <mat-card-title>
         <h3>Ваш комментарий</h3>
       </mat-card-title>

@@ -13,10 +13,11 @@ import {AuthService} from "../auth/auth.service";
 })
 export class ArticleComponent implements OnInit {
 
-  article: Article;
-  comments: Comment[] = [];
-  parentComment: Comment;
-  userComment: Comment = new Comment();
+  private article: Article;
+  private comments: Comment[] = [];
+  private parentComment: Comment;
+  private userComment: Comment = new Comment();
+  private networkProblem: boolean = false;
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
@@ -38,8 +39,12 @@ export class ArticleComponent implements OnInit {
     this.commentsService.getRootCommentsByArticleId(articleId).subscribe((inComments: Comment[]) => {
       this.comments = inComments;
       console.log(this.comments);
+      this.networkProblem = false;
     },
-      error => console.log("Error while obtaining comments: ", error)
+      error => {
+        this.networkProblem = true;
+        console.log("Error while obtaining comments: ", error)
+      }
     );
   }
 

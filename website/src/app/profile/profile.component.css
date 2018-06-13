@@ -225,3 +225,13 @@
   border: 1px solid white;
   margin: 0 10px;
 }
+
+.empty-subtitle {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.error-label {
+  font-weight: 500;
+  color: red;
+}

@@ -140,8 +140,9 @@
       </mat-tab>
 
       <mat-tab label="Комментарии">
-        <mat-card-subtitle *ngIf="comments.length == 0">
-          <h2>Здесь пока нет комментариев...</h2>
+        <mat-card-subtitle class="empty-subtitle">
+          <h2 *ngIf="comments.length == 0 && !networkProblem">Пользователь не оставлял комментариев...</h2>
+          <mat-label class="error-label" *ngIf="networkProblem">Проблемы с сетью</mat-label>
         </mat-card-subtitle>
 
         <div class="comments-block">

@@ -11,10 +11,10 @@ public interface CommentsRepository extends JpaRepository<Comment, Integer> {
 
     List<Comment> findAllByOrderByAddDate();
 
-    Optional<List<Comment>> findByArticleIdOrderByAddDate(Integer articleId);
-    Optional<List<Comment>> findByArticleIdAndParentIsNullOrderByAddDate(Integer articleId);
+    List<Comment> findByArticleIdOrderByAddDate(Integer articleId);
+    List<Comment> findByArticleIdAndParentIsNullOrderByAddDate(Integer articleId);
 
-    Optional<List<Comment>> findByAuthorId(Integer authorId);
+    List<Comment> findByAuthorId(Integer authorId);
     List<Comment> findByParent(Comment parent);
 
 }

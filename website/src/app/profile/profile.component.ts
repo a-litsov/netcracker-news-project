@@ -19,8 +19,10 @@ export class ProfileComponent implements OnInit {
   private userId: number;
   private profile: Profile;
 
-  previews: Preview[] = [];
-  comments: Comment[] = [];
+  private previews: Preview[] = [];
+  private comments: Comment[] = [];
+
+  private networkProblem: boolean = false;
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService,
               private articlesService: ArticlesService, private commentsService: CommentsService,
@@ -51,7 +53,10 @@ export class ProfileComponent implements OnInit {
         this.comments = [ ... inComments];
         console.log(this.comments);
       },
-      error => console.log("Error while obtaining comments: ", error)
+      error => {
+        console.log("Error while obtaining comments: ", error);
+        this.networkProblem = true;
+      }
     );
   }
 

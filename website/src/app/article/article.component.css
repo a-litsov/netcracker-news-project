@@ -140,3 +140,8 @@ div {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.error-label {
+  color: red;
+  font-weight: 500;
+}

@@ -75,16 +75,14 @@ public class CommentsService {
     }
 
     public List<Comment> getCommentsByArticleId(Integer articleId) {
-        return commentsRepository.findByArticleIdOrderByAddDate(articleId)
-                                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsRepository.findByArticleIdOrderByAddDate(articleId);
     }
 
     public List<Comment> getRootCommentsByArticleId(Integer articleId) {
-        return commentsRepository.findByArticleIdAndParentIsNullOrderByAddDate(articleId)
-                                 .orElseThrow(() -> new ResourceNotFoundException("Comment", "articleId", articleId));
+        return commentsRepository.findByArticleIdAndParentIsNullOrderByAddDate(articleId);
     }
 
     public List<Comment> getCommentsByAuthorId(Integer authorId) {
-        return commentsRepository.findByAuthorId(authorId).orElseThrow(() -> new ResourceNotFoundException("Comment", "authorId", authorId));
+        return commentsRepository.findByAuthorId(authorId);
     }
 }
