@@ -2,7 +2,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {JwtModule} from '@auth0/angular-jwt';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from './material.module';
 import {LayoutModule} from '@angular/cdk/layout';
 import {MarkdownModule} from 'ngx-markdown';
@@ -30,6 +30,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import {GatewayInterceptor} from "./gatewayInterceptor";
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -72,7 +73,12 @@ export function tokenGetter() {
     ArticlesService,
     CommentsService,
     CategoriesService,
-    AuthService
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GatewayInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

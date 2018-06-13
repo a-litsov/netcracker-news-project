@@ -9,28 +9,25 @@ import {PasswordsPair} from "./passwordsPair";
 })
 export class UserService {
 
-  private serviceURL = 'http://localhost:9999';
-
-
   constructor(private http: HttpClient) {}
 
   getEmailInfoById(id: number): Observable<EmailInfo> {
-    return this.http.get<EmailInfo>(this.serviceURL + "/users/" + id + "/email");
+    return this.http.get<EmailInfo>("/users/" + id + "/email");
   }
 
   updatePasswords(id:number, passwordsPair: PasswordsPair): Observable<void> {
-    return this.http.put<void>(this.serviceURL + "/users/" + id + "/password", passwordsPair);
+    return this.http.put<void>("/users/" + id + "/password", passwordsPair);
   }
 
   updateEmail(id: number, email: string): Observable<string> {
-    return this.http.put<string>(this.serviceURL + "/users/" + id + "/email", email);
+    return this.http.put<string>("/users/" + id + "/email", email);
   }
 
   sendConfirmation(id:number): Observable<void> {
-    return this.http.get<void>(this.serviceURL + "/users/" + id + "/send-confirmation");
+    return this.http.get<void>("/users/" + id + "/send-confirmation");
   }
 
   getAuthorsCommentInfoByArticleId(id: number, authorsIds: number[]) {
-    return this.http.post(this.serviceURL + "/users/authors-comment-info", authorsIds);
+    return this.http.post("/users/authors-comment-info", authorsIds);
   }
 }

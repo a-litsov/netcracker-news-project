@@ -14,9 +14,6 @@ import {UserService} from "../user-settings/user.service";
   providedIn: 'root'
 })
 export class AuthService {
-
-  private serviceURL = 'http://localhost:9999';
-
   private _user: User = this.parseUser();
   private guest: User = new User();
 
@@ -60,7 +57,7 @@ export class AuthService {
     const body = new HttpParams().set('grant_type', "password").set("username", userInfo.username)
       .set("password", userInfo.password);
 
-    this.http.post(this.serviceURL + "/oauth/token", body.toString(), httpOptions)
+    this.http.post("/oauth/token", body.toString(), httpOptions)
       .subscribe(res => {
         this.setSession(res);
         this.user = this.parseUser();
@@ -100,7 +97,7 @@ export class AuthService {
 
     console.log("register user", userInfo);
 
-    this.http.post(this.serviceURL + "/users/register", userInfo, httpOptions)
+    this.http.post("/users/register", userInfo, httpOptions)
       .subscribe(res => {
         // TODO: instant login and redirect
         console.log("registered!");
@@ -117,7 +114,7 @@ export class AuthService {
       guestProfile.avatarUrl = 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png';
       return new BehaviorSubject<Profile>(guestProfile).asObservable();
     }
-    return this.http.get<Profile>(this.serviceURL + "/profiles/" + this.user.userId);
+    return this.http.get<Profile>("/profiles/" + this.user.userId);
   }
 
   private parseUser(): User {

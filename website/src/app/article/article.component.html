@@ -107,7 +107,7 @@
         <h3>Ваш комментарий</h3>
       </mat-card-title>
       <div class="user-comment-form">
-        <img mat-card-avatar class="user-avatar" src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+        <img mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}">
         <mat-form-field class="user-comment-content">
       <textarea matInput [(ngModel)]="userComment.content" placeholder="Что вы об этом думаете?"
                 matTextareaAutosize></textarea>

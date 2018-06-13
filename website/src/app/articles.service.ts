@@ -9,47 +9,45 @@ import {Tag} from "./tag";
 @Injectable()
 export class ArticlesService {
 
-  serviceURL = 'http://localhost:8080';
-
   constructor(private http: HttpClient) { }
 
   getArticleById(id: number) {
-    return this.http.get<Article>(this.serviceURL + "/articles/" + id);
+    return this.http.get<Article>("/articles/" + id);
   }
 
   getArticles() {
-    return this.http.get<Article[]>(this.serviceURL + "/articles");
+    return this.http.get<Article[]>("/articles");
   }
 
   getArticlesByCategoryId(categoryId: number) {
-    return this.http.get<Article[]>(this.serviceURL + "/categories/" + categoryId + "/articles");
+    return this.http.get<Article[]>("/categories/" + categoryId + "/articles");
   }
 
   getPreviewByCategoryId(categoryId: number) {
-    return this.http.get<Preview[]>(this.serviceURL + "/categories/" + categoryId + "/articles/preview?sort=add-date");
+    return this.http.get<Preview[]>("/categories/" + categoryId + "/articles/preview?sort=add-date");
   }
 
   getPreviewByAuthorId(authorId: number) {
-    return this.http.get<Preview[]>(this.serviceURL + "/articles?authorId=" + authorId);
+    return this.http.get<Preview[]>("/articles?authorId=" + authorId);
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.serviceURL + "/categories");
+    return this.http.get<Category[]>("/categories");
   }
 
   getTags(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(this.serviceURL + "/tags");
+    return this.http.get<Tag[]>("/tags");
   }
 
   createArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(this.serviceURL + "/articles", article);
+    return this.http.post<Article>("/articles", article);
   }
 
   updateArticle(article: Article): Observable<Article> {
-    return this.http.put<Article>(this.serviceURL + "/articles/" + article.id, article);
+    return this.http.put<Article>("/articles/" + article.id, article);
   }
 
   deleteArticleById(id: number): Observable<{}> {
-    return this.http.delete<Article>(this.serviceURL + "/articles/" + id);
+    return this.http.delete<Article>("/articles/" + id);
   }
 }

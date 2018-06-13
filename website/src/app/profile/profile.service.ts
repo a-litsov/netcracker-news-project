@@ -9,20 +9,18 @@ import {EmailInfo} from "../user-settings/emailInfo";
 })
 export class ProfileService {
 
-  private serviceURL = 'http://localhost:9999';
-
 
   constructor(private http: HttpClient) {}
 
   getProfileById(id: number): Observable<Profile> {
-    return this.http.get<Profile>(this.serviceURL + "/profiles/" + id);
+    return this.http.get<Profile>("/profiles/" + id);
   }
 
   getGenders(): Observable<string[]> {
-    return this.http.get<string[]>(this.serviceURL + "/genders");
+    return this.http.get<string[]>("/genders");
   }
 
   updateProfile(id: number, profile: Profile): Observable<Profile> {
-    return this.http.put<Profile>(this.serviceURL + "/profiles/" + id, profile);
+    return this.http.put<Profile>("/profiles/" + id, profile);
   }
 }

@@ -5,12 +5,12 @@ import { Category } from './category';
 @Injectable()
 export class CategoriesService {
 
-  serviceURL = 'http://localhost:8080/categories';
+  serviceURL = '/categories';
 
   constructor(private http: HttpClient) { }
 
   getCategoryById(id: number) {
-    return this.http.get<Category>(this.serviceURL + id);
+    return this.http.get<Category>(this.serviceURL + "/" + id);
   }
 
   getCategories() {

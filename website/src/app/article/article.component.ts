@@ -6,6 +6,7 @@ import {CommentsService} from "../comments.service";
 import {Comment} from '../comment';
 import {AuthService} from "../auth/auth.service";
 import {UserService} from "../user-settings/user.service";
+import {Profile} from "../profile/profile";
 
 @Component({
   selector: 'app-article',
@@ -21,6 +22,7 @@ export class ArticleComponent implements OnInit {
   private userComment: Comment = new Comment();
   private authorsInfo = {};
   private networkProblem: boolean = false;
+  private profile: Profile;
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
@@ -88,6 +90,13 @@ export class ArticleComponent implements OnInit {
     }
     console.log("posting comment...", this.userComment);
     this.commentsService.createComment(this.userComment).subscribe((inComment: Comment) => {
+
+      this.authorsInfo[this.authService.user.userId] = {
+        id: this.authService.user.userId,
+        username: this.authService.user.userName,
+        avatarUrl: this.profile.avatarUrl
+      }
+
       if (this.parentComment != null) {
         this.parentComment.children.push(inComment);
       } else {
@@ -135,6 +144,9 @@ export class ArticleComponent implements OnInit {
       console.log(params.get('id'));
       this.loadArticle(parseInt(params.get('id')));
     });
+
+    // TODO: change the way of accessing user avatar; the root of many errors; look in another classes when will fix
+    this.authService.getProfile().subscribe((profile) => console.log(this.profile = profile));
   }
 
 }
