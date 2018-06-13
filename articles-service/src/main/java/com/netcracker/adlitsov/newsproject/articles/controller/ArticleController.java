@@ -2,14 +2,17 @@ package com.netcracker.adlitsov.newsproject.articles.controller;
 
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
+import com.netcracker.adlitsov.newsproject.articles.model.ArticleMailInfo;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
+import com.netcracker.adlitsov.newsproject.articles.model.Category;
 import com.netcracker.adlitsov.newsproject.articles.repository.ArticleRepository;
+import com.netcracker.adlitsov.newsproject.articles.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,6 +21,9 @@ public class ArticleController {
 
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @GetMapping()
     public List<Article> getAllArticles() {
@@ -86,5 +92,20 @@ public class ArticleController {
         articleRepository.delete(article);
 
         return ResponseEntity.ok().build();
+    }
+
+    // categoryId:articles
+    @GetMapping("/mail")
+    public Map<Integer, ArticleMailInfo> getMailArticles() {
+        Map<Integer, ArticleMailInfo> mailArticles = new HashMap<>();
+        // take one from each category
+        List<Category> categories = categoryRepository.findAll();
+        for (Category category : categories) {
+            List<Article> catArticles = category.getArticles();
+            if (!catArticles.isEmpty()) {
+                mailArticles.put(catArticles.get(0).getCategory().getId(), new ArticleMailInfo(catArticles.get(0)));
+            }
+        }
+        return mailArticles;
     }
 }

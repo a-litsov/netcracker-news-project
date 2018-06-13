@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://discovery-service:9091/eureka/
+      defaultZone: http://localhost:9091/eureka/
 server:
   port: 8081
 management:
@@ -11,7 +11,7 @@ management:
         include: "*"
 spring:
   datasource:
-    url: jdbc:postgresql://local-database:5432/comments_db
+    url: jdbc:postgresql://localhost:5432/comments_db
     username: postgres
     password: postgres
   jpa:

@@ -1,0 +1,32 @@
+server:
+  port: 9955
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka/
+spring:
+  application:
+    name: mail-service
+    profiles:
+      - dev
+      - prod
+  mail:
+    host: localhost
+    port: 5025
+    username: random-username
+    password: random-password
+    properties:
+      mail:
+        from: mail@netcracker-news-project.com
+        smtp:
+          auth: true
+          starttls.enable: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mail_db
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        ddl-auto: validate
