@@ -121,6 +121,15 @@ ALTER TABLE ONLY comment
     ADD CONSTRAINT comment_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES comment(id);
 
 
+CREATE TYPE vote_type AS ENUM ('LIKE', 'DISLIKE');
+
+CREATE TABLE vote (
+    id SERIAL PRIMARY KEY,
+    comment_id integer NOT NULL REFERENCES comment(id),
+    user_id integer NOT NULL,
+    type vote_type NOT NULL
+);
+
 -- Completed on 2018-05-20 14:50:07 MSK
 
 --
