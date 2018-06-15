@@ -46,12 +46,19 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     JwtAccessTokenConverter tokenConverter;
 
 
+    @Value("${spring.mail.host}")
+    private String host;
+    @Value("${spring.mail.port}")
+    private int port;
+    @Value("${spring.mail.properties.mail.from}")
+    private String from;
+
     // TODO: configure using properties
     @Bean(name = "javaMailSender")
     public JavaMailSender javaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost("localhost");
-        javaMailSender.setPort(5025);
+        javaMailSender.setHost(host);
+        javaMailSender.setPort(port);
         return javaMailSender;
     }
 }

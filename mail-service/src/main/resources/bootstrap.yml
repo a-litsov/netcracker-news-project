@@ -30,3 +30,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL95Dialect
         ddl-auto: validate
+  gateway:
+    url: http://localhost:8084

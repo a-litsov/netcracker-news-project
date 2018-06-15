@@ -2,8 +2,12 @@
 
   <mat-card>
     <mat-card-title><h2>Управление подпиской</h2></mat-card-title>
-    <h4>Список категорий:</h4>
+
         <div class="form-wrapper">
+          <mat-form-field>
+            <input matInput [(ngModel)]="emailInfo.email" placeholder="Адрес, на который производится подписка">
+          </mat-form-field>
+          <h4>Список категорий:</h4>
             <mat-checkbox class="example-margin" *ngFor="let category of categories; let i = index"
                 [(ngModel)]="checked[i]">
               {{category.name}}

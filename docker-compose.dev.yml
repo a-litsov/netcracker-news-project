@@ -142,6 +142,9 @@ services:
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
             SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/mail_db
+            SPRING_MAIL_HOST: fake-smtp
+            SPRING_MAIL_PORT: 5025
+            SPRING_GATEWAY_URL: http://gateway-service:8084
 
     fake-smtp:
         container_name: fake-smtp

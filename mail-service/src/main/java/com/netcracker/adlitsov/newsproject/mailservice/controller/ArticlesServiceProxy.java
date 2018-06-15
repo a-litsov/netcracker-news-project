@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 // TODO: gateway
-@FeignClient(name = "articles-service", url = "http://localhost:8080")
+@FeignClient(name = "articles-service", url="${spring.gateway.url}")
 public interface ArticlesServiceProxy {
 
     @GetMapping("/articles/mail")

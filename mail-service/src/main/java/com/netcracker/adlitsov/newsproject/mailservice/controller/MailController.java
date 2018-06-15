@@ -32,7 +32,7 @@ public class MailController {
     MailService mailService;
 
     // every 10 secs by default
-    @Scheduled(cron = "${cron:#{'0 0 0/10 * * *'}}")
+    @Scheduled(cron = "${cron:#{'0/10 * * * * *'}}")
     public void makeEverydayMailing() throws MessagingException {
         System.out.println("Mailing begins..");
         Map<Integer, ArticleMailInfo> articles = articlesServiceProxy.getAllMailArticles();
