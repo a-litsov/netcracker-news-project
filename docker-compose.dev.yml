@@ -44,6 +44,27 @@ services:
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
             SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/articles_db
+    auth-server:
+        container_name: auth-server
+        build:
+            context: ./auth-server
+        image: nc-news-project/auth-server:latest
+        ports:
+            - 9999:9999
+            - 5005:5007 # remote debugging port
+        entrypoint:
+            "java -Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007 -jar /app.jar"
+        depends_on:
+            - config-server
+            - discovery-service
+            - local-database
+        logging:
+            driver: json-file
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CLOUD_CONFIG_URI: http://config-server:9090
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
+            SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/auth_db
     comments-service:
         container_name: comments-service
         build:

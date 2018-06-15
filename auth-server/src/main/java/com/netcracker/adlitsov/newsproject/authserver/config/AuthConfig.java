@@ -26,6 +26,10 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     UserService userService;
 
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -33,14 +37,14 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .scopes("ARTICLE", "CATEGORY", "TAG", "COMMENT", "REGISTER_USER")
                 .autoApprove(true)
                 .authorizedGrantTypes("client_credentials", "refresh_token", "password")
-                .secret(passwordEncoder().encode("website-secret"))
+                .secret(passwordEncoder.encode("website-secret"))
                 .accessTokenValiditySeconds(TWO_HOURS)
                 .and()
             .withClient("users-service")
                 .scopes("REGISTER_USER")
                 .autoApprove(true)
                 .authorizedGrantTypes("client_credentials", "password")
-                .secret(passwordEncoder().encode("users-service-secret"))
+                .secret(passwordEncoder.encode("users-service-secret"))
                 .accessTokenValiditySeconds(TWO_HOURS);
     }
 
@@ -78,10 +82,5 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
         converter.setAccessTokenConverter(datc);
         return converter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
