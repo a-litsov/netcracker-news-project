@@ -69,6 +69,8 @@ CREATE TABLE comment (
     article_id integer,
     add_date timestamp with time zone,
     content text,
+    likes_count integer NOT NULL DEFAULT 0,
+    dislikes_count integer NOT NULL DEFAULT 0,
     hidden boolean DEFAULT FALSE
 );
 
@@ -127,9 +129,9 @@ CREATE TABLE vote (
     id SERIAL PRIMARY KEY,
     comment_id integer NOT NULL REFERENCES comment(id),
     user_id integer NOT NULL,
-    type vote_type NOT NULL
+    type vote_type NOT NULL,
+    unique (comment_id, user_id)
 );
-
 -- Completed on 2018-05-20 14:50:07 MSK
 
 --

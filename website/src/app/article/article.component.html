@@ -76,14 +76,16 @@
             <span class="example-fill-remaining-space"></span>
             Рейтинг:
             <div class="comment-rating">
-              0
+              {{comment.rating}}
             </div>
           </mat-card-header>
 
           <div class="comment-buttons">
-            <button mat-button>Нравится</button>
-            <button mat-button>Не нравится</button>
-            <button mat-button (click)="setParentComment(comment)">Ответить</button>
+            <button mat-button [style.color]="getLikeButtonColor(comment)" (click)="likeComment(comment)"
+                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Нравится</button>
+            <button mat-button [style.color]="getDislikeButtonColor(comment)" (click)="dislikeComment(comment)"
+                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Не нравится</button>
+            <button mat-button (click)="setParentComment(comment)" *ngIf="authService.hasAuthority('OP_ADD_COMMENT')">Ответить</button>
             <button mat-button *ngIf="!comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="hideComment(comment)">Скрыть</button>
             <button mat-button *ngIf="comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="showComment(comment)">Показать</button>
             <button mat-button *ngIf="authService.hasAuthority('OP_DELETE_COMMENT')" (click)="deleteComment(comment, parent)">Удалить</button>

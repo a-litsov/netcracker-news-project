@@ -2,14 +2,18 @@ package com.netcracker.adlitsov.newsproject.comments.controller;
 
 import com.netcracker.adlitsov.newsproject.comments.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.comments.model.Comment;
+import com.netcracker.adlitsov.newsproject.comments.model.Vote;
 import com.netcracker.adlitsov.newsproject.comments.repository.CommentsRepository;
 import com.netcracker.adlitsov.newsproject.comments.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/comments")
@@ -74,5 +78,20 @@ public class CommentController {
     @GetMapping(params = {"articleId", "authors"})
     public List<Integer> getAuthorsByArticleId(@RequestParam("articleId") Integer articleId) {
         return this.commentsService.getAuthorsIdByArticleId(articleId);
+    }
+
+    @GetMapping(value = "/my-votes", params = "articleId")
+    public Map<Integer, Vote> getMyVotes(@RequestParam("articleId") Integer articleId, Authentication auth) {
+        return commentsService.getMyVotes(articleId, auth);
+    }
+
+    @PostMapping("/{id}/like")
+    public int likeComment(@PathVariable("id") int id, Authentication auth) {
+        return commentsService.voteComment(id, Vote.VoteType.LIKE, auth).getRating();
+    }
+
+    @PostMapping("/{id}/dislike")
+    public int dislikeComment(@PathVariable("id") int id, Authentication auth) {
+        return commentsService.voteComment(id, Vote.VoteType.DISLIKE, auth).getRating();
     }
 }

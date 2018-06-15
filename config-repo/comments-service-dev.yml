@@ -11,7 +11,7 @@ management:
         include: "*"
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/comments_db
+    url: jdbc:postgresql://localhost:5432/comments_db?stringtype=unspecified
     username: postgres
     password: postgres
   jpa:

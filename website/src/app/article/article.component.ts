@@ -7,6 +7,7 @@ import {Comment} from '../comment';
 import {AuthService} from "../auth/auth.service";
 import {UserService} from "../user-settings/user.service";
 import {Profile} from "../profile/profile";
+import {Vote} from "../vote";
 
 @Component({
   selector: 'app-article',
@@ -23,6 +24,7 @@ export class ArticleComponent implements OnInit {
   private authorsInfo = {};
   private networkProblem: boolean = false;
   private profile: Profile;
+  private votes = {};
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
@@ -73,6 +75,38 @@ export class ArticleComponent implements OnInit {
         console.log("Error while obtaining authors ids: ", error)
       }
     );
+    this.commentsService.getMyVotes(this.article.id).subscribe((votes) => {
+      this.votes = votes;
+      console.log("got votes", votes);
+    }, (error) => console.log("error while obtaining votes"));
+  }
+
+  likeComment(comment: Comment) {
+    this.commentsService.likeComment(comment.id).subscribe((rating: number) => {
+      comment.rating = rating;
+      console.log("liked comment, current rating", rating);
+      if (this.votes[comment.id] == undefined || this.votes[comment.id].type == "DISLIKE") {
+        let vote: Vote = new Vote();
+        vote.type = "LIKE";
+        this.votes[comment.id] = vote;
+      } else {
+        delete this.votes[comment.id];
+      }
+    })
+  }
+
+  dislikeComment(comment: Comment) {
+    this.commentsService.dislikeComment(comment.id).subscribe((rating: number) => {
+      comment.rating = rating;
+      console.log("disliked comment, current rating", rating);
+      if (this.votes[comment.id] == undefined || this.votes[comment.id].type == "LIKE") {
+        let vote: Vote = new Vote();
+        vote.type = "DISLIKE";
+        this.votes[comment.id] = vote;
+      } else {
+        delete this.votes[comment.id];
+      }
+    })
   }
 
   setParentComment(parent: Comment) {
@@ -137,6 +171,26 @@ export class ArticleComponent implements OnInit {
         this.parentComment = null;
       }
     });
+  }
+
+  getLikeButtonColor(comment: Comment) {
+    let vote: Vote = this.votes[comment.id];
+    if (vote == undefined) {
+      return "black";
+    }
+    if (vote.type == "LIKE") {
+      return "green";
+    }
+  }
+
+  getDislikeButtonColor(comment: Comment) {
+    let vote: Vote = this.votes[comment.id];
+    if (vote == undefined) {
+      return "black";
+    }
+    if (vote.type == "DISLIKE") {
+      return "INDIANRED";
+    }
   }
 
   ngOnInit() {

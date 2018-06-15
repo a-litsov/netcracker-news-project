@@ -2,15 +2,25 @@ package com.netcracker.adlitsov.newsproject.comments.service;
 
 import com.netcracker.adlitsov.newsproject.comments.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.comments.model.Comment;
+import com.netcracker.adlitsov.newsproject.comments.model.Vote;
 import com.netcracker.adlitsov.newsproject.comments.repository.CommentsRepository;
+import com.netcracker.adlitsov.newsproject.comments.repository.VotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +28,10 @@ public class CommentsService {
 
     @Autowired
     CommentsRepository commentsRepository;
+
+    @Autowired
+    VotesRepository votesRepository;
+
 
     public List<Comment> getAllComments() {
         return commentsRepository.findAllByOrderByAddDate();
@@ -90,5 +104,46 @@ public class CommentsService {
     public List<Integer> getAuthorsIdByArticleId(int articleId) {
         List<Comment> comments = commentsRepository.findByArticleId(articleId);
         return comments.stream().map(c -> c.getAuthorId()).distinct().collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Comment voteComment(int id, Vote.VoteType type, Authentication auth) {
+        Comment comment = commentsRepository.findById(id)
+                                            .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
+
+        int userId = getUserId(auth);
+
+        Vote vote = new Vote();
+        vote.setUserId(userId);
+        vote.setType(type);
+        vote.setComment(comment);
+
+        Vote foundVote = comment.getVoteFromUser(userId);
+        if (foundVote != null) {
+            comment.deleteVote(foundVote);
+            if (foundVote.getType().equals(vote.getType())) {
+                return commentsRepository.save(comment);
+            }
+        }
+
+        comment.addVote(vote);
+        return commentsRepository.saveAndFlush(comment);
+    }
+
+    public Map<Integer, Vote> getMyVotes(int articleId, Authentication auth) {
+        List<Comment> comments = getCommentsByArticleId(articleId);
+        Map<Integer, Vote> votes = new HashMap<>();
+        for(Comment comment: comments) {
+            Vote v = comment.getVoteFromUser(getUserId(auth));
+            if (v != null) {
+                votes.put(v.getCommentId(), v);
+            }
+        }
+        return votes;
+    }
+
+    private int getUserId(Authentication auth) {
+        Map<String, Object> details = (Map<String, Object>)((OAuth2AuthenticationDetails)auth.getDetails()).getDecodedDetails();
+        return (int)details.get("user_id");
     }
 }

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     @OrderBy("addDate")
     private List<Comment> children;
@@ -39,12 +40,20 @@ public class Comment implements Serializable {
     @NotBlank
     private String content;
 
+    private int likesCount = 0;
+
+    private int dislikesCount = 0;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date addDate;
 
     private boolean hidden = false;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
 
     public Comment() {
     }
@@ -107,5 +116,54 @@ public class Comment implements Serializable {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    public void addVote(Vote vote) {
+        this.votes.add(vote);
+        switch (vote.type) {
+            case LIKE:
+                likesCount++;
+                break;
+            case DISLIKE:
+                dislikesCount++;
+                break;
+        }
+    }
+
+    public void deleteVote(Vote vote) {
+        this.votes.remove(vote);
+        switch (vote.type) {
+            case LIKE:
+                likesCount--;
+                break;
+            case DISLIKE:
+                dislikesCount--;
+                break;
+        }
+    }
+
+    public Vote getVoteFromUser(int userId) {
+        for (Vote v : votes) {
+            if (v.getUserId() == userId) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public int getRating() {
+        return likesCount - dislikesCount;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public int getDislikesCount() {
+        return dislikesCount;
     }
 }

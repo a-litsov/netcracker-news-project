@@ -8,6 +8,7 @@ export class Comment {
   addDate: Date;
   articleId: number;
   content: string;
+  rating: number;
   hidden: boolean = false;
 
   constructor() { }

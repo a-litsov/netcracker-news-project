@@ -21,6 +21,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/comments/{\\d+}/like", "/comments/{\\d+}/dislike")
+                    .hasAuthority("OP_VOTE_COMMENT")
+
                 .antMatchers(HttpMethod.POST, "/comments/**").hasAuthority("OP_ADD_COMMENT")
                 .antMatchers(HttpMethod.PUT, "/comments/{\\d+}/hide", "/comments/{\\d+}/show").hasAuthority("OP_HIDE_COMMENT")
                 .antMatchers(HttpMethod.PUT, "/comments/{\\d+}").hasAuthority("OP_UPDATE_COMMENT")

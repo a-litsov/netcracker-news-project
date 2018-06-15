@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs/Rx";
 import {Comment} from "./comment";
+import {Vote} from "./vote";
 
 @Injectable()
 export class CommentsService {
@@ -38,5 +39,17 @@ export class CommentsService {
 
   getAuthorsIdsByArticleId(id: number): Observable<number[]> {
     return this.http.get<number[]>("/comments?articleId=" + id + "&authors");
+  }
+
+  likeComment(id: number): Observable<number> {
+    return this.http.post<number>("/comments/" + id + "/like", null);
+  }
+
+  dislikeComment(id: number): Observable<number> {
+    return this.http.post<number>("/comments/" + id + "/dislike", null);
+  }
+
+  getMyVotes(articleId: number) {
+    return this.http.get("/comments/my-votes?articleId=" + articleId);
   }
 }
