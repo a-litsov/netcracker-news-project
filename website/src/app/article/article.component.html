@@ -10,10 +10,10 @@
       <mat-card-subtitle>
         <div class="article-info">
           <div class="author-info">
-            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorsInfo[article.authorId].avatarUrl + ')'}">
+            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorProfile.avatarUrl + ')'}">
             </div>
             <span class="author-name">
-              <a href="/profile/{{article.authorId}}">{{authorsInfo[article.authorId].username }}</a>
+              <a href="/profile/{{article.authorId}}">{{authorProfile.userName }}</a>
             </span>
           </div>
           <span class="article-add-date">{{article.addDate | date: 'hh:mm dd.MM.yyyy'}}</span>

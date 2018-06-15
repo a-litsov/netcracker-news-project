@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit {
   private previews: Preview[] = [];
   private comments: Comment[] = [];
 
-  private networkProblem: boolean = false;
+  private articlesNetworkProblem: boolean = false;
+  private commentsNetworkProblem: boolean = false;
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService,
               private articlesService: ArticlesService, private commentsService: CommentsService,
@@ -33,8 +34,12 @@ export class ProfileComponent implements OnInit {
     this.articlesService.getPreviewByAuthorId(id).subscribe((inPreviews: Preview[]) => {
         this.previews = [...inPreviews];
         console.log(this.previews);
+        this.articlesNetworkProblem = false;
       },
-      error => console.log("Error while obtaining all articles: ", error)
+      error => {
+        this.articlesNetworkProblem = true;
+        console.log("Error while obtaining all articles: ", error)
+      }
     );
   }
 
@@ -52,10 +57,11 @@ export class ProfileComponent implements OnInit {
     this.commentsService.getCommentsByAuthorId(id).subscribe((inComments: Comment[]) => {
         this.comments = [ ... inComments];
         console.log(this.comments);
+        this.commentsNetworkProblem = false;
       },
       error => {
         console.log("Error while obtaining comments: ", error);
-        this.networkProblem = true;
+        this.commentsNetworkProblem = true;
       }
     );
   }

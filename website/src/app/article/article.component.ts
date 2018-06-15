@@ -8,6 +8,7 @@ import {AuthService} from "../auth/auth.service";
 import {UserService} from "../user-settings/user.service";
 import {Profile} from "../profile/profile";
 import {Vote} from "../vote";
+import {ProfileService} from "../profile/profile.service";
 
 @Component({
   selector: 'app-article',
@@ -24,16 +25,19 @@ export class ArticleComponent implements OnInit {
   private authorsInfo = {};
   private networkProblem: boolean = false;
   public profile: Profile;
+  public authorProfile: Profile;
   private votes = {};
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
-              private router: Router, private usersService: UserService) { }
+              private router: Router, private usersService: UserService,
+              private profileService: ProfileService) { }
 
   private loadArticle(id: number) {
     this.articlesService.getArticleById(id).subscribe((inArticle: Article) => {
         this.article = {...inArticle};
         console.log(this.article);
+        this.profileService.getProfileById(this.article.authorId).subscribe((profile) => console.log("got author profile", this.authorProfile = profile));
         console.log("loading comments begins..");
         this.loadComments();
       },
@@ -201,6 +205,7 @@ export class ArticleComponent implements OnInit {
 
     // TODO: change the way of accessing user avatar; the root of many errors; look in another classes when will fix
     this.authService.getProfile().subscribe((profile) => console.log(this.profile = profile));
+
   }
 
 }

@@ -99,8 +99,9 @@
     <mat-card-title>Активность пользователя</mat-card-title>
     <mat-tab-group class="activity-tab-group" [dynamicHeight]="true">
       <mat-tab label="Статьи">
-        <mat-card-subtitle *ngIf="previews.length == 0">
-          <h2>Здесь пока нет статей...</h2>
+        <mat-card-subtitle class="empty-subtitle">
+          <h2 *ngIf="previews.length == 0 && !articlesNetworkProblem">Пользователь не писал статей...</h2>
+          <mat-label class="error-label" *ngIf="articlesNetworkProblem">Проблемы с сетью</mat-label>
         </mat-card-subtitle>
 
         <div class="grid-container" #gridContainer>
@@ -141,8 +142,8 @@
 
       <mat-tab label="Комментарии">
         <mat-card-subtitle class="empty-subtitle">
-          <h2 *ngIf="comments.length == 0 && !networkProblem">Пользователь не оставлял комментариев...</h2>
-          <mat-label class="error-label" *ngIf="networkProblem">Проблемы с сетью</mat-label>
+          <h2 *ngIf="comments.length == 0 && !commentsNetworkProblem">Пользователь не оставлял комментариев...</h2>
+          <mat-label class="error-label" *ngIf="commentsNetworkProblem">Проблемы с сетью</mat-label>
         </mat-card-subtitle>
 
         <div class="comments-block">
