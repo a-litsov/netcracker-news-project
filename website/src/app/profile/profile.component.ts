@@ -17,7 +17,7 @@ import {AuthService} from "../auth/auth.service";
 export class ProfileComponent implements OnInit {
 
   private userId: number;
-  private profile: Profile;
+  public profile: Profile;
 
   private previews: Preview[] = [];
   private comments: Comment[] = [];

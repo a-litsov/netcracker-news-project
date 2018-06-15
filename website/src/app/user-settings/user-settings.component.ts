@@ -17,10 +17,10 @@ export class UserSettingsComponent implements OnInit {
 
   private userId: number;
 
-  private emailInfo: EmailInfo = new EmailInfo();
-  private email: string;
-  private passwordsPair: PasswordsPair = new PasswordsPair();
-  private errorMessage: string;
+  public emailInfo: EmailInfo = new EmailInfo();
+  public email: string;
+  public passwordsPair: PasswordsPair = new PasswordsPair();
+  public errorMessage: string;
 
   constructor(private route: ActivatedRoute, private userService: UserService,
               private location: Location, private cdRef:ChangeDetectorRef,

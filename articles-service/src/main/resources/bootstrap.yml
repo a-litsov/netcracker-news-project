@@ -13,3 +13,16 @@ spring:
         multiplier: 1.8
         maxInterval: 50000
         maxAttempts: 20
+  datasource:
+    url: jdbc:postgresql://localhost:5432/articles_db
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        ddl-auto: validate
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka/

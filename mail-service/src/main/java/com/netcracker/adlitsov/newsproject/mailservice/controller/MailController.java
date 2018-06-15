@@ -32,7 +32,7 @@ public class MailController {
     MailService mailService;
 
     // every 10 secs by default
-    @Scheduled(cron = "${cron:#{'0/10 * * * * *'}}")
+    @Scheduled(cron = "${cron:#{'0 0 0/10 * * *'}}")
     public void makeEverydayMailing() throws MessagingException {
         System.out.println("Mailing begins..");
         Map<Integer, ArticleMailInfo> articles = articlesServiceProxy.getAllMailArticles();
@@ -41,8 +41,13 @@ public class MailController {
     }
 
     // orphanRemoval - only listed subscriptions will be saved (others will be removed)
-    @PostMapping("/subscribe")
+    @PostMapping("/mailing/subscribe")
     public void subscribeUserOnCategory(Authentication authentication, @RequestBody SubInfo subInfo) {
         mailService.subscribeUserOnCategory(authentication, subInfo);
+    }
+
+    @PostMapping("/mailing/get-subs")
+    public List<Integer> subscribeUserOnCategory(Authentication authentication, @RequestBody String email) {
+        return mailService.getUserSubs(authentication, email);
     }
 }

@@ -43,7 +43,7 @@ export class MainNavComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver, private categoriesService: CategoriesService,
-              private authService: AuthService, private profileService: ProfileService,
+              public authService: AuthService, private profileService: ProfileService,
               private router: Router) {}
 
   private getCategories() {
@@ -55,7 +55,7 @@ export class MainNavComponent {
     );
   }
 
-  private logout() {
+  public logout() {
     this.authService.logout();
     this.router.navigateByUrl("/");
   }

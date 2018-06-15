@@ -51,7 +51,7 @@ services:
         image: nc-news-project/auth-server:latest
         ports:
             - 9999:9999
-            - 5005:5007 # remote debugging port
+            - 5007:5007 # remote debugging port
         entrypoint:
             "java -Djava.security.egd=file:/dev/./urandom -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007 -jar /app.jar"
         depends_on:
@@ -85,7 +85,7 @@ services:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
             EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
-            SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/comments_db
+            SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/comments_db?stringtype=unspecified
     website:
         container_name: website
         build:
@@ -113,6 +113,7 @@ services:
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
     local-database:
         container_name: local-database
         image: postgres:9.6
@@ -123,6 +124,25 @@ services:
             POSTGRES_PASSWORD: postgres
         volumes:
           - $PWD/local-db:/docker-entrypoint-initdb.d
+    mail-service:
+        container_name: mail-service
+        build:
+            context: ./mail-service
+        image: nc-news-project/mail-service:latest
+        ports:
+            - 9955:9955
+        depends_on:
+            - config-server
+            - discovery-service
+            - local-database
+        logging:
+            driver: json-file
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            SPRING_CLOUD_CONFIG_URI: http://config-server:9090
+            EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:9091/eureka/
+            SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/mail_db
+
     fake-smtp:
         container_name: fake-smtp
         image: gessnerfl/fake-smtp-server

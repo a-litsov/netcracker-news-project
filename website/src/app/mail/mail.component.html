@@ -1,0 +1,17 @@
+<div class="wrapper">
+
+  <mat-card>
+    <mat-card-title><h2>Управление подпиской</h2></mat-card-title>
+    <h4>Список категорий:</h4>
+        <div class="form-wrapper">
+            <mat-checkbox class="example-margin" *ngFor="let category of categories; let i = index"
+                [(ngModel)]="checked[i]">
+              {{category.name}}
+            </mat-checkbox>
+
+          <button class="password-button" mat-raised-button color="primary" (click)="sendSub()">Применить
+          </button>
+        </div>
+  </mat-card>
+
+</div>

@@ -16,8 +16,8 @@ import {Category} from "../category";
 export class ProfileEditorComponent implements OnInit {
 
   private userId: number;
-  private profile: Profile = new Profile();
-  private genders: string[];
+  public profile: Profile = new Profile();
+  public genders: string[];
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService,
               private location: Location, private cdRef:ChangeDetectorRef,

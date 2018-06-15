@@ -16,14 +16,14 @@ import {Vote} from "../vote";
 })
 export class ArticleComponent implements OnInit {
 
-  private article: Article;
+  public article: Article;
   private comments: Comment[] = [];
   private authorsIds: number[] = [];
   private parentComment: Comment;
   private userComment: Comment = new Comment();
   private authorsInfo = {};
   private networkProblem: boolean = false;
-  private profile: Profile;
+  public profile: Profile;
   private votes = {};
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,

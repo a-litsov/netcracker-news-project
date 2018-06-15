@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +96,17 @@ public class MailService {
         messageBuilder.append("<br>С уважением, редакция сайта.");
 
         return messageBuilder.toString();
+    }
+
+    public List<Integer> getUserSubs(Authentication auth, String email) {
+        int userId = parseAuth(auth).getId();
+        User user = userRepository.findById(userId).orElseThrow(() -> new AuthenticationCredentialsNotFoundException("not found"));
+
+        List<Integer> subs = new ArrayList<>();
+        for (Subscription subscription : user.getSubscriptions()) {
+            subs.add(subscription.getCategoryId());
+        }
+        return subs;
     }
 
     private User parseAuth(Authentication auth) {

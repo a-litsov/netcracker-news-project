@@ -8,6 +8,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDialogModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   exports: [
     MatToolbarModule,
@@ -42,7 +45,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDialogModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [
     MatIconRegistry

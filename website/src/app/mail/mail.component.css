@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+.mat-card {
+  width: 450px;
+  margin: 30px auto;
+}
+
+.form-wrapper {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.password-button {
+  width: 40%;
+  margin: auto;
+}
+
+.error-label {
+  margin-bottom: 10px;
+  color: red;
+}

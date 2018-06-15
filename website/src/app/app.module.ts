@@ -31,6 +31,7 @@ import { ProfileEditorComponent } from './profile-editor/profile-editor.componen
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
 import {GatewayInterceptor} from "./gatewayInterceptor";
+import { MailComponent } from './mail/mail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -48,7 +49,8 @@ export function tokenGetter() {
     ProfileComponent,
     ProfileEditorComponent,
     UserSettingsComponent,
-    AccessDeniedComponent
+    AccessDeniedComponent,
+    MailComponent
   ],
   imports: [
     BrowserModule,

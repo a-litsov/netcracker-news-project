@@ -11,6 +11,7 @@ import {ProfileComponent} from "./profile/profile.component";
 import {ProfileEditorComponent} from "./profile-editor/profile-editor.component";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
 import {AccessDeniedComponent} from "./access-denied/access-denied.component";
+import {MailComponent} from "./mail/mail.component";
 
 
 const appRoutes: Routes = [
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: 'user/settings', component: UserSettingsComponent},
   { path: 'user/:id/settings', component: UserSettingsComponent},
   { path: 'access-denied', component: AccessDeniedComponent},
+  { path: 'mailing', component: MailComponent},
   { path: '',
     redirectTo: '/category/2',
     pathMatch: 'full'
