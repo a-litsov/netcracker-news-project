@@ -12,10 +12,6 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput [(ngModel)]="article.authorId" placeholder="Имя автора">
-      </mat-form-field>
-
-      <mat-form-field>
         <mat-select placeholder="Категория" [(ngModel)]="article.category">
           <mat-option *ngFor="let category of categories" [value]="category">
             {{ category.name }}

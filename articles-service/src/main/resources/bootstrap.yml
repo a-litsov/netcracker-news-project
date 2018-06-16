@@ -14,7 +14,7 @@ spring:
         maxInterval: 50000
         maxAttempts: 20
   datasource:
-    url: jdbc:postgresql://localhost:5432/articles_db
+    url: jdbc:postgresql://localhost:5432/articles_db?stringtype=unspecified
     username: postgres
     password: postgres
   jpa:

@@ -16,7 +16,7 @@ export class MailComponent implements OnInit {
 
   public categories: Category[] = [];
   public checked: boolean[] = [];
-  private emailInfo: EmailInfo;
+  public emailInfo: EmailInfo;
 
   constructor(private categoriesService: CategoriesService, private mailService: MailService,
               private authService: AuthService, private userService: UserService) { }

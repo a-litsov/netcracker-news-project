@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 //@PreAuthorize("#oauth2.hasScope('ARTICLE')") //need to move that in service layer (to do)
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CategoriesRepository extends JpaRepository<Category, Integer> {
 }

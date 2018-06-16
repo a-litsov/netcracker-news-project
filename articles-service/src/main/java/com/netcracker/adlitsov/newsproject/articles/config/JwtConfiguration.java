@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Configuration
 public class JwtConfiguration {
@@ -36,7 +38,17 @@ public class JwtConfiguration {
             throw new RuntimeException(e);
         }
         converter.setVerifierKey(publicKey);
+        converter.setAccessTokenConverter(new MyJwtAuthenticationConverter());
         return converter;
+    }
+
+    protected static class MyJwtAuthenticationConverter extends JwtAccessTokenConverter {
+        @Override
+        public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
+            OAuth2Authentication result = super.extractAuthentication(map);
+            result.setDetails(map);
+            return result;
+        }
     }
 }
 

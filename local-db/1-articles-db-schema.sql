@@ -74,7 +74,9 @@ CREATE TABLE article (
     logo_src text,
     content text,
     author_id integer NOT NULL,
-    add_date timestamp with time zone
+    add_date timestamp with time zone,
+    likes_count integer NOT NULL DEFAULT 0,
+    dislikes_count integer NOT NULL DEFAULT 0
 );
 
 
@@ -246,6 +248,15 @@ ALTER TABLE ONLY article
 ALTER TABLE ONLY article
     ADD CONSTRAINT article_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tag(id);
 
+
+CREATE TYPE vote_type AS ENUM ('LIKE', 'DISLIKE');
+
+CREATE TABLE vote (
+    id SERIAL PRIMARY KEY,
+    article_id integer NOT NULL REFERENCES article(id),
+    user_id integer NOT NULL,
+    type vote_type NOT NULL
+);
 
 --
 -- TOC entry 2163 (class 0 OID 0)

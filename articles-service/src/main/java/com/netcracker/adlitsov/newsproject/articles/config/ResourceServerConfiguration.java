@@ -21,6 +21,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/articles/{\\d+}/like", "/articles/{\\d+}/dislike")
+                    .hasAuthority("OP_VOTE_ARTICLE")
+
                 .antMatchers(HttpMethod.POST, "/articles/**").hasAuthority("OP_ADD_ARTICLE")
                 .antMatchers(HttpMethod.PUT, "/articles/**").hasAuthority("OP_UPDATE_ARTICLE")
                 .antMatchers(HttpMethod.DELETE, "/articles/**").hasAuthority("OP_DELETE_ARTICLE")

@@ -9,6 +9,7 @@ public class ArticlePreview {
     private Tag tag;
     private String logoSrc;
     private Date addDate;
+    private String content;
 
     public ArticlePreview() {
     }

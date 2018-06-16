@@ -78,7 +78,12 @@ div {
 .rating {
   font-size: 200%;
   color: black;
-  margin: auto 40px;
+  margin: auto 30px;
+}
+
+.artice-rating-title {
+  margin: auto 0;
+  margin-left: 20px;
 }
 
 .comments-card {

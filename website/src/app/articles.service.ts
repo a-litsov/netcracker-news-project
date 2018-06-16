@@ -5,6 +5,7 @@ import { Preview } from './preview';
 import {Category} from "./category";
 import {Observable} from "rxjs/Rx";
 import {Tag} from "./tag";
+import {Vote} from "./vote";
 
 @Injectable()
 export class ArticlesService {
@@ -49,5 +50,17 @@ export class ArticlesService {
 
   deleteArticleById(id: number): Observable<{}> {
     return this.http.delete<Article>("/articles/" + id);
+  }
+
+  likeArticle(id: number): Observable<number> {
+    return this.http.post<number>("/articles/" + id + "/like", null);
+  }
+
+  dislikeArticle(id: number): Observable<number> {
+    return this.http.post<number>("/articles/" + id + "/dislike", null);
+  }
+
+  getMyVote(articleId: number): Observable<Vote> {
+    return this.http.get<Vote>("/articles/my-vote?articleId=" + articleId);
   }
 }

@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.articles.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -8,7 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "article")
@@ -45,6 +48,13 @@ public class Article implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date addDate;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
+
+    private int likesCount, dislikesCount;
+
 
     public Article() {
     }
@@ -108,6 +118,44 @@ public class Article implements Serializable {
 
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
+    }
+
+    public void addVote(Vote vote) {
+        this.votes.add(vote);
+        switch (vote.type) {
+            case LIKE:
+                likesCount++;
+                break;
+            case DISLIKE:
+                dislikesCount++;
+                break;
+        }
+    }
+
+    public void deleteVote(Vote vote) {
+        this.votes.remove(vote);
+        switch (vote.type) {
+            case LIKE:
+                likesCount--;
+                break;
+            case DISLIKE:
+                dislikesCount--;
+                break;
+        }
+    }
+
+    public Vote getVoteFromUser(int userId) {
+        for (Vote v : votes) {
+            if (v.getUserId() == userId) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+
+    public int getRating() {
+        return likesCount - dislikesCount;
     }
 
     public ArticlePreview getPreview() {

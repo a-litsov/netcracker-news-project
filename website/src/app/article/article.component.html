@@ -36,10 +36,17 @@
       </span>
 
       <mat-card-actions align="end">
-        <button mat-raised-button>Нравится</button>
-        <button mat-raised-button>Не нравится</button>
+        <button mat-raised-button [style.color]="getArticleLikeButtonColor()" (click)="likeArticle()"
+                *ngIf="authService.hasAuthority('OP_VOTE_ARTICLE')">
+          Нравится
+        </button>
+        <button mat-raised-button [style.color]="getArticleDislikeButtonColor()" (click)="dislikeArticle()"
+                *ngIf="authService.hasAuthority('OP_VOTE_ARTICLE')">
+          Не нравится
+        </button>
+        <span class="artice-rating-title">Рейтинг:</span>
         <div class="rating">
-          0
+          {{article.rating}}
         </div>
       </mat-card-actions>
 

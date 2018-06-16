@@ -10,4 +10,5 @@ export class Article {
   content: string;
   authorId: number;
   addDate: Date;
+  rating: number;
 }

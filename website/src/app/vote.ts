@@ -1,6 +1,6 @@
 export class Vote {
   id: number;
   userId: number;
-  commentId: number;
+  ownerId: number;
   type: string;
 }

@@ -27,6 +27,7 @@ export class ArticleComponent implements OnInit {
   public profile: Profile;
   public authorProfile: Profile;
   private votes = {};
+  private articleVote: Vote = new Vote();
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
@@ -109,6 +110,34 @@ export class ArticleComponent implements OnInit {
         this.votes[comment.id] = vote;
       } else {
         delete this.votes[comment.id];
+      }
+    })
+  }
+
+  likeArticle() {
+    this.articlesService.likeArticle(this.article.id).subscribe((rating: number) => {
+      this.article.rating = rating;
+      console.log("liked article, current rating", rating);
+      if (this.articleVote == undefined || this.articleVote.type == "DISLIKE") {
+        let vote: Vote = new Vote();
+        vote.type = "LIKE";
+        this.articleVote = vote;
+      } else {
+        this.articleVote = undefined;
+      }
+    })
+  }
+
+  dislikeArticle() {
+    this.articlesService.dislikeArticle(this.article.id).subscribe((rating: number) => {
+      this.article.rating = rating;
+      console.log("disliked article, current rating", rating);
+      if (this.articleVote == undefined || this.articleVote.type == "LIKE") {
+        let vote: Vote = new Vote();
+        vote.type = "DISLIKE";
+        this.articleVote = vote;
+      } else {
+        this.articleVote = undefined;
       }
     })
   }
@@ -197,9 +226,34 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  getArticleLikeButtonColor() {
+    let vote: Vote = this.articleVote;
+    if (vote == undefined) {
+      return "black";
+    }
+    if (vote.type == "LIKE") {
+      return "green";
+    }
+  }
+
+  getArticleDislikeButtonColor() {
+    let vote: Vote = this.articleVote;
+    if (vote == undefined) {
+      return "black";
+    }
+    if (vote.type == "DISLIKE") {
+      return "INDIANRED";
+    }
+  }
+
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       console.log(params.get('id'));
+      this.articlesService.getMyVote(parseInt(params.get('id'))).subscribe((v) => {
+        this.articleVote = v;
+        console.log("loaded article vote", v);
+      });
+
       this.loadArticle(parseInt(params.get('id')));
     });
 
