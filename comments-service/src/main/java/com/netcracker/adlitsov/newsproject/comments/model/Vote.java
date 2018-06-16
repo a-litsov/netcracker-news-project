@@ -1,10 +1,9 @@
 package com.netcracker.adlitsov.newsproject.comments.model;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(uniqueConstraints={
@@ -25,7 +24,7 @@ public class Vote {
 
     @ManyToOne
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
-    @JsonIgnore
+    @JsonBackReference
     private Comment comment;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +42,7 @@ public class Vote {
         this.userId = userId;
     }
 
-    @JsonIgnore
+    @JsonBackReference
     public Comment getComment() {
         return comment;
     }
@@ -55,7 +54,7 @@ public class Vote {
         return null;
     }
 
-    @JsonIgnore
+    @JsonBackReference
     public void setComment(Comment comment) {
         this.comment = comment;
     }

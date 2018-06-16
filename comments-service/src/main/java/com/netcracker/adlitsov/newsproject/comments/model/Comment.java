@@ -159,10 +159,6 @@ public class Comment implements Serializable {
         return likesCount;
     }
 
-    public void setLikesCount(int likesCount) {
-        this.likesCount = likesCount;
-    }
-
     public int getDislikesCount() {
         return dislikesCount;
     }
