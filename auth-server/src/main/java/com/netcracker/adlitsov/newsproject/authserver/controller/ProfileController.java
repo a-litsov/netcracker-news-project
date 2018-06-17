@@ -54,4 +54,9 @@ public class ProfileController {
     public boolean hasVoted(@AuthenticationPrincipal UserPrincipal principal, @PathVariable("id") Integer id) {
         return userService.userHasVoted(principal, id);
     }
+
+    @GetMapping("profiles/{id}/rating")
+    public double getRating(@PathVariable("id") Integer id) {
+        return userService.getProfileRating(id);
+    }
 }

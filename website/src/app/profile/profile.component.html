@@ -5,7 +5,11 @@
 
     <div class="avatar-block">
       <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
-      <div [style.background-color]="getRankColor()" class="user-rank">{{profile.rank.name}}</div>
+      <!--<div [style.background-color]="getRankColor()" class="user-rank">{{profile.rank.name}}</div>-->
+      <div class="user-rating-container">
+        <star-rating class="user-rating" [starType]="'svg'" [rating]="profile.rating" staticColor="false"
+                     [readOnly]="hasVoted" [hoverEnabled]="true"  (starClickChange)="userVoted($event)"></star-rating>
+      </div>
     </div>
 
     <div class="profile-header">
@@ -14,8 +18,9 @@
       <span class="example-fill-remaining-space"></span>
 
       <div class="user-counts">
-        <span class="count-info">
-          Рейтинг <span class="count">{{profile.rating}}</span></span>
+        <!--<span class="count-info">-->
+          <!--Рейтинг <span class="count">{{profile.rating}}</span>-->
+        <!--</span>-->
         <span class="count-info">
           Комментарии <span class="count">{{comments.length}}</span>
         </span>

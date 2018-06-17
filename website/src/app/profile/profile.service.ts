@@ -23,4 +23,16 @@ export class ProfileService {
   updateProfile(id: number, profile: Profile): Observable<Profile> {
     return this.http.put<Profile>("/profiles/" + id, profile);
   }
+
+  getRating(receiverId: number): Observable<number> {
+    return this.http.get<number>("/profiles/" + receiverId + "/rating");
+  }
+
+  hasVoted(receiverId: number): Observable<boolean> {
+    return this.http.get<boolean>("/profiles/" + receiverId + "/vote");
+  }
+
+  vote(receiverId: number, value: number): Observable<number> {
+    return this.http.post<number>("/profiles/" + receiverId + "/vote", value);
+  }
 }

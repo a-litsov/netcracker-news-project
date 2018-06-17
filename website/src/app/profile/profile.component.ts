@@ -25,6 +25,8 @@ export class ProfileComponent implements OnInit {
   private articlesNetworkProblem: boolean = false;
   private commentsNetworkProblem: boolean = false;
 
+  public hasVoted: boolean = true;
+
   constructor(private route: ActivatedRoute, private profileService: ProfileService,
               private articlesService: ArticlesService, private commentsService: CommentsService,
               private location: Location, private cdRef:ChangeDetectorRef,
@@ -83,6 +85,12 @@ export class ProfileComponent implements OnInit {
       console.log("profile id to load", this.userId);
       this.loadProfile(this.userId);
 
+      console.log("loading hasVoted...");
+      this.profileService.hasVoted(this.userId).subscribe((voted: boolean) => {
+        this.hasVoted = voted;
+        console.log("voted is", voted);
+      });
+
       console.log("loading previews");
       this.loadArticlesPreview(this.userId);
 
@@ -94,6 +102,15 @@ export class ProfileComponent implements OnInit {
   canVoteComment(): boolean {
     return this.authService.hasAuthority('OP_VOTE_COMMENT') &&
       this.authService.user.userId != this.userId;
+  }
+
+  userVoted(ratingObj: {rating: number}) {
+    console.log(ratingObj.rating);
+    this.profileService.vote(this.userId, ratingObj.rating).subscribe((newRating: number) => {
+      console.log("successfully voted, new rating is", newRating);
+      this.profile.rating = newRating;
+      this.hasVoted = true;
+    }, (error) => console.log("error while voting", error));
   }
 
 }

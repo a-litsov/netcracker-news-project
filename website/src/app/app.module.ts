@@ -9,6 +9,7 @@ import {MarkdownModule} from 'ngx-markdown';
 import {LMarkdownEditorModule} from 'ngx-markdown-editor';
 import {RoutingModule} from './routing.module';
 import {FormsModule} from '@angular/forms';
+import {StarRatingModule} from 'angular-star-rating';
 
 // Components
 import {AppComponent} from './app.component';
@@ -26,12 +27,12 @@ import {CategoriesService} from './categories.service';
 import {CommentsService} from "./comments.service";
 import {AuthService} from "./auth/auth.service";
 import {MatIconRegistry} from "@angular/material";
-import { ProfileComponent } from './profile/profile.component';
-import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
-import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ProfileEditorComponent} from './profile-editor/profile-editor.component';
+import {UserSettingsComponent} from './user-settings/user-settings.component';
+import {AccessDeniedComponent} from './access-denied/access-denied.component';
 import {GatewayInterceptor} from "./gatewayInterceptor";
-import { MailComponent } from './mail/mail.component';
+import {MailComponent} from './mail/mail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -69,7 +70,8 @@ export function tokenGetter() {
         blacklistedRoutes: ['localhost:9999/auth/'],
         skipWhenExpired: true
       }
-    })
+    }),
+    StarRatingModule.forRoot()
   ],
   providers: [
     ArticlesService,

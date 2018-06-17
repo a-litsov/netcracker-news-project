@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~css-star-rating/css/star-rating.css';
 
 body { margin: 0; }
+
+/* To fix ugly border in browser around star-rating component*/
+*:focus {
+  outline: none !important;
+  border: 0 !important;
+}
 
 .mat-drawer-backdrop.mat-drawer-shown {
   background: none;

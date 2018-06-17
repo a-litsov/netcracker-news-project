@@ -299,4 +299,10 @@ public class UserService implements UserDetailsService {
         List<Vote> votes = voteRepository.findAllByAuthorAndReceiver(authorProfile, receiverProfile);
         return !votes.isEmpty();
     }
+
+    public double getProfileRating(int profileId) {
+        return userRepository.findById(profileId)
+                             .orElseThrow(() -> new ResourceNotFoundException("User", "id", profileId))
+                             .getProfile().getRating();
+    }
 }
