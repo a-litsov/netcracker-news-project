@@ -10,10 +10,19 @@
       <mat-card-subtitle>
         <div class="article-info">
           <div class="author-info">
-            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorProfile.avatarUrl + ')'}">
+            <div class="author-ava-rating">
+              <div mat-card-avatar class="user-avatar"
+                   [ngStyle]="{'background-image': 'url(' + authorProfile.avatarUrl + ')'}"></div>
+              <div class="authorRating">
+                <star-rating class="user-rating" [starType]="'svg'" [rating]="authorProfile.rating" staticColor="false"
+                             [showHalfStars]="true" [readOnly]="true" size="small" [hoverEnabled]="false"></star-rating>
+              </div>
             </div>
-            <span class="author-name">
-              <a href="/profile/{{article.authorId}}">{{authorProfile.userName }}</a>
+            <span class="author-name-details">
+              <a href="/profile/{{article.authorId}}">
+                {{authorProfile.firstName}} <span class="author-nick">{{authorProfile.userName}}</span>
+                {{authorProfile.lastName}}
+              </a>
             </span>
           </div>
           <span class="article-add-date">{{article.addDate | date: 'hh:mm dd.MM.yyyy'}}</span>
@@ -58,7 +67,7 @@
       <h1>Комментарии</h1>
     </mat-card-title>
 
-    <mat-card-subtitle >
+    <mat-card-subtitle>
       <h2 *ngIf="comments.length == 0 && !networkProblem">Здесь пока нет комментариев...</h2>
       <mat-label class="error-label" *ngIf="networkProblem">Проблемы с сетью!</mat-label>
     </mat-card-subtitle>
@@ -67,7 +76,8 @@
       <ng-template #recursiveList let-comments let-parent="parent">
         <div class="comment-wrapper" *ngFor="let comment of comments">
           <mat-card-header>
-            <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}"></div>
+            <div mat-card-avatar class="user-avatar"
+                 [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}"></div>
             <mat-card-title>
               <span class="comment-author">
                 <a href="/profile/{{comment.authorId}}">{{authorsInfo[comment.authorId].username }}</a>
@@ -89,20 +99,31 @@
 
           <div class="comment-buttons">
             <button mat-button [style.color]="getLikeButtonColor(comment)" (click)="likeComment(comment)"
-                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Нравится</button>
+                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Нравится
+            </button>
             <button mat-button [style.color]="getDislikeButtonColor(comment)" (click)="dislikeComment(comment)"
-                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Не нравится</button>
-            <button mat-button (click)="setParentComment(comment)" *ngIf="authService.hasAuthority('OP_ADD_COMMENT')">Ответить</button>
-            <button mat-button *ngIf="!comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="hideComment(comment)">Скрыть</button>
-            <button mat-button *ngIf="comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')" (click)="showComment(comment)">Показать</button>
-            <button mat-button *ngIf="authService.hasAuthority('OP_DELETE_COMMENT')" (click)="deleteComment(comment, parent)">Удалить</button>
+                    *ngIf="authService.hasAuthority('OP_VOTE_COMMENT')">Не нравится
+            </button>
+            <button mat-button (click)="setParentComment(comment)" *ngIf="authService.hasAuthority('OP_ADD_COMMENT')">
+              Ответить
+            </button>
+            <button mat-button *ngIf="!comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')"
+                    (click)="hideComment(comment)">Скрыть
+            </button>
+            <button mat-button *ngIf="comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')"
+                    (click)="showComment(comment)">Показать
+            </button>
+            <button mat-button *ngIf="authService.hasAuthority('OP_DELETE_COMMENT')"
+                    (click)="deleteComment(comment, parent)">Удалить
+            </button>
           </div>
 
           <hr class="comments-divider">
 
 
           <div *ngIf="comment.children.length > 0">
-            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: comment.children, parent: comment }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="recursiveList; context:{ $implicit: comment.children, parent: comment }"></ng-container>
           </div>
 
         </div>
