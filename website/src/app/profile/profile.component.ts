@@ -113,4 +113,7 @@ export class ProfileComponent implements OnInit {
     }, (error) => console.log("error while voting", error));
   }
 
+  canVote(): boolean {
+    return this.authService.hasAuthority("OP_VOTE_PROFILE") && !this.hasVoted;
+  }
 }
