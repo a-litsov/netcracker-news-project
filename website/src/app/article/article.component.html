@@ -13,7 +13,8 @@
             <div class="author-ava-rating">
               <div mat-card-avatar class="user-avatar"
                    [ngStyle]="{'background-image': 'url(' + authorProfile.avatarUrl + ')'}"></div>
-              <div class="authorRating">
+              <div class="authorRating"></div>
+              <div *ngIf="authorProfile.rating > 0">
                 <star-rating class="user-rating" [starType]="'svg'" [rating]="authorProfile.rating" staticColor="false"
                              [showHalfStars]="true" [readOnly]="true" size="small" [hoverEnabled]="false"></star-rating>
               </div>
@@ -75,9 +76,17 @@
     <div class="comments-block">
       <ng-template #recursiveList let-comments let-parent="parent">
         <div class="comment-wrapper" *ngFor="let comment of comments">
+          <div class="temp">
           <mat-card-header>
-            <div mat-card-avatar class="user-avatar"
-                 [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}"></div>
+            <div mat-card-avatar class="comment-author-ava-rating">
+              <div mat-card-avatar class="user-avatar"
+                   [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}">
+              </div>
+              <div class="comment-author-rating" *ngIf="authorsInfo[comment.authorId].rating > 0">
+                <star-rating class="user-rating" [starType]="'svg'" [rating]="authorsInfo[comment.authorId].rating"
+                             [showHalfStars]="true" [readOnly]="true" size="small" [hoverEnabled]="false"></star-rating>
+              </div>
+            </div>
             <mat-card-title>
               <span class="comment-author">
                 <a href="/profile/{{comment.authorId}}">{{authorsInfo[comment.authorId].username }}</a>
@@ -117,9 +126,9 @@
                     (click)="deleteComment(comment, parent)">Удалить
             </button>
           </div>
+          </div>
 
           <hr class="comments-divider">
-
 
           <div *ngIf="comment.children.length > 0">
             <ng-container
@@ -137,9 +146,9 @@
         <h3>Ваш комментарий</h3>
       </mat-card-title>
       <div class="user-comment-form">
-        <img mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}">
+        <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
         <mat-form-field class="user-comment-content">
-      <textarea matInput [(ngModel)]="userComment.content" placeholder="Что вы об этом думаете?"
+      <textarea matInput class="user-textarea" [(ngModel)]="userComment.content" placeholder="Что вы об этом думаете?"
                 matTextareaAutosize></textarea>
         </mat-form-field>
         <button mat-button class="send-button" (click)="createComment()">Отправить</button>

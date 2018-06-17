@@ -17,3 +17,8 @@ body { margin: 0; }
 .mat-tab-label {
   width: 50%;
 }
+
+.star.small, .rating.small .star {
+  width: 14px !important;
+  height: 14px !important;
+}

@@ -27,7 +27,6 @@ div {
   display: table-cell;
   vertical-align: middle;
   padding-left: 5px;
-  padding-top: 5px;
   color: black;
   font-weight: 400;
   font-size: 100%;
@@ -42,12 +41,25 @@ div {
   flex-direction: column;
 }
 
+.comment-author-ava-rating {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 60px;
+  height: 60px;
+}
+
 .authorRating {
-  margin-bottom: -20px;
+
+  /*margin-top: 0;*/
+}
+
+.user-rating {
+  margin-top: 10px;
 }
 
 .author-name-details > a {
   color: darkslategray;
+  font-size: 120%;
 }
 
 .comment-author > a {
@@ -58,8 +70,10 @@ div {
   background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   display: table-cell;
   background-size: cover;
-  border: 1px solid white;
-  margin: 0 10px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  margin-bottom: 5px;
 }
 
 .article-add-date {
@@ -111,8 +125,12 @@ div {
 .comment-wrapper {
   margin-top: 10px;
   margin-left: 50px;
+  min-height: 75px;
 }
 
+.temp {
+  min-height: 90px;
+}
 .comment-author{
   font-weight: 600;
 }
@@ -132,6 +150,7 @@ div {
 
 .comment-buttons {
   margin-top: -15px;
+  margin-left: 77px;
 }
 
 .comment-rating {
@@ -150,12 +169,19 @@ div {
 }
 
 .user-comment-content {
-  width: 80%;
+  width: 70%;
 }
 
 .user-comment-content textarea {
   min-height: 40px;
+  width: 20%;
 }
+
+.user-comment-form > .user-avatar {
+  max-width: 80px;
+  margin: 0 10px;
+}
+
 .send-button {
   height: 40px;
 }

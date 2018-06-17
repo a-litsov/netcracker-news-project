@@ -25,7 +25,7 @@ export class ArticleComponent implements OnInit {
   private authorsInfo = {};
   private networkProblem: boolean = false;
   public profile: Profile;
-  public authorProfile: Profile;
+  public authorProfile: Profile = new Profile();
   private votes = {};
   private articleVote: Vote = new Vote();
 

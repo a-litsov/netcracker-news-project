@@ -4,11 +4,13 @@ public class AuthorCommentInfo {
     private int id;
     private String username;
     private String avatarUrl;
+    private double rating;
 
     public AuthorCommentInfo(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.avatarUrl = user.getProfile().getAvatarUrl();
+        this.rating = user.getProfile().getRating();
     }
 
     public int getId() {
@@ -33,5 +35,13 @@ public class AuthorCommentInfo {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
