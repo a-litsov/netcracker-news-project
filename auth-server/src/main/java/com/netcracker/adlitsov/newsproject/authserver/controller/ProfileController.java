@@ -6,6 +6,7 @@ import com.netcracker.adlitsov.newsproject.authserver.service.UserPrincipal;
 import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -41,5 +42,16 @@ public class ProfileController {
         return Arrays.stream(Profile.Gender.values())
                      .map(genderConverter::convertToDatabaseColumn)
                      .collect(Collectors.toList());
+    }
+
+    @PostMapping("/profiles/{id}/vote")
+    public Double voteProfile(@AuthenticationPrincipal UserPrincipal principal,
+                              @PathVariable("id") Integer id, @RequestBody Integer value) {
+        return userService.voteProfile(principal, id, value);
+    }
+
+    @GetMapping("/profiles/{id}/vote")
+    public boolean hasVoted(@AuthenticationPrincipal UserPrincipal principal, @PathVariable("id") Integer id) {
+        return userService.userHasVoted(principal, id);
     }
 }

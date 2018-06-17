@@ -35,20 +35,21 @@ INSERT INTO operation VALUES (6, 'OP_HIDE_COMMENT');
 INSERT INTO operation VALUES (7, 'OP_DELETE_COMMENT');
 INSERT INTO operation VALUES (8, 'OP_VOTE_ARTICLE');
 INSERT INTO operation VALUES (9, 'OP_VOTE_COMMENT');
-INSERT INTO operation VALUES (10, 'OP_MUTE_USER');
-INSERT INTO operation VALUES (11, 'OP_BAN_USER');
-INSERT INTO operation VALUES (12, 'OP_CREATE_USER');
-INSERT INTO operation VALUES (13, 'OP_UPDATE_USER');
-INSERT INTO operation VALUES (14, 'OP_DELETE_USER');
-INSERT INTO operation VALUES (15, 'OP_UPDATE_PROFILE');
-INSERT INTO operation VALUES (16, 'OP_UPDATE_PASSWORD');
-INSERT INTO operation VALUES (17, 'OP_UPDATE_EMAIL');
-INSERT INTO operation VALUES (18, 'OP_ADD_CATEGORY');
-INSERT INTO operation VALUES (19, 'OP_UPDATE_CATEGORY');
-INSERT INTO operation VALUES (20, 'OP_DELETE_CATEGORY');
-INSERT INTO operation VALUES (21, 'OP_ADD_TAG');
-INSERT INTO operation VALUES (22, 'OP_UPDATE_TAG');
-INSERT INTO operation VALUES (23, 'OP_DELETE_TAG');
+INSERT INTO operation VALUES (10, 'OP_VOTE_PROFILE');
+INSERT INTO operation VALUES (11, 'OP_MUTE_USER');
+INSERT INTO operation VALUES (12, 'OP_BAN_USER');
+INSERT INTO operation VALUES (13, 'OP_CREATE_USER');
+INSERT INTO operation VALUES (14, 'OP_UPDATE_USER');
+INSERT INTO operation VALUES (15, 'OP_DELETE_USER');
+INSERT INTO operation VALUES (16, 'OP_UPDATE_PROFILE');
+INSERT INTO operation VALUES (17, 'OP_UPDATE_PASSWORD');
+INSERT INTO operation VALUES (18, 'OP_UPDATE_EMAIL');
+INSERT INTO operation VALUES (19, 'OP_ADD_CATEGORY');
+INSERT INTO operation VALUES (20, 'OP_UPDATE_CATEGORY');
+INSERT INTO operation VALUES (21, 'OP_DELETE_CATEGORY');
+INSERT INTO operation VALUES (22, 'OP_ADD_TAG');
+INSERT INTO operation VALUES (23, 'OP_UPDATE_TAG');
+INSERT INTO operation VALUES (24, 'OP_DELETE_TAG');
 
 
 
@@ -93,12 +94,14 @@ SELECT pg_catalog.setval('role_id_seq', 5, true);
 INSERT INTO role_operation VALUES (3, 4);
 INSERT INTO role_operation VALUES (3, 8);
 INSERT INTO role_operation VALUES (3, 9);
+INSERT INTO role_operation VALUES (3, 10);
 INSERT INTO role_operation VALUES (4, 1);
 INSERT INTO role_operation VALUES (4, 2);
 INSERT INTO role_operation VALUES (4, 3);
 INSERT INTO role_operation VALUES (4, 4);
 INSERT INTO role_operation VALUES (4, 8);
 INSERT INTO role_operation VALUES (4, 9);
+INSERT INTO role_operation VALUES (4, 10);
 INSERT INTO role_operation VALUES (5, 4);
 INSERT INTO role_operation VALUES (5, 5);
 INSERT INTO role_operation VALUES (5, 6);
@@ -106,8 +109,9 @@ INSERT INTO role_operation VALUES (5, 7);
 INSERT INTO role_operation VALUES (5, 8);
 INSERT INTO role_operation VALUES (5, 9);
 INSERT INTO role_operation VALUES (5, 10);
-INSERT INTO role_operation VALUES (5, 15);
-INSERT INTO role_operation VALUES (5, 17);
+INSERT INTO role_operation VALUES (5, 11);
+INSERT INTO role_operation VALUES (5, 16);
+INSERT INTO role_operation VALUES (5, 18);
 INSERT INTO role_operation VALUES (6, 1);
 INSERT INTO role_operation VALUES (6, 2);
 INSERT INTO role_operation VALUES (6, 3);
@@ -131,6 +135,7 @@ INSERT INTO role_operation VALUES (6, 20);
 INSERT INTO role_operation VALUES (6, 21);
 INSERT INTO role_operation VALUES (6, 22);
 INSERT INTO role_operation VALUES (6, 23);
+INSERT INTO role_operation VALUES (6, 24);
 
 --
 -- TOC entry 2160 (class 0 OID 16470)
@@ -162,12 +167,12 @@ INSERT INTO rank VALUES (3, 'Бывалый', '00B6C9', 10);
 
 
 
-INSERT INTO profile VALUES (1, 'Василий', 'Блокированный', -20, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я даже не могу зайти в аккаунт', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
-INSERT INTO profile VALUES (2, 'Михаил', 'Немногословный', -20, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому я теперь muted. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
-INSERT INTO profile VALUES (3, 'Игорь', 'Пользователев', 4, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
-INSERT INTO profile VALUES (4, 'Владимир', 'Редакторов', 15, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
-INSERT INTO profile VALUES (5, 'Семён', 'Модераторов', 25, 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
-INSERT INTO profile VALUES (6, 'Альберт', 'Администраторов', 42, 'https://i.imgur.com/bzWhIub.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
+INSERT INTO profile VALUES (1, 'Василий', 'Блокированный', 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому меня заблокировали. Теперь я даже не могу зайти в аккаунт', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO profile VALUES (2, 'Михаил', 'Немногословный', 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Я вёл себя плохо и поэтому я теперь muted. Теперь я могу только читать новости и комментарии, а ведь я так хотел ещё писать комментарии, ставить лайки и дизлайки!', '2018-06-07 19:08:19.762367', '2018-06-07 19:08:19.762367', 1);
+INSERT INTO profile VALUES (3, 'Игорь', 'Пользователев', 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:11.772853', '2018-06-07 19:09:11.772853', 2);
+INSERT INTO profile VALUES (4, 'Владимир', 'Редакторов', 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:09:37.071194', '2018-06-07 19:09:37.071194', 3);
+INSERT INTO profile VALUES (5, 'Семён', 'Модераторов', 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:11:05.230551', '2018-06-07 19:11:05.230551', 3);
+INSERT INTO profile VALUES (6, 'Альберт', 'Администраторов', 'https://i.imgur.com/bzWhIub.png', 'Этот пользователь предпочёл пока не указывать информации о себе', '2018-06-07 19:10:38.782046', '2018-06-07 19:10:38.782046', 3);
 
 
 

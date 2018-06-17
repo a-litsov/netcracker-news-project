@@ -8,6 +8,7 @@ import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExist
 import com.netcracker.adlitsov.newsproject.authserver.repository.RankRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.RoleRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.UserRepository;
+import com.netcracker.adlitsov.newsproject.authserver.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -30,6 +32,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RankRepository rankRepository;
+
+    @Autowired
+    private VoteRepository voteRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -269,5 +274,29 @@ public class UserService implements UserDetailsService {
         Map<Integer, AuthorCommentInfo> authorsMap = new HashMap();
         authors.forEach(a -> authorsMap.put(a.getId(), new AuthorCommentInfo(a)));
         return authorsMap;
+    }
+
+    @PreAuthorize("@securityService.canVote(principal, #id)")
+    @Transactional
+    public Double voteProfile(UserPrincipal principal, int id, int value) {
+        Profile authorProfile = getUser(principal.getId()).getProfile();
+        Profile receiverProfile = getUser(id).getProfile();
+
+        Vote vote = new Vote();
+        vote.setAuthor(authorProfile);
+        vote.setReceiver(receiverProfile);
+        vote.setValue(value);
+
+        authorProfile.giveVote(vote);
+        receiverProfile.receiveVote(vote);
+
+        return voteRepository.save(vote).getReceiver().getRating();
+    }
+
+    public boolean userHasVoted(UserPrincipal principal, Integer receiverId) {
+        Profile authorProfile = getUser(principal.getId()).getProfile();
+        Profile receiverProfile = getUser(receiverId).getProfile();
+        List<Vote> votes = voteRepository.findAllByAuthorAndReceiver(authorProfile, receiverProfile);
+        return !votes.isEmpty();
     }
 }

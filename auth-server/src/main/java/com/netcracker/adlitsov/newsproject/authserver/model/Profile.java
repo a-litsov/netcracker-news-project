@@ -5,18 +5,19 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.netcracker.adlitsov.newsproject.authserver.converter.GenderConverter;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "profile")
 public class Profile implements Serializable {
 
+    private static final int RATING_SAMPLES_COUNT = 10;
     private static final GenderConverter GENDER_CONVERTER = new GenderConverter();
 
     public static enum Gender {
@@ -32,8 +33,6 @@ public class Profile implements Serializable {
     private String firstName;
 
     private String lastName;
-
-    private int rating;
 
     @NotNull
     private String avatarUrl = "https://www.worldskills.org/components/angular-worldskills-utils/images/user.png";
@@ -60,6 +59,19 @@ public class Profile implements Serializable {
 
     @Convert(converter = GenderConverter.class)
     private Gender gender;
+
+    // moving average of user rating
+    private double rating = 0;
+
+    private int receivedVotesCount = 0;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> givenVotes = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> receivedVotes = new ArrayList<>();
 
     public User getUser() {
         return user;
@@ -89,7 +101,7 @@ public class Profile implements Serializable {
         this.lastName = lastName;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -179,6 +191,40 @@ public class Profile implements Serializable {
     @JsonSetter(value = "gender")
     public void setGenderText(String gender) {
         this.gender = GENDER_CONVERTER.convertToEntityAttribute(gender);
+    }
+
+    public void giveVote(Vote vote) {
+        this.givenVotes.add(vote);
+    }
+
+    public void receiveVote(Vote vote) {
+        receivedVotes.add(vote);
+        receivedVotesCount++;
+        int samplesCount = (receivedVotesCount < RATING_SAMPLES_COUNT) ? receivedVotesCount
+                : RATING_SAMPLES_COUNT;
+        rating = approxMovingAverage(rating, vote.getValue(), samplesCount);
+    }
+
+    public Vote getReceivedVoteByUserId(int userId) {
+        for (Vote v : receivedVotes) {
+            if (v.getAuthorId() == userId) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * Calculate moving average.
+     * avg - previous average
+     * newSample - new value from group of values for which you calculating average
+     * N - the number of samples where you want to average over
+     */
+    double approxMovingAverage(double avg, double newSample, int N) {
+        avg -= avg / N;
+        avg += newSample / N;
+
+        return avg;
     }
 
     @Override

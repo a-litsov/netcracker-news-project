@@ -353,7 +353,6 @@ CREATE TABLE profile (
     user_id integer NOT NULL,
     first_name varchar(20) DEFAULT NULL,
     last_name varchar(20) DEFAULT NULL,
-    rating integer NOT NULL DEFAULT 0,
     avatar_url text NOT NULL DEFAULT 'https://www.worldskills.org/components/angular-worldskills-utils/images/user.png'::text,
     about varchar(300) NOT NULL DEFAULT 'Этот пользователь предпочёл пока не указывать информации о себе',
     last_online timestamp NOT NULL DEFAULT NOW(),
@@ -362,7 +361,12 @@ CREATE TABLE profile (
     country varchar(30),
     city varchar(30),
     birth_date timestamp,
-    gender varchar(10)
+    gender varchar(10),
+    rating double precision NOT NULL DEFAULT 0,
+    received_votes_count integer NOT NULL DEFAULT 0
+
+    constraint valid_number
+      check (rating >= 0 AND rating <= 5)
 );
 
 
@@ -439,6 +443,17 @@ CREATE TABLE punishment (
 	id SERIAL PRIMARY KEY,
 	user_id integer REFERENCES "user"(id),
 	prev_role_id integer REFERENCES role(id)
+);
+
+
+CREATE TABLE vote (
+    id SERIAL PRIMARY KEY,
+    receiver_id integer NOT NULL REFERENCES profile(user_id),
+    author_id integer NOT NULL NOT NULL REFERENCES profile(user_id),
+    value integer NOT NULL,
+
+    constraint valid_value
+      check (value >= 1 AND value <= 5)
 );
 
 --
