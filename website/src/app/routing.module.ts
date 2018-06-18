@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { ArticlesDashbComponent } from './articles-dashb/articles-dashb.component';
+import { ArticlesDashbComponent } from './main-nav/articles-dashb/articles-dashb.component';
 import { ArticleComponent } from './article/article.component';
 import {AddArticleComponent} from "./add-article/add-article.component";
 

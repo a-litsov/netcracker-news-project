@@ -1,4 +1,8 @@
 <div class="grid-container" #gridContainer>
+  <div class="error-messages">
+    <h2 *ngIf="previews.length == 0 && !networkProblem">Новости не найдены...</h2>
+    <mat-label class="error-label" *ngIf="networkProblem">Проблемы с сетью!</mat-label>
+  </div>
   <!-- <h1 class="mat-h1">Dashboard</h1> -->
   <mat-grid-list [cols]="colsCount" rowHeight="450px" (window:resize)="onResize($event)">
     <mat-grid-tile *ngFor="let preview of previews" [colspan]="1" [rowspan]="1">

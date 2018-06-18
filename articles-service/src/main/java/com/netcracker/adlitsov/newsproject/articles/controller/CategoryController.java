@@ -6,7 +6,9 @@ import com.netcracker.adlitsov.newsproject.articles.model.ArticleMailInfo;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
 import com.netcracker.adlitsov.newsproject.articles.model.Category;
 import com.netcracker.adlitsov.newsproject.articles.repository.CategoriesRepository;
+import com.netcracker.adlitsov.newsproject.articles.service.ArticlesService;
 import com.netcracker.adlitsov.newsproject.articles.service.CategoriesService;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class CategoryController {
 
     @Autowired
     CategoriesService categoriesService;
+
+    @Autowired
+    ArticlesService articlesService;
 
     @GetMapping
     public List<Category> getCategories() {
@@ -65,5 +70,11 @@ public class CategoryController {
     @GetMapping("/all/articles/single-from-each")
     public Map<Integer, ArticleMailInfo> getMailArticles() {
         return categoriesService.getMailArticles();
+    }
+
+    @GetMapping(value = "/{id}", params = "search")
+    public List<Article> findCategoryArticlesPreviewsByTitle(@PathVariable("id") Integer id,
+                                                             @RequestParam("search") String search) {
+        return articlesService.searchArticles(id, search);
     }
 }

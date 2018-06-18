@@ -7,7 +7,8 @@ import { Category } from '../category';
 import {MatSidenav} from "@angular/material";
 import {AuthService} from "../auth/auth.service";
 import {User} from "../auth/user";
-
+import {ArticlesDashbComponent} from "./articles-dashb/articles-dashb.component";
+import { ContentChild } from '@angular/core';
 import { faAngleRight } from '@fortawesome/fontawesome-free-solid/';
 import fontawesome from '@fortawesome/fontawesome';
 
@@ -25,7 +26,7 @@ import {Route, Router} from "@angular/router";
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent {
-
+  categoryId: number = 2;
   categories: Category[];
   isSideOpened: boolean = true;
   isEmailBannerShown: boolean = true;
@@ -33,6 +34,8 @@ export class MainNavComponent {
   user: User;
   profile: Profile;
   emailInfo: EmailInfo = new EmailInfo();
+
+  searchText: string = "";
 
   @ViewChild('drawer') drawer;
 
@@ -77,11 +80,17 @@ export class MainNavComponent {
   categorySelected(catId) {
     console.log("selected category", catId);
     this.router.navigateByUrl("/category/" + catId);
+    this.categoryId = catId;
   }
 
   sideNavChanged() {
     console.log("sidenav changed");
     // Calling window.resize() to make dashboard resize
     window.dispatchEvent(new Event('resize'));
+  }
+
+  search() {
+    this.router.navigate(["/category/", this.categoryId],
+      { queryParams: {search: this.searchText}});
   }
 }

@@ -113,4 +113,8 @@ public class ArticlesService {
         Map<String, Object> details = (Map<String, Object>)((OAuth2AuthenticationDetails)auth.getDetails()).getDecodedDetails();
         return (int)details.get("user_id");
     }
+
+    public List<Article> searchArticles(Integer categoryId, String search) {
+        return articlesRepository.findArticlesByCategoryIdAndTitleContainingIgnoreCaseOrderByAddDateDesc(categoryId, search);
+    }
 }

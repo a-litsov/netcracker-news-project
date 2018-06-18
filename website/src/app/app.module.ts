@@ -15,7 +15,7 @@ import {StarRatingModule} from 'angular-star-rating';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MainNavComponent} from './main-nav/main-nav.component';
-import {ArticlesDashbComponent} from './articles-dashb/articles-dashb.component';
+import {ArticlesDashbComponent} from './main-nav/articles-dashb/articles-dashb.component';
 import {ArticleComponent} from './article/article.component';
 import {AddArticleComponent} from './add-article/add-article.component';
 import {EditArticleComponent} from './edit-article/edit-article.component';

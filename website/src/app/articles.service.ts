@@ -28,6 +28,10 @@ export class ArticlesService {
     return this.http.get<Preview[]>("/categories/" + categoryId + "/articles/preview?sort=add-date");
   }
 
+  findPreviewByCategoryIdAndWords(categoryId: number, words: string) {
+    return this.http.get<Preview[]>("/categories/" + categoryId + "?search=" + words);
+  }
+
   getPreviewByAuthorId(authorId: number) {
     return this.http.get<Preview[]>("/articles?authorId=" + authorId);
   }

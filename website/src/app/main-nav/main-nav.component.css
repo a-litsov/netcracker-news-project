@@ -25,15 +25,20 @@ mat-sidenav-content {
 }
 
 
+.mat-button-toggle-group {
+  /*margin-right: 25px;*/
+
+}
+
 .mat-button-toggle {
-  vertical-align: center;
+  /*vertical-align: center;*/
   font-family: Roboto;
-  font-size: 16px;
+  padding-top: 10px;
+  font-size: 14px;
   font-weight: 100;
   color: white;
-  box-shadow: none;
+  box-shadow: none !important;
   text-decoration: none;
-
 }
 
 .mat-button-toggle-checked {
@@ -59,4 +64,34 @@ mat-sidenav-content {
 .hide-confirm-email-banner {
   width: 20px;
   height: 20px;
+}
+
+.search-box {
+  /*color: black;*/
+  /*width: 70%;*/
+  /*padding: 12px 20px;*/
+  /*margin: 8px 0;*/
+  box-sizing: border-box;
+  /*width: 50px;*/
+  border: 0;
+  padding: 0 5px;
+  font-weight: 400;
+  color: #2a3670;
+}
+
+.search-button {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.form-search {
+  margin-top: 10px;
+  margin-left: 20px;
+  border: 0;
+  background: transparent;
+}
+
+.login-button {
+  margin: 0 10px;
 }

@@ -42,6 +42,15 @@
 
       Just news
 
+
+      <div class="form-search">
+        <input placeholder="Искать в категории" type="text" class="search-box" [(ngModel)]="searchText">
+        <button mat-icon-button [disableRipple]="true" (click)="search()">
+          <mat-icon class="search-button" fontSet="fa" fontIcon="fa-search">
+          </mat-icon>
+        </button>
+      </div>
+
       <!-- This fills the remaining space of the current row -->
       <span class="example-fill-remaining-space"></span>
 
@@ -50,16 +59,16 @@
           <!--<button mat-button (click)="catClicked(this)">{{category.name}}</button>-->
         <!--</a>-->
       <!--</span>-->
-      <mat-button-toggle-group #group="matButtonToggleGroup" color="primary" value="2">
+      <mat-button-toggle-group #group="matButtonToggleGroup" color="primary" value="{{categoryId}}">
         <mat-button-toggle *ngFor="let category of categories" value="{{category.id}}"
-                           (change)="categorySelected(category.id)">
+                           (click)="categorySelected(category.id)">
           <span class="cat-menu">{{category.name}}</span>
         </mat-button-toggle>
       </mat-button-toggle-group>
 
       <div mat-card-avatar class="user-avatar" *ngIf="!drawer.opened && authService.isLoggedIn()" (click)="drawer.toggle()"
            [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
-      <button mat-stroked-button [color]="primary" routerLink="/auth" *ngIf="authService.isLoggedOut()">Войти</button>
+      <button mat-stroked-button class="login-button"[color]="primary" routerLink="/auth" *ngIf="authService.isLoggedOut()">Войти</button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

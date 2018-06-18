@@ -51,3 +51,8 @@
 .mat-card-content {
   text-align: right;
 }
+
+.error-label {
+  color: red;
+  font-weight: 600;
+}
