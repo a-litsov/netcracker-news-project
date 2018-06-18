@@ -45,11 +45,17 @@
       <!-- This fills the remaining space of the current row -->
       <span class="example-fill-remaining-space"></span>
 
-      <span *ngFor="let category of categories" class="cat-menu">
-        <a class="cat-link" routerLink="/category/{{category.id}}" routerLinkActive="active">
-          <button mat-button>{{category.name}}</button>
-        </a>
-      </span>
+      <!--<span *ngFor="let category of categories" class="cat-menu">-->
+        <!--<a class="cat-link" routerLink="/category/{{category.id}}" routerLinkActive="active">-->
+          <!--<button mat-button (click)="catClicked(this)">{{category.name}}</button>-->
+        <!--</a>-->
+      <!--</span>-->
+      <mat-button-toggle-group #group="matButtonToggleGroup" color="primary" value="2">
+        <mat-button-toggle *ngFor="let category of categories" value="{{category.id}}"
+                           (change)="categorySelected(category.id)">
+          <span class="cat-menu">{{category.name}}</span>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
 
       <div mat-card-avatar class="user-avatar" *ngIf="!drawer.opened && authService.isLoggedIn()" (click)="drawer.toggle()"
            [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>

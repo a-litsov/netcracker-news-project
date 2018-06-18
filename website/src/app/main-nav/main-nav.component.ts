@@ -74,6 +74,11 @@ export class MainNavComponent {
     });
   }
 
+  categorySelected(catId) {
+    console.log("selected category", catId);
+    this.router.navigateByUrl("/category/" + catId);
+  }
+
   sideNavChanged() {
     console.log("sidenav changed");
     // Calling window.resize() to make dashboard resize

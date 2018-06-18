@@ -5,7 +5,6 @@
 
 .user-avatar {
   background-size: cover;
-  border: 1px solid white;
   margin: 0 10px;
 }
 
@@ -25,9 +24,20 @@ mat-sidenav-content {
   margin: auto 0;
 }
 
-.cat-link {
+
+.mat-button-toggle {
+  vertical-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 100;
   color: white;
+  box-shadow: none;
   text-decoration: none;
+
+}
+
+.mat-button-toggle-checked {
+  background-color: #3648a0;
 }
 
 .example-fill-remaining-space {
