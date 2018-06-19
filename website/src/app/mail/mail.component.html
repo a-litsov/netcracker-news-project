@@ -3,19 +3,27 @@
   <mat-card>
     <mat-card-title><h2>Управление подпиской</h2></mat-card-title>
 
-        <div class="form-wrapper">
-          <mat-form-field>
-            <input matInput [(ngModel)]="emailInfo.email" placeholder="Адрес, на который производится подписка">
-          </mat-form-field>
-          <h4>Список категорий:</h4>
-            <mat-checkbox class="example-margin" *ngFor="let category of categories; let i = index"
-                [(ngModel)]="checked[i]">
-              {{category.name}}
-            </mat-checkbox>
-
-          <button class="password-button" mat-raised-button color="primary" (click)="sendSub()">Применить
-          </button>
-        </div>
+    <div class="form-wrapper">
+      <mat-form-field>
+        <input matInput [(ngModel)]="emailInfo.email" placeholder="Адрес, на который производится подписка">
+      </mat-form-field>
+      <div class="email-status">
+        Статус:
+        <span class="email-status-ok">Активна</span>
+        <!--<span class="email-status-bad" *ngIf="!emailInfo.confirmed">Не активна</span>-->
+      </div>
+      <h4>Список категорий:</h4>
+      <mat-checkbox class="example-margin" *ngFor="let category of categories; let i = index"
+                    [(ngModel)]="checked[i]">
+        {{category.name}}
+      </mat-checkbox>
+      <div class="buttons">
+        <button class="password-button" mat-raised-button color="primary" (click)="sendSub()">Применить
+        </button>
+        <button class="confirm-email-button" mat-button (click)="sendSub()">Отменить подписку
+        </button>
+      </div>
+    </div>
   </mat-card>
 
 </div>

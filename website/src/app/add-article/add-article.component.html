@@ -20,7 +20,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="Тег" [(ngModel)]="article.tag">
+        <mat-select placeholder="Теги" [(ngModel)]="article.tag">
           <mat-option *ngFor="let tag of tags" [value]="tag">
             {{ tag.name }}
           </mat-option>

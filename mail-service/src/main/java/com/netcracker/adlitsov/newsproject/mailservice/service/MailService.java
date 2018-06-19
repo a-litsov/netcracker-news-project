@@ -43,7 +43,7 @@ public class MailService {
     public void subscribeUserOnCategory(Authentication auth, SubInfo subInfo) {
         User user = parseAuth(auth);
         user.setEmail(subInfo.getEmail());
-        for (int categoryId: subInfo.getCategoriesId()) {
+        for (int categoryId : subInfo.getCategoriesId()) {
             Subscription subscription = new Subscription();
             subscription.setCategoryId(categoryId);
             subscription.setUser(user);
@@ -81,8 +81,10 @@ public class MailService {
             if (article != null) {
                 messageBuilder.append("<br><center><h3>").append(article.getCategory().getName()).append("</h4></center>");
                 messageBuilder.append("<h4>").append(article.getTitle()).append("</h4>");
-                messageBuilder.append("<p>").append(article.getOverview()).append("... ");
-                messageBuilder.append("<a href='http://localhost:4200/article/").append(article.getId()).append("'>Читать далее</a>");
+                messageBuilder.append("<p>").append("<img src=\"" + article.getLogoSrc() + "\" style=\"float:left;width:85px;height:85px;margin-right: 5px; \">")
+                              .append(article.getOverview()).append("... ");
+                messageBuilder.append("<a href='http://localhost:4200/article/").append(article.getId()).append("'>Читать далее</a>")
+                              .append("</p>");
                 isEmpty = false;
             }
         }
@@ -110,9 +112,9 @@ public class MailService {
     }
 
     private User parseAuth(Authentication auth) {
-        Map<String, Object> details = (Map<String, Object>)((OAuth2AuthenticationDetails)auth.getDetails()).getDecodedDetails();
-        int userId = (int)details.get("user_id");
-        String userName = (String)details.get("user_name");
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2AuthenticationDetails) auth.getDetails()).getDecodedDetails();
+        int userId = (int) details.get("user_id");
+        String userName = (String) details.get("user_name");
 
         User user = new User();
         user.setId(userId);

@@ -28,3 +28,36 @@
   margin-bottom: 10px;
   color: red;
 }
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.password-button {
+  width: 40%;
+  margin: auto;
+}
+
+.email-status {
+  margin-top: -5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.email-status-ok {
+  color: green;
+}
+
+.email-status-bad {
+  color: red;
+}
+
+.change-email-button {
+  margin: 0 auto;
+}
+
+.confirm-email-button {
+  margin-left: 5px;
+}

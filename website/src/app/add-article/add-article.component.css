@@ -17,3 +17,7 @@
   width: 50%;
   margin: 0 auto;
 }
+
+::ng-deep md-editor img {
+  max-width: 600px;
+}
