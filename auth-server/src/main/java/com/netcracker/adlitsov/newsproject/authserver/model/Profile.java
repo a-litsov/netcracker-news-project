@@ -65,11 +65,11 @@ public class Profile implements Serializable {
 
     private int receivedVotesCount = 0;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vote> givenVotes = new ArrayList<>();
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vote> receivedVotes = new ArrayList<>();
 
@@ -220,7 +220,7 @@ public class Profile implements Serializable {
      * newSample - new value from group of values for which you calculating average
      * N - the number of samples where you want to average over
      */
-    double approxMovingAverage(double avg, double newSample, int N) {
+    private double approxMovingAverage(double avg, double newSample, int N) {
         avg -= avg / N;
         avg += newSample / N;
 

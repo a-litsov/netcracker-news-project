@@ -45,7 +45,18 @@
         {{article.tag.name}}
       </span>
 
-      <mat-card-actions align="end">
+      <mat-card-actions>
+        <button mat-raised-button  (click)="likeArticle()" [routerLink]="'/article/' + article.id + '/edit'" routerLinkActive="active"
+                *ngIf="authService.hasAuthority('OP_UPDATE_ARTICLE')">
+          Редактировать
+        </button>
+        <button mat-raised-button (click)="dislikeArticle()"
+                *ngIf="authService.hasAuthority('OP_DELETE_ARTICLE')">
+          Удалить
+        </button>
+
+        <span class="example-fill-remaining-space"></span>
+
         <button mat-raised-button [style.color]="getArticleLikeButtonColor()" (click)="likeArticle()"
                 *ngIf="authService.hasAuthority('OP_VOTE_ARTICLE')">
           Нравится
@@ -55,9 +66,9 @@
           Не нравится
         </button>
         <span class="artice-rating-title">Рейтинг:</span>
-        <div class="rating">
+        <span class="rating">
           {{article.rating}}
-        </div>
+        </span>
       </mat-card-actions>
 
     </mat-card-footer>
@@ -83,7 +94,7 @@
                    [ngStyle]="{'background-image': 'url(' + authorsInfo[comment.authorId].avatarUrl + ')'}">
               </div>
               <div class="comment-author-rating" *ngIf="authorsInfo[comment.authorId].rating > 0">
-                <star-rating class="user-rating" [starType]="'svg'" [rating]="authorsInfo[comment.authorId].rating"
+                <star-rating class="user-rating" [starType]="'svg'" [rating]="authorsInfo[comment.authorId].rating" staticColor="null"
                              [showHalfStars]="true" [readOnly]="true" size="small" [hoverEnabled]="false"></star-rating>
               </div>
             </div>
@@ -122,6 +133,9 @@
             <button mat-button *ngIf="comment.hidden && authService.hasAuthority('OP_HIDE_COMMENT')"
                     (click)="showComment(comment)">Показать
             </button>
+            <button mat-button *ngIf="authService.hasAuthority('OP_UPDATE_COMMENT')"
+                    (click)="activateEditMode(comment)">Изменить
+            </button>
             <button mat-button *ngIf="authService.hasAuthority('OP_DELETE_COMMENT')"
                     (click)="deleteComment(comment, parent)">Удалить
             </button>
@@ -146,12 +160,14 @@
         <h3>Ваш комментарий</h3>
       </mat-card-title>
       <div class="user-comment-form">
-        <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
+        <div mat-card-avatar *ngIf="!editing.active" class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
+        <div mat-card-avatar *ngIf="editing.active" class="user-avatar" [ngStyle]="{'background-image': 'url(' + editing.avatarUrl + ')'}"></div>
         <mat-form-field class="user-comment-content">
       <textarea matInput class="user-textarea" [(ngModel)]="userComment.content" placeholder="Что вы об этом думаете?"
                 matTextareaAutosize></textarea>
         </mat-form-field>
-        <button mat-button class="send-button" (click)="createComment()">Отправить</button>
+        <button mat-button class="send-button" *ngIf="!editing.active" (click)="createComment()">Отправить</button>
+        <button mat-button class="send-button" *ngIf="editing.active" (click)="updateComment()">Применить</button>
       </div>
     </div>
   </mat-card>

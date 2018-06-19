@@ -28,6 +28,8 @@ export class ArticleComponent implements OnInit {
   public authorProfile: Profile = new Profile();
   private votes = {};
   private articleVote: Vote = new Vote();
+  public editing: {active: boolean, comment: Comment, avatarUrl: string} = {
+    active: false, comment: null, avatarUrl: null};
 
   constructor(private articlesService: ArticlesService, private commentsService: CommentsService,
               private authService: AuthService, private route: ActivatedRoute,
@@ -169,8 +171,34 @@ export class ArticleComponent implements OnInit {
       } else {
         this.comments.push(inComment);
       }
+      this.userComment.content = "";
       console.log(inComment);
     });
+  }
+
+  public activateEditMode(comment: Comment) {
+    this.editing = {
+      active: true,
+      comment: comment,
+      avatarUrl: this.authorsInfo[comment.authorId].avatarUrl,
+    }
+    this.userComment.content = comment.content;
+    console.log("edit mode activated", this.editing);
+
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  public updateComment() {
+    let updatedComment: Comment = this.editing.comment;
+    updatedComment.content = this.userComment.content;
+    console.log("updating comment... updated comment", updatedComment);
+    this.commentsService.updateComment(updatedComment).subscribe((comment: Comment) => {
+      console.log("successfully updated comment", comment);
+      this.editing.active = false;
+      this.editing.comment = null;
+      this.editing.avatarUrl = null;
+      this.userComment.content = "";
+    }, (error) => console.log("error while updating comment", error));
   }
 
   private hideComment(comment: Comment) {
@@ -244,6 +272,14 @@ export class ArticleComponent implements OnInit {
     if (vote.type == "DISLIKE") {
       return "INDIANRED";
     }
+  }
+
+  private deleteArticle() {
+    console.log("removing article...");
+    this.articlesService.deleteArticleById(this.article.id).subscribe((response) => {
+      console.log(response);
+      this.router.navigateByUrl('/' + this.article.category.id);
+    });
   }
 
   ngOnInit() {

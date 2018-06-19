@@ -25,6 +25,10 @@ export class CommentsService {
     return this.http.post<Comment>("/comments", comment);
   }
 
+  updateComment(comment: Comment): Observable<Comment> {
+    return this.http.put<Comment>("/comments/" + comment.id, comment);
+  }
+
   hideComment(id: number): Observable<void> {
     return this.http.put<void>("/comments/" + id + "/hide", null);
   }

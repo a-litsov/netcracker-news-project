@@ -33,7 +33,7 @@ public class CommentController {
     }
 
     @PostMapping()
-    public Comment createComment(@Valid @RequestBody Comment comment) {
+    public Comment createComment(@RequestBody Comment comment) {
         return commentsService.createComment(comment);
     }
 
