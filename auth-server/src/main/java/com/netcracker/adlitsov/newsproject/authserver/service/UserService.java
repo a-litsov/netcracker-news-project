@@ -200,7 +200,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void muteUser(int userId) {
+    public Role muteUser(int userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         final Role mutedRole = roleRepository.findByAuthority("ROLE_MUTED");
@@ -219,15 +219,16 @@ public class UserService implements UserDetailsService {
         user.setPunishment(punishment);
 
         user.setRole(mutedRole);
-        userRepository.save(user);
+        User newUser = userRepository.save(user);
+        return newUser.getRole();
     }
 
-    public void unmuteUser(int userId) {
-        clearPunishment(userId);
+    public Role unmuteUser(int userId) {
+        return clearPunishment(userId);
     }
 
     @Transactional
-    public void banUser(int userId) {
+    public Role banUser(int userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         final Role bannedRole = roleRepository.findByAuthority("ROLE_BANNED");
@@ -247,18 +248,19 @@ public class UserService implements UserDetailsService {
 
         user.setRole(bannedRole);
         User newUser = userRepository.save(user);
+        return newUser.getRole();
     }
 
-    public void unbanUser(int userId) {
-        clearPunishment(userId);
+    public Role unbanUser(int userId) {
+        return clearPunishment(userId);
     }
 
-    private void clearPunishment(int userId) {
+    private Role clearPunishment(int userId) {
         User user = userRepository.findById(userId)
                                   .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         if (user.getPunishment() == null) {
-            return;
+            return user.getRole();
         }
 
         Role prevRole = user.getPunishment().getPrevRole();
@@ -267,6 +269,7 @@ public class UserService implements UserDetailsService {
         user.setRole(prevRole);
 
         userRepository.save(user);
+        return user.getRole();
     }
 
     public Map<Integer, AuthorCommentInfo> getAuthorsCommentInfo(List<Integer> authorsIds) {
@@ -304,5 +307,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(profileId)
                              .orElseThrow(() -> new ResourceNotFoundException("User", "id", profileId))
                              .getProfile().getRating();
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
+
+    public Role getUserRole(Integer id) {
+        return userRepository.findById(id)
+                             .orElseThrow(() -> new ResourceNotFoundException("User", "id", id))
+                             .getRole();
+    }
+
+    public User setUserRole(Integer id, Role role) {
+        User user =  userRepository.findById(id)
+                             .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        user.setRole(role);
+        return userRepository.save(user);
     }
 }

@@ -7,8 +7,10 @@
       <div mat-card-avatar class="user-avatar" [ngStyle]="{'background-image': 'url(' + profile.avatarUrl + ')'}"></div>
       <!--<div [style.background-color]="getRankColor()" class="user-rank">{{profile.rank.name}}</div>-->
       <div class="user-rating-container">
-        <star-rating class="user-rating" [starType]="'svg'" [rating]="profile.rating" staticColor="false" [showHalfStars]="true"
-                     [readOnly]="!canVote()" [hoverEnabled]="canVote()"  (starClickChange)="userVoted($event)"></star-rating>
+        <star-rating class="user-rating" [starType]="'svg'" [rating]="profile.rating" staticColor="false"
+                     [showHalfStars]="true"
+                     [readOnly]="!canVote()" [hoverEnabled]="canVote()"
+                     (starClickChange)="userVoted($event)"></star-rating>
       </div>
     </div>
 
@@ -19,7 +21,7 @@
 
       <div class="user-counts">
         <!--<span class="count-info">-->
-          <!--Рейтинг <span class="count">{{profile.rating}}</span>-->
+        <!--Рейтинг <span class="count">{{profile.rating}}</span>-->
         <!--</span>-->
         <span class="count-info">
           Комментарии <span class="count">{{comments.length}}</span>
@@ -39,14 +41,6 @@
 
     <mat-card-content class="user-info-content">
       <table class="user-table-info">
-        <tr>
-          <td>
-            <span class="info-label">Последний визит:</span>
-          </td>
-          <td>
-            {{profile.lastOnline | date: 'dd.MM.yyyy в hh:mm'}}
-          </td>
-        </tr>
         <tr>
           <td>
             <span class="info-label">Дата регистрации:</span>
@@ -98,6 +92,43 @@
 
       <!--<div markdown [data]="article.content" class="article-content"></div>-->
     </mat-card-content>
+
+    <mat-card-footer style="width: 100%;">
+      <mat-card-actions class="user-actions-wrapper">
+
+        <mat-form-field class="roles-list-wrapper" *ngIf="authService.hasAuthority('OP_UPDATE_USER')">
+          <mat-select placeholder="Роль пользователя" class="roles-list" [(ngModel)]="role" [compareWith]="compareRoles">
+            <mat-option *ngFor="let role of allRoles" [value]="role" [disabled]="role.id <= 2 && !banned && !muted">
+              {{ role.authority }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button (click)="changeRole()" *ngIf="authService.hasAuthority('OP_UPDATE_USER')" [disabled]="banned || muted">
+          Сменить роль
+        </button>
+
+        <span class="example-fill-remaining-space"></span>
+
+        <button mat-raised-button (click)="editProfile()" *ngIf="authService.hasAuthority('OP_UPDATE_PROFILE')"
+                [routerLink]="'/profile/' + userId + '/edit'" routerLinkActive="active">
+          Изменить
+        </button>
+        <button mat-raised-button (click)="banUser()" *ngIf="authService.hasAuthority('OP_BAN_USER') && !banned && !muted">
+          Заблокировать
+        </button>
+        <button mat-raised-button (click)="unbanUser()" *ngIf="authService.hasAuthority('OP_BAN_USER') && banned && !muted">
+          Разблокировать
+        </button>
+        <button mat-raised-button (click)="muteUser()" *ngIf="authService.hasAuthority('OP_MUTE_USER') && !banned && !muted">
+          Замутить
+        </button>
+        <button mat-raised-button (click)="unmuteUser()" *ngIf="authService.hasAuthority('OP_MUTE_USER') && !banned && muted">
+          Размутить
+        </button>
+
+      </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
 
   <mat-card class="user-activity-card">
@@ -117,13 +148,13 @@
                 <mat-card-header class="dashboard-card-header">
                   <!--TODO: decide whether admin/editor should have access to edit/remove here-->
                   <!--<button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">-->
-                    <!--<mat-icon>more_vert</mat-icon>-->
+                  <!--<mat-icon>more_vert</mat-icon>-->
                   <!--</button>-->
                   <!--<mat-menu #menu="matMenu" xPosition="before">-->
-                    <!--<button mat-menu-item [routerLink]="['/article',preview.id,'edit']" routerLinkActive="active">-->
-                      <!--Редактировать-->
-                    <!--</button>-->
-                    <!--<button mat-menu-item (click)="deleteArticleById(preview.id)">Удалить</button>-->
+                  <!--<button mat-menu-item [routerLink]="['/article',preview.id,'edit']" routerLinkActive="active">-->
+                  <!--Редактировать-->
+                  <!--</button>-->
+                  <!--<button mat-menu-item (click)="deleteArticleById(preview.id)">Удалить</button>-->
                   <!--</mat-menu>-->
                   <mat-card-title class="dashb-card-title">
                     <a class="article-link" routerLink="/article/{{preview.id}}" routerLinkActive="active">
@@ -160,6 +191,7 @@
               <mat-card-title class="comment-title">
                 <span class="comment-author">{{profile.userName}}</span>
                 <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
+                <span><a [href]="'/article/' + comment.articleId"> Ссылка на новость</a></span>
               </mat-card-title>
               <mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>
               <span class="example-fill-remaining-space"></span>

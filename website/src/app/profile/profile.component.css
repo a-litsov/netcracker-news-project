@@ -239,3 +239,17 @@
   font-weight: 500;
   color: red;
 }
+
+.roles-list {
+  color: black;
+}
+
+.roles-list-wrapper {
+  height: 20px;
+}
+
+.user-actions-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}

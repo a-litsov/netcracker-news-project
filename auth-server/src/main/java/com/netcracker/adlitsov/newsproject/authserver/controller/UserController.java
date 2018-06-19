@@ -1,10 +1,7 @@
 package com.netcracker.adlitsov.newsproject.authserver.controller;
 
-import com.netcracker.adlitsov.newsproject.authserver.model.AuthorCommentInfo;
-import com.netcracker.adlitsov.newsproject.authserver.model.EmailInfo;
-import com.netcracker.adlitsov.newsproject.authserver.model.User;
+import com.netcracker.adlitsov.newsproject.authserver.model.*;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
-import com.netcracker.adlitsov.newsproject.authserver.model.VerificationToken;
 import com.netcracker.adlitsov.newsproject.authserver.service.MailService;
 import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,28 +67,55 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{id}/mute")
-    public void muteUser(@PathVariable("id") Integer id) {
-        userService.muteUser(id);
+    // TODO: move to service
+    @GetMapping("/users/{id}/muted")
+    public boolean isMuted(@PathVariable("id") Integer id) {
+        return userService.getUserRole(id).getAuthority().equals("ROLE_MUTED");
     }
 
-    @GetMapping("/users/{id}/unmute")
-    public void unmuteUser(@PathVariable("id") Integer id) {
-        userService.unmuteUser(id);
+    @PostMapping("/users/{id}/mute")
+    public Role muteUser(@PathVariable("id") Integer id) {
+        return userService.muteUser(id);
     }
 
-    @GetMapping("/users/{id}/ban")
-    public void banUser(@PathVariable("id") Integer id) {
-        userService.banUser(id);
+    @PostMapping("/users/{id}/unmute")
+    public Role unmuteUser(@PathVariable("id") Integer id) {
+        return userService.unmuteUser(id);
     }
 
-    @GetMapping("/users/{id}/unban")
-    public void unbanUser(@PathVariable("id") Integer id) {
-        userService.unbanUser(id);
+    // TODO: move to service
+    @GetMapping("/users/{id}/banned")
+    public boolean isBanned(@PathVariable("id") Integer id) {
+        return userService.getUserRole(id).getAuthority().equals("ROLE_BANNED");
+    }
+
+    @PostMapping("/users/{id}/ban")
+    public Role banUser(@PathVariable("id") Integer id) {
+        return userService.banUser(id);
+    }
+
+    @PostMapping("/users/{id}/unban")
+    public Role unbanUser(@PathVariable("id") Integer id) {
+        return userService.unbanUser(id);
     }
 
     @PostMapping("/users/authors-comment-info")
     public Map<Integer, AuthorCommentInfo> getAuthorsCommentInfo(@RequestBody List<Integer> authorsIds) {
         return userService.getAuthorsCommentInfo(authorsIds);
+    }
+
+    @PostMapping("/users/{id}/grant-role")
+    public User setUserRole(@PathVariable("id") Integer id, @RequestBody Role role) {
+        return userService.setUserRole(id, role);
+    }
+
+    @GetMapping("/users/roles")
+    public List<Role> getAllRoles() {
+        return userService.getAllRoles();
+    }
+
+    @GetMapping("/users/{id}/role")
+    public Role getUserRole(@PathVariable("id") Integer id) {
+        return userService.getUserRole(id);
     }
 }

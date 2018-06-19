@@ -8,6 +8,10 @@ import {Location} from "@angular/common";
 import {Comment} from "../comment";
 import {CommentsService} from "../comments.service";
 import {AuthService} from "../auth/auth.service";
+import {UserService} from "../user-settings/user.service";
+import {Role} from "../user-settings/role";
+import {Category} from "../category";
+import {User} from "../auth/user";
 
 @Component({
   selector: 'app-profile',
@@ -26,11 +30,16 @@ export class ProfileComponent implements OnInit {
   private commentsNetworkProblem: boolean = false;
 
   public hasVoted: boolean = true;
+  public banned: boolean = false;
+  public muted: boolean = false;
+
+  public allRoles: Role[] = [];
+  public role: Role = new Role();
 
   constructor(private route: ActivatedRoute, private profileService: ProfileService,
               private articlesService: ArticlesService, private commentsService: CommentsService,
               private location: Location, private cdRef:ChangeDetectorRef,
-              private authService: AuthService) { }
+              private authService: AuthService, public usersService: UserService) { }
 
   private loadArticlesPreview(id: number) {
     this.articlesService.getPreviewByAuthorId(id).subscribe((inPreviews: Preview[]) => {
@@ -91,6 +100,28 @@ export class ProfileComponent implements OnInit {
         console.log("voted is", voted);
       });
 
+      console.log("loading muted");
+      this.usersService.userMuted(this.userId).subscribe((muted: boolean) => {
+        this.muted = muted;
+        console.log("muted is", muted);
+      });
+
+      console.log("loading banned");
+      this.usersService.userBanned(this.userId).subscribe((banned: boolean) => {
+        this.banned = banned;
+        console.log("banned is", banned);
+      });
+
+      this.usersService.getAllRoles().subscribe((roles: Role[]) => {
+        this.allRoles = roles;
+        console.log("roles are", roles);
+      });
+
+      this.usersService.getUserRole(this.userId).subscribe((role: Role) => {
+        this.role = role;
+        console.log("role is", role);
+      });
+
       console.log("loading previews");
       this.loadArticlesPreview(this.userId);
 
@@ -115,5 +146,52 @@ export class ProfileComponent implements OnInit {
 
   canVote(): boolean {
     return this.authService.hasAuthority("OP_VOTE_PROFILE") && !this.hasVoted;
+  }
+
+  banUser() {
+    console.log("banning user", this.userId);
+    this.usersService.banUser(this.userId).subscribe((role: Role) => {
+      console.log("user banned");
+      this.banned = true;
+      this.role = role;
+    })
+  }
+
+  unbanUser() {
+    console.log("unbanning user", this.userId);
+    this.usersService.unbanUser(this.userId).subscribe((role: Role) => {
+      console.log("user banned");
+      this.banned = false;
+      this.role = role;
+    })
+  }
+
+  muteUser() {
+    console.log("muting user", this.userId);
+    this.usersService.muteUser(this.userId).subscribe((role: Role) => {
+      console.log("user muted");
+      this.muted = true;
+      this.role = role;
+    })
+  }
+
+  unmuteUser() {
+    console.log("unmuting user", this.userId);
+    this.usersService.unmuteUser(this.userId).subscribe((role: Role) => {
+      console.log("user unmuted");
+      this.muted = false;
+      this.role = role;
+    })
+  }
+
+  compareRoles(first: Role, second: Role) {
+    return first.id === second.id && first.authority === second.authority;
+  }
+
+  changeRole() {
+    this.usersService.setUserRole(this.userId, this.role).subscribe((user) => {
+      console.log("updated role", user);
+      this.role = user['role'];
+    })
   }
 }
