@@ -3,6 +3,7 @@ package com.netcracker.adlitsov.newsproject.articles.service;
 import com.netcracker.adlitsov.newsproject.articles.controller.CommentsServiceProxy;
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
+import com.netcracker.adlitsov.newsproject.articles.model.ArticleMailInfo;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
 import com.netcracker.adlitsov.newsproject.articles.model.Vote;
 import com.netcracker.adlitsov.newsproject.articles.repository.ArticlesRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,5 +129,26 @@ public class ArticlesService {
 
     public boolean existsById(int id) {
         return articlesRepository.existsById(id);
+    }
+
+    public Map<Integer, ArticleMailInfo> getTopOfTheDayCategorized() {
+        Map<Integer, ArticleMailInfo> mailingList = new HashMap<>();
+        List<Article> todaySorted = articlesRepository.findTodayArticlesSortedByCategoryAndRating();
+        if (todaySorted.isEmpty()) {
+            return mailingList;
+        }
+
+        Article current = null;
+        for (int i = 0; i < todaySorted.size() - 1; i++) {
+            current = todaySorted.get(i);
+            // current is last in category - most rated
+            if (!todaySorted.get(i+1).getCategory().equals(current.getCategory())) {
+                mailingList.put(current.getCategory().getId(), new ArticleMailInfo(current));
+            }
+        }
+        Article last = todaySorted.get(todaySorted.size() - 1);
+        mailingList.put(last.getCategory().getId(), new ArticleMailInfo(last));
+
+        return mailingList;
     }
 }

@@ -66,12 +66,6 @@ public class CategoryController {
         return categoriesService.getCategoryArticlesPreviews(categoryId);
     }
 
-    // categoryId:articles
-    @GetMapping("/all/articles/single-from-each")
-    public Map<Integer, ArticleMailInfo> getMailArticles() {
-        return categoriesService.getMailArticles();
-    }
-
     @GetMapping(value = "/{id}", params = "search")
     public List<Article> findCategoryArticlesPreviewsByTitle(@PathVariable("id") Integer id,
                                                              @RequestParam("search") String search) {

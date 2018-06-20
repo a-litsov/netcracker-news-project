@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -22,6 +23,7 @@ import java.util.Properties;
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableScheduling
+@Order(1)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
@@ -30,7 +32,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .csrf().disable()
                 .authorizeRequests()
 
-                .antMatchers("/**").access("#oauth2.hasScope('mail')");
+                .antMatchers("/mailing/password-changed", "/mailing/send-confirmation")
+                    .access("#oauth2.hasScope('mail')")
+                .anyRequest().permitAll();
     }
 
 

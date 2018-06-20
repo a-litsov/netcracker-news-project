@@ -21,6 +21,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/articles/day-top-mail").permitAll()
                 .antMatchers(HttpMethod.POST, "/articles/{\\d+}/like", "/articles/{\\d+}/dislike")
                     .hasAuthority("OP_VOTE_ARTICLE")
 

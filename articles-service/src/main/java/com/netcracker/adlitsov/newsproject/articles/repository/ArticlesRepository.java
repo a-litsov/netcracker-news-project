@@ -2,6 +2,7 @@ package com.netcracker.adlitsov.newsproject.articles.repository;
 
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,12 @@ public interface ArticlesRepository extends JpaRepository<Article, Integer> {
     List<Article> findArticlesByAuthorId(Integer articleId);
 
     List<Article> findArticlesByCategoryIdAndTitleContainingIgnoreCaseOrderByAddDateDesc(Integer categoryId, String search);
+
+    @Query("SELECT a" +
+            " FROM Article a" +
+            " WHERE a.addDate >= CURRENT_DATE" +
+            " ORDER BY a.category, a.likesCount - a.dislikesCount")
+    List<Article> findTodayArticlesSortedByCategoryAndRating();
 
     boolean existsById(Integer id);
 }

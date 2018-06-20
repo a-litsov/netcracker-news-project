@@ -78,4 +78,9 @@ public class ArticleController {
     public boolean articleExists(@PathVariable("id") Integer id) {
         return articlesService.existsById(id);
     }
+
+    @GetMapping("/day-top-mail")
+    public Map<Integer, ArticleMailInfo> getTopOfTheDayMailing() {
+        return articlesService.getTopOfTheDayCategorized();
+    }
 }

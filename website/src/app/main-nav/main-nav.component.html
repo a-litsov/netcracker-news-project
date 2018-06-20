@@ -1,13 +1,3 @@
-<mat-toolbar class="confirm-email-banner" *ngIf="!emailInfo.confirmed && isEmailBannerShown">
-    Пожалуйста, подтвердите почту, которую вы указали при регистрации, чтобы писать комментарии и изменять
-  рейтинг новостей и комментариев.
-  <!-- This fills the remaining space of the current row -->
-  <span class="example-fill-remaining-space"></span>
-  <button mat-icon-button [disableRipple]="true" (click)="isEmailBannerShown = false">
-    <mat-icon class="hide-confirm-email-banner" fontSet="fa" fontIcon="fa-times">
-    </mat-icon>
-  </button>
-</mat-toolbar>
 <mat-sidenav-container>
   <!--Will be used when we add user functionality-->
   <mat-sidenav

@@ -12,7 +12,7 @@ import java.util.Map;
 @FeignClient(name = "articles-service", url="${spring.gateway.url}")
 public interface ArticlesServiceProxy {
 
-    @GetMapping("/categories/all/articles/single-from-each")
+    @GetMapping("articles/day-top-mail")
     public Map<Integer, ArticleMailInfo> getAllMailArticles();
 
 }

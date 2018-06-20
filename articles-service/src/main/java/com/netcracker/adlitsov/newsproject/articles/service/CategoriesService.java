@@ -69,17 +69,4 @@ public class CategoriesService {
                        .sorted(comp)
                        .collect(Collectors.toList());
     }
-
-    public Map<Integer, ArticleMailInfo> getMailArticles() {
-        Map<Integer, ArticleMailInfo> mailArticles = new HashMap<>();
-        // take one from each category
-        List<Category> categories = categoriesRepository.findAll();
-        for (Category category : categories) {
-            List<Article> catArticles = category.getArticles();
-            if (!catArticles.isEmpty()) {
-                mailArticles.put(catArticles.get(0).getCategory().getId(), new ArticleMailInfo(catArticles.get(0)));
-            }
-        }
-        return mailArticles;
-    }
 }
