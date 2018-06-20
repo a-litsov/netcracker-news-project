@@ -1,10 +1,13 @@
 package com.netcracker.adlitsov.newsproject.comments.service;
 
+import com.netcracker.adlitsov.newsproject.comments.config.ArticlesServiceClientConfiguration;
+import com.netcracker.adlitsov.newsproject.comments.controller.ArticlesServiceProxy;
 import com.netcracker.adlitsov.newsproject.comments.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.comments.model.Comment;
 import com.netcracker.adlitsov.newsproject.comments.model.Vote;
 import com.netcracker.adlitsov.newsproject.comments.repository.CommentsRepository;
 import com.netcracker.adlitsov.newsproject.comments.repository.VotesRepository;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
@@ -32,6 +35,9 @@ public class CommentsService {
     @Autowired
     VotesRepository votesRepository;
 
+    @Autowired
+    ArticlesServiceProxy articlesServiceProxy;
+
 
     public List<Comment> getAllComments() {
         return commentsRepository.findAllByOrderByAddDate();
@@ -41,7 +47,12 @@ public class CommentsService {
         return commentsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Comment", "id", id));
     }
 
+    @Transactional
     public Comment createComment(Comment comment) {
+        if (!articlesServiceProxy.articleExists(comment.getArticleId())) {
+            throw new ResourceNotFoundException("Article", "id", comment.getArticleId());
+        }
+
         return commentsRepository.save(comment);
     }
 

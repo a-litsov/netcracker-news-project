@@ -73,4 +73,9 @@ public class ArticleController {
     public int dislikeComment(@PathVariable("id") int id, Authentication auth) {
         return articlesService.voteArticle(id, Vote.VoteType.DISLIKE, auth).getRating();
     }
+
+    @GetMapping("/{id}/exists")
+    public boolean articleExists(@PathVariable("id") Integer id) {
+        return articlesService.existsById(id);
+    }
 }

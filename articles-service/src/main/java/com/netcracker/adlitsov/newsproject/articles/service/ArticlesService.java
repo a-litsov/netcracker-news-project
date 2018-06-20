@@ -124,4 +124,8 @@ public class ArticlesService {
     public List<Article> searchArticles(Integer categoryId, String search) {
         return articlesRepository.findArticlesByCategoryIdAndTitleContainingIgnoreCaseOrderByAddDateDesc(categoryId, search);
     }
+
+    public boolean existsById(int id) {
+        return articlesRepository.existsById(id);
+    }
 }

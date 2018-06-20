@@ -16,4 +16,6 @@ public interface ArticlesRepository extends JpaRepository<Article, Integer> {
     List<Article> findArticlesByAuthorId(Integer articleId);
 
     List<Article> findArticlesByCategoryIdAndTitleContainingIgnoreCaseOrderByAddDateDesc(Integer categoryId, String search);
+
+    boolean existsById(Integer id);
 }
