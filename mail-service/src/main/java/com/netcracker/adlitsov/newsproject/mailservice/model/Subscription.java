@@ -1,5 +1,7 @@
 package com.netcracker.adlitsov.newsproject.mailservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -12,8 +14,9 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    @JsonBackReference
     private User user;
 
     @NotNull

@@ -5,6 +5,7 @@ import java.util.List;
 public class SubInfo {
     private String email;
     private List<Integer> categoriesId;
+    private Boolean active;
 
     public String getEmail() {
         return email;
@@ -20,5 +21,13 @@ public class SubInfo {
 
     public void setCategoriesId(List<Integer> categoriesId) {
         this.categoriesId = categoriesId;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

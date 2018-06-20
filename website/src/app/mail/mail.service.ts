@@ -13,11 +13,15 @@ export class MailService {
   constructor(private http: HttpClient) { }
 
   subscribeOnCategories(subInfo: SubInfo) {
-    return this.http.post<void>(this.serviceURL + "/subscribe", subInfo);
+    return this.http.post<boolean>(this.serviceURL + "/subscribe", subInfo);
   }
 
-  getUserSubs(email: string): Observable<number[]> {
-    return this.http.post<number[]>(this.serviceURL + "/get-subs", email);
+  unsubscribeUser() {
+    return this.http.post<void>(this.serviceURL + "/unsubscribe", null);
+  }
+
+  getUserSubInfo(): Observable<SubInfo> {
+    return this.http.get<SubInfo>(this.serviceURL + "/get-subinfo");
   }
 
 }

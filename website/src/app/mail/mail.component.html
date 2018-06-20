@@ -5,22 +5,26 @@
 
     <div class="form-wrapper">
       <mat-form-field>
-        <input matInput [(ngModel)]="emailInfo.email" placeholder="Адрес, на который производится подписка">
+        <input matInput id="email-input" [(ngModel)]="subInfo.email" placeholder="Адрес, на который производится подписка"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
       </mat-form-field>
       <div class="email-status">
         Статус:
-        <span class="email-status-ok">Активна</span>
-        <!--<span class="email-status-bad" *ngIf="!emailInfo.confirmed">Не активна</span>-->
+        <span class="email-status-ok" *ngIf="subInfo.active == true && !networkProblem">Активна</span>
+        <span class="email-status-bad" *ngIf="subInfo.active == false && !networkProblem">Не активна</span>
+        <span class="email-status-bad" *ngIf="networkProblem">Проблемы с сетью!</span>
       </div>
       <h4>Список категорий:</h4>
       <mat-checkbox class="example-margin" *ngFor="let category of categories; let i = index"
-                    [(ngModel)]="checked[i]">
+                    [(ngModel)]="checked[category.id]">
         {{category.name}}
       </mat-checkbox>
       <div class="buttons">
-        <button class="password-button" mat-raised-button color="primary" (click)="sendSub()">Применить
+        <button class="password-button" mat-raised-button color="primary" (click)="sendSub()" [disabled]="!isValid()">
+          Применить
         </button>
-        <button class="confirm-email-button" mat-button (click)="sendSub()">Отменить подписку
+        <button class="confirm-email-button" mat-button (click)="unsubscribeUser()" [disabled]="!subInfo.active">
+          Отменить подписку
         </button>
       </div>
     </div>

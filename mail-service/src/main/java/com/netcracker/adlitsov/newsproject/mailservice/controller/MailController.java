@@ -8,14 +8,13 @@ import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.security.Principal;
@@ -42,12 +41,34 @@ public class MailController {
 
     // orphanRemoval - only listed subscriptions will be saved (others will be removed)
     @PostMapping("/mailing/subscribe")
-    public void subscribeUserOnCategory(Authentication authentication, @RequestBody SubInfo subInfo) {
-        mailService.subscribeUserOnCategory(authentication, subInfo);
+    public Boolean subscribeUserOnCategory(Authentication authentication, @RequestBody SubInfo subInfo) throws MessagingException {
+        return mailService.subscribeUserOnCategory(authentication, subInfo);
     }
 
-    @PostMapping("/mailing/get-subs")
-    public List<Integer> subscribeUserOnCategory(Authentication authentication, @RequestBody String email) {
-        return mailService.getUserSubs(authentication, email);
+    @GetMapping("/mailing/users/{id}/send-confirmation")
+    public void sendConfirmation(@PathVariable("id") Integer id) throws MessagingException {
+        mailService.sendConfirmation(id);
+    }
+
+    @GetMapping(value = "/mailing/users/confirm")
+    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token) {
+        User confirmedUser = mailService.confirmUserByToken(token);
+        if (confirmedUser != null) {
+            return new ResponseEntity<>("Подписка на почту " + confirmedUser.getEmail() + " успешно подтверждена, "
+                                                + confirmedUser.getUsername() + "!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Не удалось подтвердить почту! Попробуйте ещё раз.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @GetMapping("/mailing/get-subinfo")
+    public SubInfo getSubInfo(Authentication authentication) {
+        return mailService.getUserSubs(authentication);
+    }
+
+    @PostMapping("/mailing/unsubscribe")
+    public void unsubscribeUser(Authentication authentication) {
+        mailService.unsubscribeUser(authentication);
     }
 }

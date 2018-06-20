@@ -26,7 +26,7 @@ import {ArticlesService} from './articles.service';
 import {CategoriesService} from './categories.service';
 import {CommentsService} from "./comments.service";
 import {AuthService} from "./auth/auth.service";
-import {MatIconRegistry} from "@angular/material";
+import {MAT_DATE_LOCALE, MatIconRegistry} from "@angular/material";
 import {ProfileComponent} from './profile/profile.component';
 import {ProfileEditorComponent} from './profile-editor/profile-editor.component';
 import {UserSettingsComponent} from './user-settings/user-settings.component';
@@ -82,7 +82,8 @@ export function tokenGetter() {
       provide: HTTP_INTERCEPTORS,
       useClass: GatewayInterceptor,
       multi: true,
-    }
+    },
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent]
 })

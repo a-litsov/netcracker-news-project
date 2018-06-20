@@ -166,7 +166,7 @@
                   {{preview.tag.name}}
                 </span>
                     <span class="date">
-                  {{preview.addDate | date: 'hh:mm dd.MM'}}
+                  {{preview.addDate | date: 'HH:mm dd.MM'}}
                 </span>
                   </mat-card-subtitle>
                 </mat-card-header>
@@ -190,7 +190,7 @@
               </div>
               <mat-card-title class="comment-title">
                 <span class="comment-author">{{profile.userName}}</span>
-                <span class="comment-date">{{ comment.addDate | date: 'hh:mm dd/MM/yyyy'}}</span>
+                <span class="comment-date">{{ comment.addDate | date: 'HH:mm dd/MM/yyyy'}}</span>
                 <span><a [href]="'/article/' + comment.articleId"> Ссылка на новость</a></span>
               </mat-card-title>
               <mat-card-subtitle class="comment-content">{{comment.content}}</mat-card-subtitle>

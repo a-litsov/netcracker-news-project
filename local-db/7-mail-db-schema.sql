@@ -65,7 +65,8 @@ SET default_with_oids = false;
 CREATE TABLE "user" (
     id integer NOT NULL,
     username text NOT NULL,
-    email text NOT NULL
+    email text NOT NULL,
+    sub_active boolean NOT NULL DEFAULT false
 );
 
 
@@ -136,6 +137,58 @@ ALTER TABLE ONLY user_subscription
 
 ALTER TABLE ONLY user_subscription
     ADD CONSTRAINT user_subscription_user_id_fkey FOREIGN KEY (user_id) REFERENCES "user"(id);
+
+
+CREATE TABLE verification_token (
+    id integer NOT NULL,
+    user_id integer,
+    token text NOT NULL,
+    expiry_date timestamp without time zone
+);
+
+
+--
+-- TOC entry 192 (class 1259 OID 16538)
+-- Name: verification_token_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE verification_token_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2150 (class 0 OID 0)
+-- Dependencies: 192
+-- Name: verification_token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE verification_token_id_seq OWNED BY verification_token.id;
+
+
+--
+-- TOC entry 2026 (class 2604 OID 16543)
+-- Name: verification_token id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY verification_token ALTER COLUMN id SET DEFAULT nextval('verification_token_id_seq'::regclass);
+
+
+--
+-- TOC entry 2028 (class 2606 OID 16548)
+-- Name: verification_token verification_token_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY verification_token
+    ADD CONSTRAINT verification_token_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY verification_token
+  ADD CONSTRAINT verification_token_user_fk FOREIGN KEY (user_id)
+      REFERENCES public."user" (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 -- Completed on 2018-06-13 03:54:38 MSK

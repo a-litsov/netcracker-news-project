@@ -15,8 +15,9 @@ import {UserService} from "../user-settings/user.service";
 export class MailComponent implements OnInit {
 
   public categories: Category[] = [];
-  public checked: boolean[] = [];
-  public emailInfo: EmailInfo;
+  public checked = {};
+  public subInfo: SubInfo = new SubInfo();
+  public networkProblem: boolean = false;
 
   constructor(private categoriesService: CategoriesService, private mailService: MailService,
               private authService: AuthService, private userService: UserService) { }
@@ -25,23 +26,27 @@ export class MailComponent implements OnInit {
     let subs: number[] = [];
 
 
-    for (var key in this.checked) {
-      var value = this.checked[key];
-      if (value == true) {
-        subs.push(this.categories[parseInt(key, 10)].id);
-      }
-    }
+    Object.entries(this.checked).forEach(([id, selected]) => {
+      if (selected)
+        subs.push(parseInt(id));
+    });
 
     console.log(subs);
-    let subInfo: SubInfo = new SubInfo();
-    subInfo.email = this.emailInfo.email;
-    subInfo.categoriesId = subs;
-    console.log(subInfo);
-    this.mailService.subscribeOnCategories(subInfo).subscribe((v: void) => {
-      console.log("subscribed");
+    this.subInfo.categoriesId = subs;
+    console.log(this.subInfo);
+    this.mailService.subscribeOnCategories(this.subInfo).subscribe((active: boolean) => {
+      this.subInfo.active = active;
+      console.log("subscribed", active);
     }, (error) => {
+      this.networkProblem = true;
       console.log("error while subscribing");
     })
+  }
+
+  public hasChecked(): boolean {
+    let flag: boolean = false;
+    Object.keys(this.checked).forEach((id) => flag = flag || this.checked[id]);
+    return flag;
   }
 
   getCheckWithCatId(id: number): number {
@@ -52,18 +57,36 @@ export class MailComponent implements OnInit {
     }
   }
 
-  loadEmail() {
-    this.userService.getEmailInfoById(this.authService.user.userId).subscribe((emailInfo: EmailInfo) => {
-      this.emailInfo = emailInfo;
-      console.log("emailInfo is ", this.emailInfo);
-
-      this.mailService.getUserSubs(this.emailInfo.email).subscribe((subs: number[]) => {
-        console.log("got subs", subs);
-        for (var i = 0; i < subs.length; i++) {
-          this.checked[this.getCheckWithCatId(subs[i])] = true;
+  loadSubInfo() {
+      this.mailService.getUserSubInfo().subscribe((subInfo: SubInfo) => {
+        console.log("got subInfo", subInfo);
+        this.subInfo = subInfo;
+        subInfo.categoriesId.forEach((id) => this.checked[id] = true);
+        console.log(this.checked);
+      }, (error) => {
+        if (error.status != 404) {
+          console.log("Проблемы с сетью!");
+          this.networkProblem = true;
         }
       })
+  }
+
+  unsubscribeUser() {
+    this.mailService.unsubscribeUser().subscribe((v: void) => {
+      console.log("successfully unsubed");
+      this.subInfo.email = "";
+      this.subInfo.active = null;
+      this.subInfo.categoriesId = [];
+      this.checked = [];
+    }, (error) => {
+      console.log("Проблемы с сетью!");
+      this.networkProblem = true;
     })
+  }
+
+  public isValid() {
+    let emailInput =  document.getElementById("email-input") as HTMLInputElement;
+    return emailInput.checkValidity() && emailInput.value != "" && this.hasChecked();
   }
 
   ngOnInit() {
@@ -71,7 +94,7 @@ export class MailComponent implements OnInit {
       console.log("got categories", categories);
       this.categories = categories;
     })
-    this.loadEmail();
+    this.loadSubInfo();
   }
 
 }

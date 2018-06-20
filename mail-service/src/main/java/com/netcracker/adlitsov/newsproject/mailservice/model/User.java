@@ -21,6 +21,11 @@ public class User {
     @OneToMany(mappedBy =  "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Subscription> subscriptions = new ArrayList<>();
 
+    private boolean subActive = false;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private VerificationToken verificationToken;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -50,7 +55,12 @@ public class User {
     }
 
     public void setSubscriptions(List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
+        if (subscriptions == null) {
+            this.subscriptions = subscriptions;
+        } else {
+            this.subscriptions.retainAll(subscriptions);
+            this.subscriptions.addAll(subscriptions);
+        }
     }
 
     public String getEmail() {
@@ -59,5 +69,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isSubActive() {
+        return subActive;
+    }
+
+    public void setSubActive(boolean subActive) {
+        this.subActive = subActive;
+    }
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
     }
 }
