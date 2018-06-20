@@ -2,14 +2,13 @@ package com.netcracker.adlitsov.newsproject.authserver.controller;
 
 import com.netcracker.adlitsov.newsproject.authserver.model.*;
 import com.netcracker.adlitsov.newsproject.authserver.exception.UserAlreadyExistsException;
-import com.netcracker.adlitsov.newsproject.authserver.service.MailService;
+import com.netcracker.adlitsov.newsproject.authserver.service.MailServiceProxy;
 import com.netcracker.adlitsov.newsproject.authserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private MailService mailService;
+    private MailServiceProxy mailServiceProxy;
 
     // sends verification email
     @PostMapping("/users/register")
@@ -117,5 +116,10 @@ public class UserController {
     @GetMapping("/users/{id}/role")
     public Role getUserRole(@PathVariable("id") Integer id) {
         return userService.getUserRole(id);
+    }
+
+    @GetMapping("/users/send-message")
+    public void sendMessage() {
+        mailServiceProxy.sendMessage();
     }
 }

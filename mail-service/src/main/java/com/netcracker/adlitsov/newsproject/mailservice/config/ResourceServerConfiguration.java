@@ -30,7 +30,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .csrf().disable()
                 .authorizeRequests()
 
-                .anyRequest().permitAll();
+                .antMatchers("/**").access("#oauth2.hasScope('mail')");
     }
 
 

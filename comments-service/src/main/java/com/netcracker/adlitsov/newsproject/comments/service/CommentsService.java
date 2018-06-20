@@ -146,4 +146,8 @@ public class CommentsService {
         Map<String, Object> details = (Map<String, Object>)((OAuth2AuthenticationDetails)auth.getDetails()).getDecodedDetails();
         return (int)details.get("user_id");
     }
+
+    public void deleteCommentByArticleId(int articleId) {
+        commentsRepository.deleteAllByArticleId(articleId);
+    }
 }

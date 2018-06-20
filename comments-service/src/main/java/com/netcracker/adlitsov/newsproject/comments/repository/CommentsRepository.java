@@ -18,4 +18,6 @@ public interface CommentsRepository extends JpaRepository<Comment, Integer> {
     List<Comment> findByAuthorId(Integer authorId);
     List<Comment> findByParent(Comment parent);
 
+
+    void deleteAllByArticleId(Integer articleId);
 }

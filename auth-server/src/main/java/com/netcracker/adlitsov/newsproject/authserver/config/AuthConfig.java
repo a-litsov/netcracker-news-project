@@ -40,11 +40,11 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
                 .secret(passwordEncoder.encode("website-secret"))
                 .accessTokenValiditySeconds(TWO_HOURS)
                 .and()
-            .withClient("users-service")
-                .scopes("REGISTER_USER")
+            .withClient("auth-service")
                 .autoApprove(true)
+                .scopes("mail")
                 .authorizedGrantTypes("client_credentials", "password")
-                .secret(passwordEncoder.encode("users-service-secret"))
+                .secret(passwordEncoder.encode("auth-service-secret"))
                 .accessTokenValiditySeconds(TWO_HOURS);
     }
 

@@ -9,6 +9,7 @@ import com.netcracker.adlitsov.newsproject.authserver.repository.RankRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.RoleRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.UserRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.VoteRepository;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    MailService mailService;
+    MailServiceProxy mailServiceProxy;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -129,7 +130,12 @@ public class UserService implements UserDetailsService {
         verificationToken.setUser(user);
         user.setVerificationToken(verificationToken);
 
-        mailService.sendConfirmationMessage(user, verificationToken);
+        VerificationData data = new VerificationData();
+        data.setEmail(user.getEmail());
+        data.setUserName(user.getUsername());
+        data.setVerificationToken(verificationToken.getToken());
+
+        mailServiceProxy.sendAuthConfirmationMessage(data);
 
         return user;
     }
@@ -193,10 +199,12 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        // TODO: make separate method for this in  mailService
-        mailService.sendSimpleMessage(user.getEmail(), "News project site - настройки аккаунта изменились",
-                                      "Уважаемый " + user.getUsername() + ", кто-то изменил пароль для вашего аккаунта." +
-                                              "\nЕсли это были не вы, пожалуйста, свяжитесь с администрацией сайта.");
+        PasswordChangedInfo passInfo = new PasswordChangedInfo();
+        passInfo.setEmail(user.getEmail());
+        passInfo.setNewPassword(newPassword);
+        passInfo.setUserName(user.getUsername());
+
+        mailServiceProxy.sendPasswordChangedMail(passInfo);
     }
 
     @Transactional

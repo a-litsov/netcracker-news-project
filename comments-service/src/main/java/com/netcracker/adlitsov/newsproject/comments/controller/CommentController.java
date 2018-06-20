@@ -60,6 +60,11 @@ public class CommentController {
         commentsService.deleteComment(commentId);
     }
 
+    @DeleteMapping("/article/{id}")
+    public void deleteCommentsByArticleId(@PathVariable(value = "id") Integer articleId) {
+        commentsService.deleteCommentByArticleId(articleId);
+    }
+
     @GetMapping(params = "articleId")
     public List<Comment> getCommentsByArticleId(@RequestParam("articleId") Integer articleId) {
         return commentsService.getCommentsByArticleId(articleId);

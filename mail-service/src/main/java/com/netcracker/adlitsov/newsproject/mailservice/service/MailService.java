@@ -186,6 +186,34 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
+    public void sendAuthConfirmationMessage(VerificationData data) throws MessagingException {
+        String confirmationUrl = "http://localhost:8084/users/confirm?token=" + data.getVerificationToken();
+        String message = "Уважаемый " + data.getUserName() + ", пожалуйста, подтвердите почту для завершения регистрации на сайте." +
+                "Для этого перейдите по следующей <a href=\"" + confirmationUrl + "\">ссылке</a>.";
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+        helper.setText(message, true);
+        helper.setTo(data.getEmail());
+        helper.setSubject("Подтверждение регистрации на сайте");
+        helper.setFrom("mail@justnews.com");
+        mailSender.send(mimeMessage);
+    }
+
+    public void sendPasswordChangedMail(PasswordChangedInfo passInfo) throws MessagingException {
+        String message = "Уважаемый " + passInfo.getUserName() + ", пароль для вашего аккаунта изменился." +
+                "Новый пароль: " + passInfo.getNewPassword();
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+        helper.setText(message, true);
+        helper.setTo(passInfo.getEmail());
+        helper.setSubject("Настройки аккаунта изменились");
+        helper.setFrom("mail@justnews.com");
+        mailSender.send(mimeMessage);
+    }
+
+
     private User parseAuth(Authentication auth) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2AuthenticationDetails) auth.getDetails()).getDecodedDetails();
         int userId = (int) details.get("user_id");

@@ -1,24 +1,16 @@
 package com.netcracker.adlitsov.newsproject.mailservice.controller;
 
-import com.netcracker.adlitsov.newsproject.mailservice.model.ArticleMailInfo;
-import com.netcracker.adlitsov.newsproject.mailservice.model.SubInfo;
-import com.netcracker.adlitsov.newsproject.mailservice.model.User;
+import com.netcracker.adlitsov.newsproject.mailservice.model.*;
 import com.netcracker.adlitsov.newsproject.mailservice.service.MailService;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,6 +53,10 @@ public class MailController {
         }
     }
 
+    @PostMapping("/mailing/password-changed")
+    public void sendPasswordChangedMail(@RequestBody PasswordChangedInfo passwordChangedInfo) throws MessagingException {
+        mailService.sendPasswordChangedMail(passwordChangedInfo);
+    }
 
     @GetMapping("/mailing/get-subinfo")
     public SubInfo getSubInfo(Authentication authentication) {
@@ -71,4 +67,10 @@ public class MailController {
     public void unsubscribeUser(Authentication authentication) {
         mailService.unsubscribeUser(authentication);
     }
+
+    @PostMapping("/mailing/send-confirmation")
+    void sendAuthConfirmationMessage(@RequestBody VerificationData data) throws MessagingException {
+        mailService.sendAuthConfirmationMessage(data);
+    }
+
 }
