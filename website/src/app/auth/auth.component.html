@@ -10,9 +10,19 @@
           <mat-form-field>
             <input matInput type="password" placeholder="Пароль" [(ngModel)]="userAuthInfo.password">
           </mat-form-field>
-          <mat-label class="error-label" >{{errorMessage}}</mat-label>
+          <mat-label class="error-label">{{errorMessage}}</mat-label>
           <button mat-raised-button color="primary" (click)="login()">Войти</button>
-          <button mat-button>Я забыл пароль</button>
+          <button mat-button (click)="activateRecovery()">Я забыл пароль</button>
+          <mat-form-field *ngIf="recoveryMode">
+            <input matInput placeholder="Введите вашу почту" [(ngModel)]="recoveryEmail"
+                   id="recoveryEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          </mat-form-field>
+          <button mat-raised-button *ngIf="recoveryMode" color="primary" (click)="recoveryPass()"
+          [disabled]="!recoveryEmailCorrect()">
+            Выслать новый пароль
+          </button>
+          <span class="recovery-label" *ngIf="recoveryMode && !networkProblem">{{recoveryMessage}}</span>
+          <span class="recovery-label error-label" *ngIf="recoveryMode && networkProblem">{{recoveryMessage}}</span>
         </div>
       </mat-tab>
 

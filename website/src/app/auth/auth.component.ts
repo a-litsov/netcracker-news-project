@@ -3,6 +3,7 @@ import {UserAuthDTO} from './userAuthDTO';
 import {UserRegDTO} from './userRegDTO';
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
+import {UserService} from "../user-settings/user.service";
 
 @Component({
   selector: 'app-auth',
@@ -11,13 +12,19 @@ import {Router} from "@angular/router";
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router,
+              private userService: UserService) {
   }
 
   userAuthInfo: UserAuthDTO = new UserAuthDTO();
   userRegInfo: UserRegDTO = new UserRegDTO();
 
+  recoveryMode: boolean = false;
+  recoveryEmail: string = "";
+  recoveryMessage: string = "";
+
   errorMessage: string;
+  networkProblem: boolean = false;
 
   login() {
     console.log(this.authService.isLoggedIn());
@@ -42,6 +49,25 @@ export class AuthComponent implements OnInit {
     );
   }
 
+  activateRecovery() {
+    this.recoveryMode = !this.recoveryMode;
+  }
+
+  recoveryPass() {
+    this.userService.recoveryPass(this.recoveryEmail).subscribe((v) => {
+      console.log("recovered pass");
+      this.networkProblem = false;
+      this.recoveryMessage = "Письмо с новым паролем отправлено на почту"
+    }, (error) => {
+      this.networkProblem = true;
+      if (error.status == 404) {
+        this.recoveryMessage = "Пользователь с такой почтой не найден";
+      } else {
+        this.recoveryMessage = "Проблемы с сетью";
+      }
+    })
+  }
+
   register() {
     this.authService.register(this.userRegInfo,
       () => this.router.navigate(['/']),
@@ -59,6 +85,10 @@ export class AuthComponent implements OnInit {
     );
   }
 
+  recoveryEmailCorrect() {
+    let recoverEmailInput = document.getElementById("recoveryEmail") as HTMLInputElement;
+    return recoverEmailInput.checkValidity() && recoverEmailInput.value.length > 0;
+  }
   ngOnInit() {
   }
 

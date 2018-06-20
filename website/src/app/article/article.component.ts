@@ -278,7 +278,7 @@ export class ArticleComponent implements OnInit {
     console.log("removing article...");
     this.articlesService.deleteArticleById(this.article.id).subscribe((response) => {
       console.log(response);
-      this.router.navigateByUrl('/' + this.article.category.id);
+      this.router.navigateByUrl('/');
     });
   }
 

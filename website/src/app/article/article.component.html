@@ -50,7 +50,7 @@
                 *ngIf="authService.hasAuthority('OP_UPDATE_ARTICLE')">
           Редактировать
         </button>
-        <button mat-raised-button (click)="dislikeArticle()"
+        <button mat-raised-button (click)="deleteArticle()"
                 *ngIf="authService.hasAuthority('OP_DELETE_ARTICLE')">
           Удалить
         </button>

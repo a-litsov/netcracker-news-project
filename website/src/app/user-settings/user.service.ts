@@ -21,6 +21,10 @@ export class UserService {
     return this.http.put<void>("/users/" + id + "/password", passwordsPair);
   }
 
+  recoveryPass(email: string): Observable<void> {
+    return this.http.put<void>("/users/recovery-password", email);
+  }
+
   updateEmail(id: number, email: string): Observable<string> {
     return this.http.put<string>("/users/" + id + "/email", email);
   }

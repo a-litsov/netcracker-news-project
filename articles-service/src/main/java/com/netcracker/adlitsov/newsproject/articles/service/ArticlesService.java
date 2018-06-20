@@ -1,5 +1,6 @@
 package com.netcracker.adlitsov.newsproject.articles.service;
 
+import com.netcracker.adlitsov.newsproject.articles.controller.CommentsServiceProxy;
 import com.netcracker.adlitsov.newsproject.articles.exception.ResourceNotFoundException;
 import com.netcracker.adlitsov.newsproject.articles.model.Article;
 import com.netcracker.adlitsov.newsproject.articles.model.ArticlePreview;
@@ -21,6 +22,9 @@ public class ArticlesService {
 
     @Autowired
     ArticlesRepository articlesRepository;
+
+    @Autowired
+    CommentsServiceProxy commentsServiceProxy;
 
     public List<Article> getArticles() {
         return articlesRepository.findAll();
@@ -72,7 +76,10 @@ public class ArticlesService {
         return articlesRepository.save(article);
     }
 
+    @Transactional
     public void deleteArticleById(Integer articleId) {
+        commentsServiceProxy.deleteCommentsByArticleId(articleId);
+
         Article article = articlesRepository.findById(articleId)
                                             .orElseThrow(() -> new ResourceNotFoundException("Article", "id", articleId));
         articlesRepository.delete(article);

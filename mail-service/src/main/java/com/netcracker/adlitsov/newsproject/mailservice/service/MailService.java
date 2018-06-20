@@ -213,7 +213,6 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-
     private User parseAuth(Authentication auth) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2AuthenticationDetails) auth.getDetails()).getDecodedDetails();
         int userId = (int) details.get("user_id");

@@ -147,6 +147,7 @@ public class CommentsService {
         return (int)details.get("user_id");
     }
 
+    @Transactional
     public void deleteCommentByArticleId(int articleId) {
         commentsRepository.deleteAllByArticleId(articleId);
     }

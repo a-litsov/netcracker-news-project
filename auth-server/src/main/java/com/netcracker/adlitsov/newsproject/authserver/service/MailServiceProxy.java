@@ -13,10 +13,6 @@ import javax.mail.MessagingException;
 // TODO: gateway
 @FeignClient(name = "mail-service", url="http://localhost:8084", configuration = MailServiceClientConfiguration.class)
 public interface MailServiceProxy {
-
-    @GetMapping("/mailing/send-message")
-    void sendMessage();
-
     @PostMapping("/mailing/send-confirmation")
     void sendAuthConfirmationMessage(@RequestBody VerificationData data);
 

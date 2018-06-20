@@ -41,6 +41,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         http
                 .authorizeRequests()
                 // UserController
+                .antMatchers(HttpMethod.PUT, "/users/recovery-password").permitAll()
                 .antMatchers("/users/authors-comment-info").permitAll()
                 .antMatchers("/users/register", "/users/confirm", "/users/{\\d+}/send-confirmation").permitAll()
                 .antMatchers("/users/create").hasAuthority("OP_CREATE_USER")

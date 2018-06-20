@@ -10,6 +10,7 @@ import com.netcracker.adlitsov.newsproject.authserver.repository.RoleRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.UserRepository;
 import com.netcracker.adlitsov.newsproject.authserver.repository.VoteRepository;
 import com.netflix.discovery.converters.Auto;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -189,7 +190,6 @@ public class UserService implements UserDetailsService {
         return updatedUser.getEmail();
     }
 
-    // TODO: check password in method level security; charSequence?
     @Transactional
     @PreAuthorize("@securityService.canUpdatePassword(principal, #id, #oldPassword)")
     public void updateUserPassword(int id, String oldPassword, String newPassword) {
@@ -203,6 +203,23 @@ public class UserService implements UserDetailsService {
         passInfo.setEmail(user.getEmail());
         passInfo.setNewPassword(newPassword);
         passInfo.setUserName(user.getUsername());
+
+        mailServiceProxy.sendPasswordChangedMail(passInfo);
+    }
+
+    @Transactional
+    public void recoveryPassword(String email) {
+        User user = userRepository.findUserByEmail(email)
+                                  .orElseThrow(() -> new ResourceNotFoundException("user", "email", email));
+
+        String newPass = RandomStringUtils.randomAlphanumeric(10);
+        PasswordChangedInfo passInfo = new PasswordChangedInfo();
+        passInfo.setEmail(user.getEmail());
+        passInfo.setNewPassword(newPass);
+        passInfo.setUserName(user.getUsername());
+
+        user.setPassword(passwordEncoder.encode(newPass));
+        userRepository.save(user);
 
         mailServiceProxy.sendPasswordChangedMail(passInfo);
     }
@@ -328,8 +345,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User setUserRole(Integer id, Role role) {
-        User user =  userRepository.findById(id)
-                             .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        User user = userRepository.findById(id)
+                                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         user.setRole(role);
         return userRepository.save(user);
     }

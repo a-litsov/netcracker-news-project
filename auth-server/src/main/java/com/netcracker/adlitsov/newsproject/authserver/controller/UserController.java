@@ -118,8 +118,8 @@ public class UserController {
         return userService.getUserRole(id);
     }
 
-    @GetMapping("/users/send-message")
-    public void sendMessage() {
-        mailServiceProxy.sendMessage();
+    @PutMapping("/users/recovery-password")
+    public void recoveryPass(@RequestBody String email) {
+        userService.recoveryPassword(email);
     }
 }
