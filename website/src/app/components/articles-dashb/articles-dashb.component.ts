@@ -1,11 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ArticlesService } from '../../../services/articles.service';
-import { Preview } from '../../../preview'
+import { ArticlesService } from '../../services/articles.service';
+import { Preview } from './preview'
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-import {Article} from "../../../article";
+import {Article} from "../article/article";
 import { Location } from "@angular/common";
-import {AuthService} from "../../../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {Observable} from "rxjs/Rx";
 @Component({
   selector: 'articles-dashb',

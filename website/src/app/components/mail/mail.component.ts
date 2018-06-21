@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoriesService} from "../../services/categories.service";
-import {Category} from "../../category";
+import {Category} from "../article/category";
 import {MailService} from "../../services/mail.service";
 import {SubInfo} from "./subInfo";
 import {AuthService} from "../../services/auth.service";

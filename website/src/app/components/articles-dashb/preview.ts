@@ -1,4 +1,4 @@
-import { Category } from './category';
+import { Category } from '../article/category';
 import { Tag } from './tag';
 
 export class Preview {

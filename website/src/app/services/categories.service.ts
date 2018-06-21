@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../category';
+import { Category } from '../components/article/category';
 
 @Injectable()
 export class CategoriesService {

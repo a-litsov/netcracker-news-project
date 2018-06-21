@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Article } from '../article';
-import { Preview } from '../preview';
-import {Category} from "../category";
+import { Article } from '../components/article/article';
+import { Preview } from '../components/articles-dashb/preview';
+import {Category} from "../components/article/category";
 import {Observable} from "rxjs/Rx";
-import {Tag} from "../tag";
-import {Vote} from "../vote";
+import {Tag} from "../components/articles-dashb/tag";
+import {Vote} from "../components/articles-dashb/vote";
 
 @Injectable()
 export class ArticlesService {

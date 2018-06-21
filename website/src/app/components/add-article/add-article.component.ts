@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Article} from '../../article';
-import {Category} from '../../category';
+import {Article} from '../article/article';
+import {Category} from '../article/category';
 import { ArticlesService } from '../../services/articles.service';
-import {Tag} from "../../tag";
+import {Tag} from "../articles-dashb/tag";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 

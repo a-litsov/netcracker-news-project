@@ -2,15 +2,15 @@ import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angu
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {ProfileService} from "../../services/profile.service";
 import {Profile} from "./profile";
-import {Preview} from "../../preview";
+import {Preview} from "../articles-dashb/preview";
 import {ArticlesService} from "../../services/articles.service";
 import {Location} from "@angular/common";
-import {Comment} from "../../comment";
+import {Comment} from "../article/comment";
 import {CommentsService} from "../../services/comments.service";
 import {AuthService} from "../../services/auth.service";
 import {UserService} from "../../services/user.service";
 import {Role} from "../user-settings/role";
-import {Category} from "../../category";
+import {Category} from "../article/category";
 import {User} from "../auth/user";
 
 @Component({

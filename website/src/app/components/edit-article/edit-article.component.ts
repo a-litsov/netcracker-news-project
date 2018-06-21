@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ArticlesService} from "../../services/articles.service";
-import {Article} from "../../article";
+import {Article} from "../article/article";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Tag} from "../../tag";
-import {Category} from "../../category";
+import {Tag} from "../articles-dashb/tag";
+import {Category} from "../article/category";
 import {AuthService} from "../../services/auth.service";
 
 @Component({

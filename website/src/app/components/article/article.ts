@@ -1,5 +1,5 @@
 import { Category } from './category';
-import { Tag } from './tag';
+import { Tag } from '../articles-dashb/tag';
 
 export class Article {
   id: number;

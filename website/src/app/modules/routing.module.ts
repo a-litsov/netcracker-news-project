@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 
-import { ArticlesDashbComponent } from './components/main-nav/articles-dashb/articles-dashb.component';
-import { ArticleComponent } from './components/article/article.component';
-import {AddArticleComponent} from "./components/add-article/add-article.component";
+import { ArticlesDashbComponent } from '../components/articles-dashb/articles-dashb.component';
+import { ArticleComponent } from '../components/article/article.component';
+import {AddArticleComponent} from "../components/add-article/add-article.component";
 
 import { RouterModule, Routes } from '@angular/router';
-import {EditArticleComponent} from "./components/edit-article/edit-article.component";
-import {AuthComponent} from "./components/auth/auth.component";
-import {ProfileComponent} from "./components/profile/profile.component";
-import {ProfileEditorComponent} from "./components/profile-editor/profile-editor.component";
-import {UserSettingsComponent} from "./components/user-settings/user-settings.component";
-import {AccessDeniedComponent} from "./components/access-denied/access-denied.component";
-import {MailComponent} from "./components/mail/mail.component";
+import {EditArticleComponent} from "../components/edit-article/edit-article.component";
+import {AuthComponent} from "../components/auth/auth.component";
+import {ProfileComponent} from "../components/profile/profile.component";
+import {ProfileEditorComponent} from "../components/profile-editor/profile-editor.component";
+import {UserSettingsComponent} from "../components/user-settings/user-settings.component";
+import {AccessDeniedComponent} from "../components/access-denied/access-denied.component";
+import {MailComponent} from "../components/mail/mail.component";
 
 
 const appRoutes: Routes = [

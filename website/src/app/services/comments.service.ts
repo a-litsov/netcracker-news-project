@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs/Rx";
-import {Comment} from "../comment";
-import {Vote} from "../vote";
+import {Comment} from "../components/article/comment";
+import {Vote} from "../components/articles-dashb/vote";
 
 @Injectable()
 export class CommentsService {

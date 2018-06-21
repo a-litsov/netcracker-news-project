@@ -6,7 +6,7 @@ import {ProfileService} from "../../services/profile.service";
 import {ArticlesService} from "../../services/articles.service";
 import {Location} from "@angular/common";
 import {Profile} from "../profile/profile";
-import {Category} from "../../category";
+import {Category} from "../article/category";
 
 @Component({
   selector: 'app-profile-editor',

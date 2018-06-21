@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticlesService } from '../../services/articles.service';
-import {Article} from "../../article";
+import {Article} from "./article";
 import {Router, ActivatedRoute, ParamMap} from "@angular/router";
 import {CommentsService} from "../../services/comments.service";
-import {Comment} from '../../comment';
+import {Comment} from './comment';
 import {AuthService} from "../../services/auth.service";
 import {UserService} from "../../services/user.service";
 import {Profile} from "../profile/profile";
-import {Vote} from "../../vote";
+import {Vote} from "../articles-dashb/vote";
 import {ProfileService} from "../../services/profile.service";
 
 @Component({

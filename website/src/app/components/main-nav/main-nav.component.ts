@@ -3,11 +3,11 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CategoriesService } from '../../services/categories.service';
-import { Category } from '../../category';
+import { Category } from '../article/category';
 import {MatSidenav} from "@angular/material";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../auth/user";
-import {ArticlesDashbComponent} from "./articles-dashb/articles-dashb.component";
+import {ArticlesDashbComponent} from "../articles-dashb/articles-dashb.component";
 import { ContentChild } from '@angular/core';
 import { faAngleRight } from '@fortawesome/fontawesome-free-solid/';
 import fontawesome from '@fortawesome/fontawesome';

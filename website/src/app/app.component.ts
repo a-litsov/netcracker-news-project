@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ArticlesService } from './services/articles.service';
-import { Article } from './article';
-import { Category } from './category';
-import { Tag } from './tag';
+import { Article } from './components/article/article';
+import { Category } from './components/article/category';
+import { Tag } from './components/articles-dashb/tag';
 
 @Component({
   selector: 'app-root',
