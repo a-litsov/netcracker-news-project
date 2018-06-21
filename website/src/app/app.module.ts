@@ -14,25 +14,25 @@ import {StarRatingModule} from 'angular-star-rating';
 // Components
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MainNavComponent} from './main-nav/main-nav.component';
-import {ArticlesDashbComponent} from './main-nav/articles-dashb/articles-dashb.component';
-import {ArticleComponent} from './article/article.component';
-import {AddArticleComponent} from './add-article/add-article.component';
-import {EditArticleComponent} from './edit-article/edit-article.component';
-import {AuthComponent} from './auth/auth.component';
+import {MainNavComponent} from './components/main-nav/main-nav.component';
+import {ArticlesDashbComponent} from './components/main-nav/articles-dashb/articles-dashb.component';
+import {ArticleComponent} from './components/article/article.component';
+import {AddArticleComponent} from './components/add-article/add-article.component';
+import {EditArticleComponent} from './components/edit-article/edit-article.component';
+import {AuthComponent} from './components/auth/auth.component';
 
 // Services
-import {ArticlesService} from './articles.service';
-import {CategoriesService} from './categories.service';
-import {CommentsService} from "./comments.service";
-import {AuthService} from "./auth/auth.service";
+import {ArticlesService} from './services/articles.service';
+import {CategoriesService} from './services/categories.service';
+import {CommentsService} from "./services/comments.service";
+import {AuthService} from "./services/auth.service";
 import {MAT_DATE_LOCALE, MatIconRegistry} from "@angular/material";
-import {ProfileComponent} from './profile/profile.component';
-import {ProfileEditorComponent} from './profile-editor/profile-editor.component';
-import {UserSettingsComponent} from './user-settings/user-settings.component';
-import {AccessDeniedComponent} from './access-denied/access-denied.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {ProfileEditorComponent} from './components/profile-editor/profile-editor.component';
+import {UserSettingsComponent} from './components/user-settings/user-settings.component';
+import {AccessDeniedComponent} from './components/access-denied/access-denied.component';
 import {GatewayInterceptor} from "./gatewayInterceptor";
-import {MailComponent} from './mail/mail.component';
+import {MailComponent} from './components/mail/mail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');

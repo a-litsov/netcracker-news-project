@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ArticlesService } from './articles.service';
+import { ArticlesService } from './services/articles.service';
 import { Article } from './article';
 import { Category } from './category';
 import { Tag } from './tag';
