@@ -39,6 +39,7 @@ services:
             - local-database
         logging:
             driver: json-file
+        mem_limit: 1G
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
@@ -61,6 +62,7 @@ services:
             - fake-smtp
         logging:
             driver: json-file
+        mem_limit: 1G
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
@@ -68,6 +70,7 @@ services:
             SPRING_DATASOURCE_URL: jdbc:postgresql://local-database:5432/auth_db
             SPRING_MAIL_HOST: fake-smtp
             SPRING_MAIL_PORT: 5025
+
     comments-service:
         container_name: comments-service
         build:
@@ -84,6 +87,7 @@ services:
             - local-database
         logging:
             driver: json-file
+        mem_limit: 1G
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
@@ -93,6 +97,8 @@ services:
         container_name: website
         build:
             context: ./website
+            args:
+              env: prod
         image: nc-news-project/website:latest
         ports:
             - 4200:4200
@@ -101,6 +107,7 @@ services:
             - discovery-service
         logging:
             driver: json-file
+        mem_limit: 1G
     gateway-service:
         container_name: gateway-service
         build:
@@ -141,6 +148,7 @@ services:
             - fake-smtp
         logging:
             driver: json-file
+        mem_limit: 256m
         environment:
             SPRING_PROFILES_ACTIVE: dev
             SPRING_CLOUD_CONFIG_URI: http://config-server:9090
@@ -157,3 +165,4 @@ services:
             - 5025:5025
             - 5080:5080
             - 5081:5081
+        mem_limit: 1G
